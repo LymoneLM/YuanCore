@@ -1,0 +1,9 @@
+# Ignore IDE files
+.idea
+.vs
+**.user
+# Ignore build output directories
+ModPack/BepInEx/
+ModPack/*.zip
+**/bin
+**/obj
