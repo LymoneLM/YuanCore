@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace YuanCore.Building;
 
-public class PerBackMapScene : MonoBehaviour
+public class PerBackMapSceneEx : MonoBehaviour
 {
 	public string PoisA_mouse;
 
