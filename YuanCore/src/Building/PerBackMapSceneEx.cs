@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿// 重责任场景建筑管理器
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 // ReSharper disable InconsistentNaming
 
 namespace YuanCore.Building;
@@ -23,10 +26,6 @@ public class PerBackMapScene : MonoBehaviour
 
 	private GameObject perBuildA;
 
-	private int AddbuildPosiA;
-
-	private int AddbuildPosiB;
-
 	private bool isUpdateMemQ;
 
 	private int LoadSpeed;
@@ -46,9 +45,9 @@ public class PerBackMapScene : MonoBehaviour
 		PoisA_mouse = "0";
 		PoisB_mouse = "0";
 		Rebuild = false;
-		_BuildShow = base.transform.Find("BuildShow");
-		_BuildCity = base.transform.Find("BuildCity");
-		_BuildShop = base.transform.Find("BuildShop");
+		_BuildShow = transform.Find("BuildShow");
+		_BuildCity = transform.Find("BuildCity");
+		_BuildShop = transform.Find("BuildShop");
 	}
 
 	private void Start()
@@ -134,7 +133,7 @@ public class PerBackMapScene : MonoBehaviour
 			}
 			else
 			{
-				StartCoroutine("AddBuildM");
+				StartCoroutine(nameof(ReloadBuildingM));
 			}
 		}
 		else if (SceneClass == "Z")
@@ -144,22 +143,22 @@ public class PerBackMapScene : MonoBehaviour
 				Mainload.isCreatSceneFinish = true;
 				int num = int.Parse(Mainload.SceneID.Split('|')[2]);
 				string[] array = Mainload.NongZ_now[SceneIndex][num][2].Split('|');
-				for (int i = 0; i < base.transform.Find("AddClickBack").Find("AllKuai").childCount; i++)
+				for (int i = 0; i < transform.Find("AddClickBack").Find("AllKuai").childCount; i++)
 				{
-					base.transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
+					transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
 						.GetComponent<PerFeiWoRange>()
 						.FeiWoNum = int.Parse(array[i]);
-					base.transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
+					transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
 						.GetComponent<PerFeiWoRange>()
 						.FengDiIndex = SceneIndex;
-					base.transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
+					transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
 						.GetComponent<PerFeiWoRange>()
 						.NongZIndex = num;
 				}
 			}
 			else
 			{
-				StartCoroutine("AddBuildZ");
+				StartCoroutine(nameof(ReloadBuildingZ));
 			}
 		}
 		else if (SceneClass == "S")
@@ -170,11 +169,11 @@ public class PerBackMapScene : MonoBehaviour
 			}
 			else if (Mainload.BuildInto_s.Count <= 0)
 			{
-				StartCoroutine("AddBuildC");
+				StartCoroutine(nameof(ReloadBuildingC));
 			}
 			else
 			{
-				StartCoroutine("AddBuildS");
+				StartCoroutine(nameof(ReloadBuildingS));
 			}
 		}
 		else if (SceneClass == "H")
@@ -185,7 +184,7 @@ public class PerBackMapScene : MonoBehaviour
 			}
 			else
 			{
-				StartCoroutine("AddBuildH");
+				StartCoroutine(nameof(ReloadBuildingH));
 			}
 		}
 		else if (SceneClass == "L")
@@ -196,97 +195,86 @@ public class PerBackMapScene : MonoBehaviour
 			}
 			else
 			{
-				StartCoroutine("AddBuildL");
+				StartCoroutine(nameof(ReloadBuildingL));
 			}
 		}
 	}
 
-	private IEnumerator AddBuildM()
+    private void AddBuilding(int index, string buildingBigClass, string positionAB)
+    {
+        var positionList = positionAB.Split('|');
+        var positionA = int.Parse(positionList[0]);
+        var positionB = int.Parse(positionList[1]);
+
+        var obj = Instantiate(perBuildA, _BuildShow, true);
+        var buildSceneComponent = obj.transform.GetComponent<PerBuildScene>();
+        buildSceneComponent.BuildBigClass = buildingBigClass;
+        buildSceneComponent.PosiA = positionA;
+        buildSceneComponent.PosiB = positionB;
+        obj.name = index.ToString();
+        obj.transform.localScale = new Vector3(1f, 1f, 1f);
+        obj.transform.localPosition = FormulaData.GetBuildPosi(positionA, positionB);
+    }
+
+	private IEnumerator ReloadBuildingM()
 	{
-		for (int i = 0; i < _BuildShow.childCount; i++)
-		{
-			Object.Destroy(_BuildShow.GetChild(i).gameObject);
-		}
-		for (int a = 0; a < Mainload.BuildInto_m.Count; a++)
-		{
-			AddbuildPosiA = int.Parse(Mainload.BuildInto_m[a][5].Split('|')[0]);
-			AddbuildPosiB = int.Parse(Mainload.BuildInto_m[a][5].Split('|')[1]);
-			GameObject obj = Object.Instantiate(perBuildA);
-			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "M";
-			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
-			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
-			obj.name = a.ToString();
-			obj.transform.SetParent(_BuildShow);
-			obj.transform.localScale = new Vector3(1f, 1f, 1f);
-			obj.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
-			if (a >= Mainload.BuildInto_m.Count - 1)
-			{
-				Mainload.isCreatSceneFinish = true;
-				StopCoroutine("AddBuildM");
-			}
+		_BuildShow.DestroyAllChildren();
+		for (var a = 0; a < Mainload.BuildInto_m.Count; a++)
+        {
+            AddBuilding(a, "M", Mainload.BuildInto_m[a][5]);
+
 			if ((a + 1) % LoadSpeed == 0)
 			{
 				yield return null;
 			}
 		}
+        Mainload.isCreatSceneFinish = true;
 	}
 
-	private IEnumerator AddBuildZ()
+	private IEnumerator ReloadBuildingZ()
 	{
-		for (int i = 0; i < _BuildShow.childCount; i++)
+        _BuildShow.DestroyAllChildren();
+        for (int a = 0; a < Mainload.BuildInto_z.Count; a++)
 		{
-			Object.Destroy(_BuildShow.GetChild(i).gameObject);
-		}
-		int NongZIndex = int.Parse(Mainload.SceneID.Split('|')[2]);
-		for (int a = 0; a < Mainload.BuildInto_z.Count; a++)
-		{
-			AddbuildPosiA = int.Parse(Mainload.BuildInto_z[a][3].Split('|')[0]);
-			AddbuildPosiB = int.Parse(Mainload.BuildInto_z[a][3].Split('|')[1]);
-			GameObject obj = Object.Instantiate(perBuildA);
-			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "Z";
-			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
-			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
-			obj.name = a.ToString();
-			obj.transform.SetParent(_BuildShow);
-			obj.transform.localScale = new Vector3(1f, 1f, 1f);
-			obj.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
-			if (a >= Mainload.BuildInto_z.Count - 1)
-			{
-				Mainload.isCreatSceneFinish = true;
-				StopCoroutine("AddBuildZ");
-				string[] array = Mainload.NongZ_now[SceneIndex][NongZIndex][2].Split('|');
-				for (int j = 0; j < base.transform.Find("AddClickBack").Find("AllKuai").childCount; j++)
-				{
-					base.transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
-						.GetComponent<PerFeiWoRange>()
-						.FeiWoNum = int.Parse(array[j]);
-					base.transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
-						.GetComponent<PerFeiWoRange>()
-						.FengDiIndex = SceneIndex;
-					base.transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
-						.GetComponent<PerFeiWoRange>()
-						.NongZIndex = NongZIndex;
-				}
-				Invoke("JiaoTuiFeiwo", 0.1f);
-			}
+            AddBuilding(a, "Z", Mainload.BuildInto_z[a][3]);
+
 			if ((a + 1) % LoadSpeed == 0)
 			{
 				yield return null;
 			}
 		}
+
+        int NongZIndex = int.Parse(Mainload.SceneID.Split('|')[2]);
+        Mainload.isCreatSceneFinish = true;
+        StopCoroutine(nameof(ReloadBuildingZ));
+        string[] array = Mainload.NongZ_now[SceneIndex][NongZIndex][2].Split('|');
+        for (int j = 0; j < transform.Find("AddClickBack").Find("AllKuai").childCount; j++)
+        {
+            transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
+                .GetComponent<PerFeiWoRange>()
+                .FeiWoNum = int.Parse(array[j]);
+            transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
+                .GetComponent<PerFeiWoRange>()
+                .FengDiIndex = SceneIndex;
+            transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
+                .GetComponent<PerFeiWoRange>()
+                .NongZIndex = NongZIndex;
+        }
+        Invoke(nameof(JiaoTuiFeiwo), 0.1f);
 	}
 
-	private IEnumerator AddBuildS()
+    //TODO：处理郡城S和C的特殊情况
+	private IEnumerator ReloadBuildingS()
 	{
 		for (int i = 0; i < _BuildShop.childCount; i++)
 		{
-			Object.Destroy(_BuildShop.GetChild(i).gameObject);
+			Destroy(_BuildShop.GetChild(i).gameObject);
 		}
 		for (int a = 0; a < Mainload.BuildInto_s.Count; a++)
 		{
-			AddbuildPosiA = int.Parse(Mainload.BuildInto_s[a][4].Split('|')[0]);
-			AddbuildPosiB = int.Parse(Mainload.BuildInto_s[a][4].Split('|')[1]);
-			GameObject obj = Object.Instantiate(perBuildA);
+			var AddbuildPosiA = int.Parse(Mainload.BuildInto_s[a][4].Split('|')[0]);
+			var AddbuildPosiB = int.Parse(Mainload.BuildInto_s[a][4].Split('|')[1]);
+			GameObject obj = Instantiate(perBuildA);
 			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "S";
 			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -296,14 +284,14 @@ public class PerBackMapScene : MonoBehaviour
 			obj.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 			if (a >= Mainload.BuildInto_s.Count - 1)
 			{
-				StopCoroutine("AddBuildS");
+				StopCoroutine(nameof(ReloadBuildingS));
 				if (Mainload.BuildInto_c.Count <= 0)
 				{
 					Mainload.isCreatSceneFinish = true;
 				}
 				else
 				{
-					StartCoroutine("AddBuildC");
+					StartCoroutine(nameof(ReloadBuildingC));
 				}
 			}
 			if ((a + 1) % LoadSpeed == 0)
@@ -313,17 +301,17 @@ public class PerBackMapScene : MonoBehaviour
 		}
 	}
 
-	private IEnumerator AddBuildC()
+	private IEnumerator ReloadBuildingC()
 	{
 		for (int i = 0; i < _BuildCity.childCount; i++)
 		{
-			Object.Destroy(_BuildCity.GetChild(i).gameObject);
+			Destroy(_BuildCity.GetChild(i).gameObject);
 		}
 		for (int a = 0; a < Mainload.BuildInto_c.Count; a++)
 		{
-			AddbuildPosiA = int.Parse(Mainload.BuildInto_c[a][3].Split('|')[0]);
-			AddbuildPosiB = int.Parse(Mainload.BuildInto_c[a][3].Split('|')[1]);
-			GameObject obj = Object.Instantiate(perBuildA);
+			var AddbuildPosiA = int.Parse(Mainload.BuildInto_c[a][3].Split('|')[0]);
+			var AddbuildPosiB = int.Parse(Mainload.BuildInto_c[a][3].Split('|')[1]);
+			GameObject obj = Instantiate(perBuildA);
 			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "C";
 			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -334,7 +322,7 @@ public class PerBackMapScene : MonoBehaviour
 			if (a >= Mainload.BuildInto_c.Count - 1)
 			{
 				Mainload.isCreatSceneFinish = true;
-				StopCoroutine("AddBuildC");
+				StopCoroutine(nameof(ReloadBuildingC));
 			}
 			if ((a + 1) % LoadSpeed == 0)
 			{
@@ -343,83 +331,56 @@ public class PerBackMapScene : MonoBehaviour
 		}
 	}
 
-	private IEnumerator AddBuildH()
+	private IEnumerator ReloadBuildingH()
 	{
-		for (int i = 0; i < _BuildShow.childCount; i++)
+		_BuildShow.DestroyAllChildren();
+		for (var a = 0; a < Mainload.BuildInto_h.Count; a++)
 		{
-			Object.Destroy(_BuildShow.GetChild(i).gameObject);
-		}
-		for (int a = 0; a < Mainload.BuildInto_h.Count; a++)
-		{
-			AddbuildPosiA = int.Parse(Mainload.BuildInto_h[a][3].Split('|')[0]);
-			AddbuildPosiB = int.Parse(Mainload.BuildInto_h[a][3].Split('|')[1]);
-			GameObject obj = Object.Instantiate(perBuildA);
-			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "H";
-			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
-			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
-			obj.name = a.ToString();
-			obj.transform.SetParent(_BuildShow);
-			obj.transform.localScale = new Vector3(1f, 1f, 1f);
-			obj.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
-			if (a >= Mainload.BuildInto_h.Count - 1)
-			{
-				Mainload.isCreatSceneFinish = true;
-				StopCoroutine("AddBuildH");
-			}
+            AddBuilding(a, "H", Mainload.BuildInto_h[a][3]);
+
 			if ((a + 1) % LoadSpeed == 0)
 			{
 				yield return null;
 			}
 		}
+        Mainload.isCreatSceneFinish = true;
 	}
 
-	private IEnumerator AddBuildL()
+	private IEnumerator ReloadBuildingL()
 	{
-		for (int i = 0; i < _BuildShow.childCount; i++)
+		_BuildShow.DestroyAllChildren();
+		for (var a = 0; a < Mainload.BuildInto_l.Count; a++)
 		{
-			Object.Destroy(_BuildShow.GetChild(i).gameObject);
-		}
-		for (int a = 0; a < Mainload.BuildInto_l.Count; a++)
-		{
-			AddbuildPosiA = int.Parse(Mainload.BuildInto_l[a][3].Split('|')[0]);
-			AddbuildPosiB = int.Parse(Mainload.BuildInto_l[a][3].Split('|')[1]);
-			GameObject obj = Object.Instantiate(perBuildA);
-			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "L";
-			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
-			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
-			obj.name = a.ToString();
-			obj.transform.SetParent(_BuildShow);
-			obj.transform.localScale = new Vector3(1f, 1f, 1f);
-			obj.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
-			if (a >= Mainload.BuildInto_l.Count - 1)
-			{
-				Mainload.isCreatSceneFinish = true;
-				StopCoroutine("AddBuildL");
-			}
+            AddBuilding(a, "L", Mainload.BuildInto_l[a][3]);
+
 			if ((a + 1) % LoadSpeed == 0)
 			{
 				yield return null;
 			}
 		}
+        Mainload.isCreatSceneFinish = true;
 	}
 
 	private void UpdateShow()
 	{
+        // 肥沃度更新
 		if (Mainload.isShiFeiMode && SceneClass == "Z" && Mainload.isChangeFeiWoNongZ)
 		{
 			Mainload.isChangeFeiWoNongZ = false;
 			int index = int.Parse(Mainload.SceneID.Split('|')[2]);
 			string[] array = Mainload.NongZ_now[SceneIndex][index][2].Split('|');
-			for (int i = 0; i < base.transform.Find("AddClickBack").Find("AllKuai").childCount; i++)
+			for (int i = 0; i < transform.Find("AddClickBack").Find("AllKuai").childCount; i++)
 			{
-				base.transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
+				transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
 					.GetComponent<PerFeiWoRange>()
 					.FeiWoNum = int.Parse(array[i]);
-				base.transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
+				transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
 					.GetComponent<PerFeiWoRange>()
 					.UpdateBuildFeiwo();
 			}
 		}
+
+        // 建筑更新
 		if (Mainload.isBuildMode || (Rebuild && Mainload.isBuildEdit))
 		{
 			Rebuild = false;
@@ -428,23 +389,24 @@ public class PerBackMapScene : MonoBehaviour
 				BuildID_CreatSelectLast = Mainload.BuildID_Creatselect;
 				if (Mainload.isBuildMode)
 				{
-					for (int j = 0; j < base.transform.Find("BuildTip").childCount; j++)
+					for (int j = 0; j < transform.Find("BuildTip").childCount; j++)
 					{
-						Object.Destroy(base.transform.Find("BuildTip").GetChild(j).gameObject);
+						Destroy(transform.Find("BuildTip").GetChild(j).gameObject);
 					}
-					GameObject obj = Object.Instantiate(perBuildTipA);
-					obj.transform.SetParent(base.transform.Find("BuildTip"));
+					GameObject obj = Instantiate(perBuildTipA);
+					obj.transform.SetParent(transform.Find("BuildTip"));
 					obj.transform.localScale = new Vector3(1f, 1f, 1f);
 				}
 			}
 			if (Mainload.BuildID_CreatNow != "null")
 			{
-				AddbuildPosiA = int.Parse(Mainload.BuildPosiID_CreatNow.Split('|')[0]);
-				AddbuildPosiB = int.Parse(Mainload.BuildPosiID_CreatNow.Split('|')[1]);
+				var AddbuildPosiA = int.Parse(Mainload.BuildPosiID_CreatNow.Split('|')[0]);
+				var AddbuildPosiB = int.Parse(Mainload.BuildPosiID_CreatNow.Split('|')[1]);
 				if (SceneClass == "M")
 				{
-					FormulaData.AddBuildNew("M", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj2 = Object.Instantiate(perBuildA);
+					FormulaData.AddBuildNew("M", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+                        0, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
+					GameObject obj2 = Instantiate(perBuildA);
 					obj2.transform.GetComponent<PerBuildScene>().BuildBigClass = "M";
 					obj2.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj2.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -457,8 +419,9 @@ public class PerBackMapScene : MonoBehaviour
 				else if (SceneClass == "Z")
 				{
 					int indexB = int.Parse(Mainload.SceneID.Split('|')[2]);
-					FormulaData.AddBuildNew("Z", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow, indexB, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj3 = Object.Instantiate(perBuildA);
+					FormulaData.AddBuildNew("Z", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+                        indexB, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
+					GameObject obj3 = Instantiate(perBuildA);
 					obj3.transform.GetComponent<PerBuildScene>().BuildBigClass = "Z";
 					obj3.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj3.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -472,8 +435,10 @@ public class PerBackMapScene : MonoBehaviour
 				{
 					if (Mainload.BuildCityClass == "S0")
 					{
-						FormulaData.AddBuildNew("S", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: false, Mainload.BuildTaoZhuangID_SelectNow);
-						GameObject obj4 = Object.Instantiate(perBuildA);
+						FormulaData.AddBuildNew("S", SceneIndex, Mainload.BuildID_CreatNow,
+                            Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: false,
+                            Mainload.BuildTaoZhuangID_SelectNow);
+						GameObject obj4 = Instantiate(perBuildA);
 						obj4.transform.GetComponent<PerBuildScene>().BuildBigClass = "S";
 						obj4.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 						obj4.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -485,8 +450,10 @@ public class PerBackMapScene : MonoBehaviour
 					}
 					else if (Mainload.BuildCityClass == "S1")
 					{
-						FormulaData.AddBuildNew("S", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-						GameObject obj5 = Object.Instantiate(perBuildA);
+						FormulaData.AddBuildNew("S", SceneIndex, Mainload.BuildID_CreatNow,
+                            Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: true,
+                            Mainload.BuildTaoZhuangID_SelectNow);
+						GameObject obj5 = Instantiate(perBuildA);
 						obj5.transform.GetComponent<PerBuildScene>().BuildBigClass = "S";
 						obj5.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 						obj5.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -498,8 +465,10 @@ public class PerBackMapScene : MonoBehaviour
 					}
 					else if (Mainload.BuildCityClass == "C")
 					{
-						FormulaData.AddBuildNew("C", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: false, Mainload.BuildTaoZhuangID_SelectNow);
-						GameObject obj6 = Object.Instantiate(perBuildA);
+						FormulaData.AddBuildNew("C", SceneIndex, Mainload.BuildID_CreatNow,
+                            Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: false,
+                            Mainload.BuildTaoZhuangID_SelectNow);
+						GameObject obj6 = Instantiate(perBuildA);
 						obj6.transform.GetComponent<PerBuildScene>().BuildBigClass = "C";
 						obj6.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 						obj6.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -512,8 +481,9 @@ public class PerBackMapScene : MonoBehaviour
 				}
 				else if (SceneClass == "H")
 				{
-					FormulaData.AddBuildNew("H", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj7 = Object.Instantiate(perBuildA);
+					FormulaData.AddBuildNew("H", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+                        0, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
+					GameObject obj7 = Instantiate(perBuildA);
 					obj7.transform.GetComponent<PerBuildScene>().BuildBigClass = "H";
 					obj7.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj7.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -526,8 +496,9 @@ public class PerBackMapScene : MonoBehaviour
 				else if (SceneClass == "L")
 				{
 					int indexB2 = int.Parse(Mainload.SceneID.Split('|')[2]);
-					FormulaData.AddBuildNew("L", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow, indexB2, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj8 = Object.Instantiate(perBuildA);
+					FormulaData.AddBuildNew("L", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+                        indexB2, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
+					GameObject obj8 = Instantiate(perBuildA);
 					obj8.transform.GetComponent<PerBuildScene>().BuildBigClass = "L";
 					obj8.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj8.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
@@ -550,44 +521,44 @@ public class PerBackMapScene : MonoBehaviour
 				{
 					FormulaData.RemoveBuildNew("M", SceneIndex, _BuildShow.childCount - 1, 0, TipShow: false, isCtrlZ: true);
 					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
-					Invoke("DestroyBuild", 0.05f);
+					Invoke(nameof(DestroyBuild), 0.05f);
 				}
 				else if (SceneClass == "Z")
 				{
 					int indexB3 = int.Parse(Mainload.SceneID.Split('|')[2]);
 					FormulaData.RemoveBuildNew("Z", SceneIndex, indexB3, _BuildShow.childCount - 1, TipShow: false, isCtrlZ: true);
 					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
-					Invoke("DestroyBuild", 0.05f);
+					Invoke(nameof(DestroyBuild), 0.05f);
 				}
 				else if (SceneClass == "S")
 				{
 					FormulaData.RemoveBuildNew(_BuildCity.GetChild(_BuildCity.childCount - 1).GetComponent<PerBuildScene>().BuildBigClass, SceneIndex, _BuildCity.childCount - 1, 0, TipShow: false, isCtrlZ: true);
 					_BuildCity.GetChild(_BuildCity.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
-					Invoke("DestroyBuildC", 0.05f);
+					Invoke(nameof(DestroyBuildC), 0.05f);
 				}
 				else if (SceneClass == "H")
 				{
 					FormulaData.RemoveBuildNew("H", SceneIndex, _BuildShow.childCount - 1, 0, TipShow: false, isCtrlZ: true);
 					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
-					Invoke("DestroyBuild", 0.05f);
+					Invoke(nameof(DestroyBuild), 0.05f);
 				}
 				else if (SceneClass == "L")
 				{
 					int indexB4 = int.Parse(Mainload.SceneID.Split('|')[2]);
 					FormulaData.RemoveBuildNew("L", SceneIndex, indexB4, _BuildShow.childCount - 1, TipShow: false, isCtrlZ: true);
 					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
-					Invoke("DestroyBuild", 0.05f);
+					Invoke(nameof(DestroyBuild), 0.05f);
 				}
 			}
 		}
 		else if (BuildID_CreatSelectLast != "-1")
 		{
 			BuildID_CreatSelectLast = "-1";
-			if (base.transform.Find("BuildTip").childCount > 0)
+			if (transform.Find("BuildTip").childCount > 0)
 			{
-				base.transform.Find("BuildTip").GetChild(0).localScale = new Vector3(0f, 0f, 0f);
-				base.transform.Find("BuildTip").GetChild(0).localPosition = new Vector3(1000000f, 1000000f, 0f);
-				Invoke("DeleBuildTip", 0.05f);
+				transform.Find("BuildTip").GetChild(0).localScale = new Vector3(0f, 0f, 0f);
+				transform.Find("BuildTip").GetChild(0).localPosition = new Vector3(1000000f, 1000000f, 0f);
+				Invoke(nameof(DeleBuildTip), 0.05f);
 			}
 		}
 		if (Mainload.isBuildEdit)
@@ -688,24 +659,24 @@ public class PerBackMapScene : MonoBehaviour
 		}
 		if (Mainload.isBuildMode || Mainload.isBuildEdit)
 		{
-			if (!base.transform.Find("BuildPosiGet").gameObject.activeSelf)
+			if (!transform.Find("BuildPosiGet").gameObject.activeSelf)
 			{
-				base.transform.Find("BuildPosiGet").gameObject.SetActive(value: true);
+				transform.Find("BuildPosiGet").gameObject.SetActive(value: true);
 			}
 			if (!isDestroyNPC)
 			{
 				isDestroyNPC = true;
-				for (int k = 0; k < base.transform.Find("QNPC").childCount; k++)
+				for (int k = 0; k < transform.Find("QNPC").childCount; k++)
 				{
-					Object.Destroy(base.transform.Find("QNPC").GetChild(k).gameObject);
+					Destroy(transform.Find("QNPC").GetChild(k).gameObject);
 				}
 			}
 		}
 		else
 		{
-			if (base.transform.Find("BuildPosiGet").gameObject.activeSelf)
+			if (transform.Find("BuildPosiGet").gameObject.activeSelf)
 			{
-				base.transform.Find("BuildPosiGet").gameObject.SetActive(value: false);
+				transform.Find("BuildPosiGet").gameObject.SetActive(value: false);
 			}
 			isDestroyNPC = false;
 		}
@@ -842,20 +813,20 @@ public class PerBackMapScene : MonoBehaviour
 	private void DestroyBuild()
 	{
 		Mainload.isNoBuild = false;
-		Object.Destroy(base.transform.Find("BuildShow").GetChild(base.transform.Find("BuildShow").childCount - 1).gameObject);
+		Destroy(transform.Find("BuildShow").GetChild(transform.Find("BuildShow").childCount - 1).gameObject);
 	}
 
 	private void DestroyBuildC()
 	{
 		Mainload.isNoBuild = false;
-		Object.Destroy(base.transform.Find("BuildCity").GetChild(base.transform.Find("BuildCity").childCount - 1).gameObject);
+		Destroy(transform.Find("BuildCity").GetChild(transform.Find("BuildCity").childCount - 1).gameObject);
 	}
 
 	private void DeleBuildTip()
 	{
-		for (int i = 0; i < base.transform.Find("BuildTip").childCount; i++)
+		for (int i = 0; i < transform.Find("BuildTip").childCount; i++)
 		{
-			Object.Destroy(base.transform.Find("BuildTip").GetChild(i).gameObject);
+			Destroy(transform.Find("BuildTip").GetChild(i).gameObject);
 		}
 	}
 
@@ -865,7 +836,7 @@ public class PerBackMapScene : MonoBehaviour
 		{
 			Mainload.isNeedJiaoDuiFeiwo = false;
 			Mainload.isShiFeiMode = true;
-			Invoke("EndJiaoDuiFeiwo", 0.1f);
+			Invoke(nameof(EndJiaoDuiFeiwo), 0.1f);
 		}
 	}
 
@@ -874,3 +845,4 @@ public class PerBackMapScene : MonoBehaviour
 		Mainload.isShiFeiMode = false;
 	}
 }
+
