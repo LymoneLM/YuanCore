@@ -4,56 +4,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ReSharper disable InconsistentNaming
-
 namespace YuanCore.Building;
 
 public class PerBackMapSceneEx : MonoBehaviour
 {
-	public string PoisA_mouse;
+	private string _sceneClass;
 
-	public string PoisB_mouse;
+	private int _sceneIndex;
 
-	private string SceneClass;
+	private bool _isDestroyNpc;
 
-	private int SceneIndex;
+	private string _buildIDCreatSelectLast;
 
-	private bool isDestroyNPC;
+	private GameObject _perBuildTipA;
 
-	private string BuildID_CreatSelectLast;
+	private GameObject _perBuildA;
 
-	private GameObject perBuildTipA;
+	private bool _isUpdateMemQ;
 
-	private GameObject perBuildA;
+	private int _loadSpeed;
 
-	private bool isUpdateMemQ;
+	private Transform _buildShow;
 
-	private int LoadSpeed;
+	private Transform _buildCity;
 
-	private Transform _BuildShow;
+	private Transform _buildShop;
 
-	private Transform _BuildCity;
-
-	private Transform _BuildShop;
-
-	private bool Rebuild;
+	private bool _rebuild;
 
 	private void Awake()
 	{
-		perBuildA = (GameObject)Resources.Load("PerBuildScene");
-		perBuildTipA = (GameObject)Resources.Load("PerBuildTip");
-		PoisA_mouse = "0";
-		PoisB_mouse = "0";
-		Rebuild = false;
-		_BuildShow = transform.Find("BuildShow");
-		_BuildCity = transform.Find("BuildCity");
-		_BuildShop = transform.Find("BuildShop");
+		_perBuildA = (GameObject)Resources.Load("PerBuildScene");
+		_perBuildTipA = (GameObject)Resources.Load("PerBuildTip");
+		_rebuild = false;
+		_buildShow = transform.Find("BuildShow");
+		_buildCity = transform.Find("BuildCity");
+		_buildShop = transform.Find("BuildShop");
 	}
 
 	private void Start()
 	{
-		initData();
-		initShow();
+		InitData();
+		InitShow();
 	}
 
 	private void Update()
@@ -61,71 +53,71 @@ public class PerBackMapSceneEx : MonoBehaviour
 		UpdateShow();
 	}
 
-	private void initData()
+	private void InitData()
 	{
 		Mainload.TempMemberIndex_now = 0;
-		isUpdateMemQ = false;
-		SceneClass = Mainload.SceneID.Split('|')[0];
-		SceneIndex = int.Parse(Mainload.SceneID.Split('|')[1]);
-		BuildID_CreatSelectLast = "-1";
+		_isUpdateMemQ = false;
+		_sceneClass = Mainload.SceneID.Split('|')[0];
+		_sceneIndex = int.Parse(Mainload.SceneID.Split('|')[1]);
+		_buildIDCreatSelectLast = "-1";
 		Mainload.BuildPosiID_Now = "0|0";
 		Mainload.BuildID_CreatNow = "null";
-		isDestroyNPC = false;
-		if (SceneClass == "Z")
+		_isDestroyNpc = false;
+		if (_sceneClass == "Z")
 		{
-			string[] array = Mainload.NongZ_now[SceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|');
+			string[] array = Mainload.NongZ_now[_sceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|');
 			Mainload.LastNonghuNum_Open = new List<float>
 			{
 				float.Parse(array[0]),
 				float.Parse(array[1]),
 				float.Parse(array[2])
 			};
-			SaveData.ReadBuildData(SceneClass, SceneIndex.ToString(), Mainload.SceneID.Split('|')[2]);
+			SaveData.ReadBuildData(_sceneClass, _sceneIndex.ToString(), Mainload.SceneID.Split('|')[2]);
 		}
-		else if (SceneClass == "L")
+		else if (_sceneClass == "L")
 		{
-			SaveData.ReadBuildData(SceneClass, SceneIndex.ToString(), Mainload.SceneID.Split('|')[2]);
+			SaveData.ReadBuildData(_sceneClass, _sceneIndex.ToString(), Mainload.SceneID.Split('|')[2]);
 		}
-		else if (SceneClass == "S")
+		else if (_sceneClass == "S")
 		{
-			SaveData.ReadBuildData(SceneClass, SceneIndex.ToString(), "0");
-			if (Mainload.ShopData_updateTime[SceneIndex].Count <= 0)
+			SaveData.ReadBuildData(_sceneClass, _sceneIndex.ToString(), "0");
+			if (Mainload.ShopData_updateTime[_sceneIndex].Count <= 0)
 			{
 				for (int i = 0; i < Mainload.BuildInto_s.Count; i++)
 				{
-					Mainload.ShopData_updateTime[SceneIndex].Add(0);
-					Mainload.Prop_shop_temp[SceneIndex].Add(new List<string>());
-					Mainload.Horse_Shop_Temp[SceneIndex].Add(new List<List<string>>());
-					Mainload.HuaiZhang_Shop_Temp[SceneIndex].Add(new List<List<string>>());
-					Mainload.OtherTrade_shop_Temp[SceneIndex].Add(new List<List<string>>());
+					Mainload.ShopData_updateTime[_sceneIndex].Add(0);
+					Mainload.Prop_shop_temp[_sceneIndex].Add(new List<string>());
+					Mainload.Horse_Shop_Temp[_sceneIndex].Add(new List<List<string>>());
+					Mainload.HuaiZhang_Shop_Temp[_sceneIndex].Add(new List<List<string>>());
+					Mainload.OtherTrade_shop_Temp[_sceneIndex].Add(new List<List<string>>());
 				}
 			}
 		}
 		else if (!Mainload.isFirstGame)
 		{
-			SaveData.ReadBuildData(SceneClass, SceneIndex.ToString(), "0");
+			SaveData.ReadBuildData(_sceneClass, _sceneIndex.ToString(), "0");
 		}
 		if (Mainload.SetData[5] == 0)
 		{
-			LoadSpeed = 50;
+			_loadSpeed = 50;
 		}
 		else if (Mainload.SetData[5] == 1)
 		{
-			LoadSpeed = 200;
+			_loadSpeed = 200;
 		}
 		else if (Mainload.SetData[5] == 2)
 		{
-			LoadSpeed = 500;
+			_loadSpeed = 500;
 		}
 		else if (Mainload.SetData[5] == 3)
 		{
-			LoadSpeed = 100000;
+			_loadSpeed = 100000;
 		}
 	}
 
-	private void initShow()
+	private void InitShow()
 	{
-		if (SceneClass == "M")
+		if (_sceneClass == "M")
 		{
 			if (Mainload.BuildInto_m.Count <= 0)
 			{
@@ -136,13 +128,13 @@ public class PerBackMapSceneEx : MonoBehaviour
 				StartCoroutine(nameof(ReloadBuildingM));
 			}
 		}
-		else if (SceneClass == "Z")
+		else if (_sceneClass == "Z")
 		{
 			if (Mainload.BuildInto_z.Count <= 0)
 			{
 				Mainload.isCreatSceneFinish = true;
 				int num = int.Parse(Mainload.SceneID.Split('|')[2]);
-				string[] array = Mainload.NongZ_now[SceneIndex][num][2].Split('|');
+				string[] array = Mainload.NongZ_now[_sceneIndex][num][2].Split('|');
 				for (int i = 0; i < transform.Find("AddClickBack").Find("AllKuai").childCount; i++)
 				{
 					transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
@@ -150,7 +142,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 						.FeiWoNum = int.Parse(array[i]);
 					transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
 						.GetComponent<PerFeiWoRange>()
-						.FengDiIndex = SceneIndex;
+						.FengDiIndex = _sceneIndex;
 					transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
 						.GetComponent<PerFeiWoRange>()
 						.NongZIndex = num;
@@ -161,7 +153,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 				StartCoroutine(nameof(ReloadBuildingZ));
 			}
 		}
-		else if (SceneClass == "S")
+		else if (_sceneClass == "S")
 		{
 			if (Mainload.BuildInto_s.Count + Mainload.BuildInto_c.Count <= 0)
 			{
@@ -176,7 +168,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 				StartCoroutine(nameof(ReloadBuildingS));
 			}
 		}
-		else if (SceneClass == "H")
+		else if (_sceneClass == "H")
 		{
 			if (Mainload.BuildInto_h.Count <= 0)
 			{
@@ -187,7 +179,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 				StartCoroutine(nameof(ReloadBuildingH));
 			}
 		}
-		else if (SceneClass == "L")
+		else if (_sceneClass == "L")
 		{
 			if (Mainload.BuildInto_l.Count <= 0)
 			{
@@ -206,7 +198,7 @@ public class PerBackMapSceneEx : MonoBehaviour
         var positionA = int.Parse(positionList[0]);
         var positionB = int.Parse(positionList[1]);
 
-        var obj = Instantiate(perBuildA, _BuildShow, true);
+        var obj = Instantiate(_perBuildA, _buildShow, true);
         var buildSceneComponent = obj.transform.GetComponent<PerBuildScene>();
         buildSceneComponent.BuildBigClass = buildingBigClass;
         buildSceneComponent.PosiA = positionA;
@@ -218,12 +210,12 @@ public class PerBackMapSceneEx : MonoBehaviour
 
 	private IEnumerator ReloadBuildingM()
 	{
-		_BuildShow.DestroyAllChildren();
+		_buildShow.DestroyAllChildren();
 		for (var a = 0; a < Mainload.BuildInto_m.Count; a++)
         {
             AddBuilding(a, "M", Mainload.BuildInto_m[a][5]);
 
-			if ((a + 1) % LoadSpeed == 0)
+			if ((a + 1) % _loadSpeed == 0)
 			{
 				yield return null;
 			}
@@ -233,12 +225,12 @@ public class PerBackMapSceneEx : MonoBehaviour
 
 	private IEnumerator ReloadBuildingZ()
 	{
-        _BuildShow.DestroyAllChildren();
+        _buildShow.DestroyAllChildren();
         for (int a = 0; a < Mainload.BuildInto_z.Count; a++)
 		{
             AddBuilding(a, "Z", Mainload.BuildInto_z[a][3]);
 
-			if ((a + 1) % LoadSpeed == 0)
+			if ((a + 1) % _loadSpeed == 0)
 			{
 				yield return null;
 			}
@@ -247,7 +239,7 @@ public class PerBackMapSceneEx : MonoBehaviour
         int NongZIndex = int.Parse(Mainload.SceneID.Split('|')[2]);
         Mainload.isCreatSceneFinish = true;
         StopCoroutine(nameof(ReloadBuildingZ));
-        string[] array = Mainload.NongZ_now[SceneIndex][NongZIndex][2].Split('|');
+        string[] array = Mainload.NongZ_now[_sceneIndex][NongZIndex][2].Split('|');
         for (int j = 0; j < transform.Find("AddClickBack").Find("AllKuai").childCount; j++)
         {
             transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
@@ -255,7 +247,7 @@ public class PerBackMapSceneEx : MonoBehaviour
                 .FeiWoNum = int.Parse(array[j]);
             transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
                 .GetComponent<PerFeiWoRange>()
-                .FengDiIndex = SceneIndex;
+                .FengDiIndex = _sceneIndex;
             transform.Find("AddClickBack").Find("AllKuai").GetChild(j)
                 .GetComponent<PerFeiWoRange>()
                 .NongZIndex = NongZIndex;
@@ -266,20 +258,20 @@ public class PerBackMapSceneEx : MonoBehaviour
     //TODO：处理郡城S和C的特殊情况
 	private IEnumerator ReloadBuildingS()
 	{
-		for (int i = 0; i < _BuildShop.childCount; i++)
+		for (int i = 0; i < _buildShop.childCount; i++)
 		{
-			Destroy(_BuildShop.GetChild(i).gameObject);
+			Destroy(_buildShop.GetChild(i).gameObject);
 		}
 		for (int a = 0; a < Mainload.BuildInto_s.Count; a++)
 		{
 			var AddbuildPosiA = int.Parse(Mainload.BuildInto_s[a][4].Split('|')[0]);
 			var AddbuildPosiB = int.Parse(Mainload.BuildInto_s[a][4].Split('|')[1]);
-			GameObject obj = Instantiate(perBuildA);
+			GameObject obj = Instantiate(_perBuildA);
 			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "S";
 			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 			obj.name = a.ToString();
-			obj.transform.SetParent(_BuildShop);
+			obj.transform.SetParent(_buildShop);
 			obj.transform.localScale = new Vector3(1f, 1f, 1f);
 			obj.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 			if (a >= Mainload.BuildInto_s.Count - 1)
@@ -294,7 +286,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 					StartCoroutine(nameof(ReloadBuildingC));
 				}
 			}
-			if ((a + 1) % LoadSpeed == 0)
+			if ((a + 1) % _loadSpeed == 0)
 			{
 				yield return null;
 			}
@@ -303,20 +295,20 @@ public class PerBackMapSceneEx : MonoBehaviour
 
 	private IEnumerator ReloadBuildingC()
 	{
-		for (int i = 0; i < _BuildCity.childCount; i++)
+		for (int i = 0; i < _buildCity.childCount; i++)
 		{
-			Destroy(_BuildCity.GetChild(i).gameObject);
+			Destroy(_buildCity.GetChild(i).gameObject);
 		}
 		for (int a = 0; a < Mainload.BuildInto_c.Count; a++)
 		{
 			var AddbuildPosiA = int.Parse(Mainload.BuildInto_c[a][3].Split('|')[0]);
 			var AddbuildPosiB = int.Parse(Mainload.BuildInto_c[a][3].Split('|')[1]);
-			GameObject obj = Instantiate(perBuildA);
+			GameObject obj = Instantiate(_perBuildA);
 			obj.transform.GetComponent<PerBuildScene>().BuildBigClass = "C";
 			obj.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 			obj.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 			obj.name = a.ToString();
-			obj.transform.SetParent(_BuildCity);
+			obj.transform.SetParent(_buildCity);
 			obj.transform.localScale = new Vector3(1f, 1f, 1f);
 			obj.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 			if (a >= Mainload.BuildInto_c.Count - 1)
@@ -324,7 +316,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 				Mainload.isCreatSceneFinish = true;
 				StopCoroutine(nameof(ReloadBuildingC));
 			}
-			if ((a + 1) % LoadSpeed == 0)
+			if ((a + 1) % _loadSpeed == 0)
 			{
 				yield return null;
 			}
@@ -333,12 +325,12 @@ public class PerBackMapSceneEx : MonoBehaviour
 
 	private IEnumerator ReloadBuildingH()
 	{
-		_BuildShow.DestroyAllChildren();
+		_buildShow.DestroyAllChildren();
 		for (var a = 0; a < Mainload.BuildInto_h.Count; a++)
 		{
             AddBuilding(a, "H", Mainload.BuildInto_h[a][3]);
 
-			if ((a + 1) % LoadSpeed == 0)
+			if ((a + 1) % _loadSpeed == 0)
 			{
 				yield return null;
 			}
@@ -348,12 +340,12 @@ public class PerBackMapSceneEx : MonoBehaviour
 
 	private IEnumerator ReloadBuildingL()
 	{
-		_BuildShow.DestroyAllChildren();
+		_buildShow.DestroyAllChildren();
 		for (var a = 0; a < Mainload.BuildInto_l.Count; a++)
 		{
             AddBuilding(a, "L", Mainload.BuildInto_l[a][3]);
 
-			if ((a + 1) % LoadSpeed == 0)
+			if ((a + 1) % _loadSpeed == 0)
 			{
 				yield return null;
 			}
@@ -364,11 +356,11 @@ public class PerBackMapSceneEx : MonoBehaviour
 	private void UpdateShow()
 	{
         // 肥沃度更新
-		if (Mainload.isShiFeiMode && SceneClass == "Z" && Mainload.isChangeFeiWoNongZ)
+		if (Mainload.isShiFeiMode && _sceneClass == "Z" && Mainload.isChangeFeiWoNongZ)
 		{
 			Mainload.isChangeFeiWoNongZ = false;
 			int index = int.Parse(Mainload.SceneID.Split('|')[2]);
-			string[] array = Mainload.NongZ_now[SceneIndex][index][2].Split('|');
+			string[] array = Mainload.NongZ_now[_sceneIndex][index][2].Split('|');
 			for (int i = 0; i < transform.Find("AddClickBack").Find("AllKuai").childCount; i++)
 			{
 				transform.Find("AddClickBack").Find("AllKuai").GetChild(i)
@@ -381,19 +373,19 @@ public class PerBackMapSceneEx : MonoBehaviour
 		}
 
         // 建筑更新
-		if (Mainload.isBuildMode || (Rebuild && Mainload.isBuildEdit))
+		if (Mainload.isBuildMode || (_rebuild && Mainload.isBuildEdit))
 		{
-			Rebuild = false;
-			if (BuildID_CreatSelectLast != Mainload.BuildID_Creatselect)
+			_rebuild = false;
+			if (_buildIDCreatSelectLast != Mainload.BuildID_Creatselect)
 			{
-				BuildID_CreatSelectLast = Mainload.BuildID_Creatselect;
+				_buildIDCreatSelectLast = Mainload.BuildID_Creatselect;
 				if (Mainload.isBuildMode)
 				{
 					for (int j = 0; j < transform.Find("BuildTip").childCount; j++)
 					{
 						Destroy(transform.Find("BuildTip").GetChild(j).gameObject);
 					}
-					GameObject obj = Instantiate(perBuildTipA);
+					GameObject obj = Instantiate(_perBuildTipA);
 					obj.transform.SetParent(transform.Find("BuildTip"));
 					obj.transform.localScale = new Vector3(1f, 1f, 1f);
 				}
@@ -402,108 +394,108 @@ public class PerBackMapSceneEx : MonoBehaviour
 			{
 				var AddbuildPosiA = int.Parse(Mainload.BuildPosiID_CreatNow.Split('|')[0]);
 				var AddbuildPosiB = int.Parse(Mainload.BuildPosiID_CreatNow.Split('|')[1]);
-				if (SceneClass == "M")
+				if (_sceneClass == "M")
 				{
-					FormulaData.AddBuildNew("M", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+					FormulaData.AddBuildNew("M", _sceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
                         0, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj2 = Instantiate(perBuildA);
+					GameObject obj2 = Instantiate(_perBuildA);
 					obj2.transform.GetComponent<PerBuildScene>().BuildBigClass = "M";
 					obj2.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj2.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 					obj2.name = (Mainload.BuildInto_m.Count - 1).ToString();
-					obj2.transform.SetParent(_BuildShow);
+					obj2.transform.SetParent(_buildShow);
 					obj2.transform.localScale = new Vector3(1f, 1f, 1f);
 					obj2.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 					Mainload.AddBuildNum_Now++;
 				}
-				else if (SceneClass == "Z")
+				else if (_sceneClass == "Z")
 				{
 					int indexB = int.Parse(Mainload.SceneID.Split('|')[2]);
-					FormulaData.AddBuildNew("Z", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+					FormulaData.AddBuildNew("Z", _sceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
                         indexB, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj3 = Instantiate(perBuildA);
+					GameObject obj3 = Instantiate(_perBuildA);
 					obj3.transform.GetComponent<PerBuildScene>().BuildBigClass = "Z";
 					obj3.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj3.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 					obj3.name = (Mainload.BuildInto_z.Count - 1).ToString();
-					obj3.transform.SetParent(_BuildShow);
+					obj3.transform.SetParent(_buildShow);
 					obj3.transform.localScale = new Vector3(1f, 1f, 1f);
 					obj3.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 					Mainload.AddBuildNum_Now++;
 				}
-				else if (SceneClass == "S")
+				else if (_sceneClass == "S")
 				{
 					if (Mainload.BuildCityClass == "S0")
 					{
-						FormulaData.AddBuildNew("S", SceneIndex, Mainload.BuildID_CreatNow,
+						FormulaData.AddBuildNew("S", _sceneIndex, Mainload.BuildID_CreatNow,
                             Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: false,
                             Mainload.BuildTaoZhuangID_SelectNow);
-						GameObject obj4 = Instantiate(perBuildA);
+						GameObject obj4 = Instantiate(_perBuildA);
 						obj4.transform.GetComponent<PerBuildScene>().BuildBigClass = "S";
 						obj4.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 						obj4.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 						obj4.name = (Mainload.BuildInto_s.Count - 1).ToString();
-						obj4.transform.SetParent(_BuildShop);
+						obj4.transform.SetParent(_buildShop);
 						obj4.transform.localScale = new Vector3(1f, 1f, 1f);
 						obj4.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 						Mainload.AddBuildNum_Now = 0;
 					}
 					else if (Mainload.BuildCityClass == "S1")
 					{
-						FormulaData.AddBuildNew("S", SceneIndex, Mainload.BuildID_CreatNow,
+						FormulaData.AddBuildNew("S", _sceneIndex, Mainload.BuildID_CreatNow,
                             Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: true,
                             Mainload.BuildTaoZhuangID_SelectNow);
-						GameObject obj5 = Instantiate(perBuildA);
+						GameObject obj5 = Instantiate(_perBuildA);
 						obj5.transform.GetComponent<PerBuildScene>().BuildBigClass = "S";
 						obj5.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 						obj5.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 						obj5.name = (Mainload.BuildInto_s.Count - 1).ToString();
-						obj5.transform.SetParent(_BuildShop);
+						obj5.transform.SetParent(_buildShop);
 						obj5.transform.localScale = new Vector3(1f, 1f, 1f);
 						obj5.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 						Mainload.AddBuildNum_Now = 0;
 					}
 					else if (Mainload.BuildCityClass == "C")
 					{
-						FormulaData.AddBuildNew("C", SceneIndex, Mainload.BuildID_CreatNow,
+						FormulaData.AddBuildNew("C", _sceneIndex, Mainload.BuildID_CreatNow,
                             Mainload.BuildPosiID_CreatNow, 0, Mainload.BuildDirID_CreatSelect, isFamily: false,
                             Mainload.BuildTaoZhuangID_SelectNow);
-						GameObject obj6 = Instantiate(perBuildA);
+						GameObject obj6 = Instantiate(_perBuildA);
 						obj6.transform.GetComponent<PerBuildScene>().BuildBigClass = "C";
 						obj6.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 						obj6.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 						obj6.name = (Mainload.BuildInto_c.Count - 1).ToString();
-						obj6.transform.SetParent(_BuildCity);
+						obj6.transform.SetParent(_buildCity);
 						obj6.transform.localScale = new Vector3(1f, 1f, 1f);
 						obj6.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 						Mainload.AddBuildNum_Now++;
 					}
 				}
-				else if (SceneClass == "H")
+				else if (_sceneClass == "H")
 				{
-					FormulaData.AddBuildNew("H", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+					FormulaData.AddBuildNew("H", _sceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
                         0, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj7 = Instantiate(perBuildA);
+					GameObject obj7 = Instantiate(_perBuildA);
 					obj7.transform.GetComponent<PerBuildScene>().BuildBigClass = "H";
 					obj7.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj7.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 					obj7.name = (Mainload.BuildInto_h.Count - 1).ToString();
-					obj7.transform.SetParent(_BuildShow);
+					obj7.transform.SetParent(_buildShow);
 					obj7.transform.localScale = new Vector3(1f, 1f, 1f);
 					obj7.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 					Mainload.AddBuildNum_Now++;
 				}
-				else if (SceneClass == "L")
+				else if (_sceneClass == "L")
 				{
 					int indexB2 = int.Parse(Mainload.SceneID.Split('|')[2]);
-					FormulaData.AddBuildNew("L", SceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
+					FormulaData.AddBuildNew("L", _sceneIndex, Mainload.BuildID_CreatNow, Mainload.BuildPosiID_CreatNow,
                         indexB2, Mainload.BuildDirID_CreatSelect, isFamily: true, Mainload.BuildTaoZhuangID_SelectNow);
-					GameObject obj8 = Instantiate(perBuildA);
+					GameObject obj8 = Instantiate(_perBuildA);
 					obj8.transform.GetComponent<PerBuildScene>().BuildBigClass = "L";
 					obj8.transform.GetComponent<PerBuildScene>().PosiA = AddbuildPosiA;
 					obj8.transform.GetComponent<PerBuildScene>().PosiB = AddbuildPosiB;
 					obj8.name = (Mainload.BuildInto_l.Count - 1).ToString();
-					obj8.transform.SetParent(_BuildShow);
+					obj8.transform.SetParent(_buildShow);
 					obj8.transform.localScale = new Vector3(1f, 1f, 1f);
 					obj8.transform.localPosition = FormulaData.GetBuildPosi(AddbuildPosiA, AddbuildPosiB);
 					Mainload.AddBuildNum_Now++;
@@ -517,43 +509,43 @@ public class PerBackMapSceneEx : MonoBehaviour
 			if (Input.GetKeyUp(Mainload.FastKey[16]) && Mainload.AddBuildNum_Now > 0)
 			{
 				Mainload.AddBuildNum_Now--;
-				if (SceneClass == "M")
+				if (_sceneClass == "M")
 				{
-					FormulaData.RemoveBuildNew("M", SceneIndex, _BuildShow.childCount - 1, 0, TipShow: false, isCtrlZ: true);
-					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
+					FormulaData.RemoveBuildNew("M", _sceneIndex, _buildShow.childCount - 1, 0, TipShow: false, isCtrlZ: true);
+					_buildShow.GetChild(_buildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
 					Invoke(nameof(DestroyBuild), 0.05f);
 				}
-				else if (SceneClass == "Z")
+				else if (_sceneClass == "Z")
 				{
 					int indexB3 = int.Parse(Mainload.SceneID.Split('|')[2]);
-					FormulaData.RemoveBuildNew("Z", SceneIndex, indexB3, _BuildShow.childCount - 1, TipShow: false, isCtrlZ: true);
-					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
+					FormulaData.RemoveBuildNew("Z", _sceneIndex, indexB3, _buildShow.childCount - 1, TipShow: false, isCtrlZ: true);
+					_buildShow.GetChild(_buildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
 					Invoke(nameof(DestroyBuild), 0.05f);
 				}
-				else if (SceneClass == "S")
+				else if (_sceneClass == "S")
 				{
-					FormulaData.RemoveBuildNew(_BuildCity.GetChild(_BuildCity.childCount - 1).GetComponent<PerBuildScene>().BuildBigClass, SceneIndex, _BuildCity.childCount - 1, 0, TipShow: false, isCtrlZ: true);
-					_BuildCity.GetChild(_BuildCity.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
+					FormulaData.RemoveBuildNew(_buildCity.GetChild(_buildCity.childCount - 1).GetComponent<PerBuildScene>().BuildBigClass, _sceneIndex, _buildCity.childCount - 1, 0, TipShow: false, isCtrlZ: true);
+					_buildCity.GetChild(_buildCity.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
 					Invoke(nameof(DestroyBuildC), 0.05f);
 				}
-				else if (SceneClass == "H")
+				else if (_sceneClass == "H")
 				{
-					FormulaData.RemoveBuildNew("H", SceneIndex, _BuildShow.childCount - 1, 0, TipShow: false, isCtrlZ: true);
-					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
+					FormulaData.RemoveBuildNew("H", _sceneIndex, _buildShow.childCount - 1, 0, TipShow: false, isCtrlZ: true);
+					_buildShow.GetChild(_buildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
 					Invoke(nameof(DestroyBuild), 0.05f);
 				}
-				else if (SceneClass == "L")
+				else if (_sceneClass == "L")
 				{
 					int indexB4 = int.Parse(Mainload.SceneID.Split('|')[2]);
-					FormulaData.RemoveBuildNew("L", SceneIndex, indexB4, _BuildShow.childCount - 1, TipShow: false, isCtrlZ: true);
-					_BuildShow.GetChild(_BuildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
+					FormulaData.RemoveBuildNew("L", _sceneIndex, indexB4, _buildShow.childCount - 1, TipShow: false, isCtrlZ: true);
+					_buildShow.GetChild(_buildShow.childCount - 1).localPosition = new Vector3(-10000f, -10000f, 0f);
 					Invoke(nameof(DestroyBuild), 0.05f);
 				}
 			}
 		}
-		else if (BuildID_CreatSelectLast != "-1")
+		else if (_buildIDCreatSelectLast != "-1")
 		{
-			BuildID_CreatSelectLast = "-1";
+			_buildIDCreatSelectLast = "-1";
 			if (transform.Find("BuildTip").childCount > 0)
 			{
 				transform.Find("BuildTip").GetChild(0).localScale = new Vector3(0f, 0f, 0f);
@@ -565,8 +557,8 @@ public class PerBackMapSceneEx : MonoBehaviour
 		{
 			if (Input.GetKeyUp(Mainload.FastKey[16]) && Mainload.BuildData_Delete_Temp.Count > 0)
 			{
-				Rebuild = true;
-				if (SceneClass == "M")
+				_rebuild = true;
+				if (_sceneClass == "M")
 				{
 					Mainload.BuildID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][1];
 					Mainload.BuildPosiID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][5];
@@ -580,14 +572,14 @@ public class PerBackMapSceneEx : MonoBehaviour
 					FormulaData.ChangeCoins(-Mathf.RoundToInt(float.Parse(Mainload.AllBuilddata[int.Parse(Mainload.BuildID_CreatNow)][1].Split('|')[0]) * num));
 					if (Mainload.BuildID_CreatNow == "0")
 					{
-						Mainload.Fudi_now[SceneIndex][39] = (int.Parse(Mainload.Fudi_now[SceneIndex][39]) + 1).ToString();
+						Mainload.Fudi_now[_sceneIndex][39] = (int.Parse(Mainload.Fudi_now[_sceneIndex][39]) + 1).ToString();
 					}
 					else if (Mainload.BuildID_CreatNow == "2" || Mainload.BuildID_CreatNow == "3" || Mainload.BuildID_CreatNow == "4")
 					{
-						Mainload.Fudi_now[SceneIndex][38] = (int.Parse(Mainload.Fudi_now[SceneIndex][38]) + 1).ToString();
+						Mainload.Fudi_now[_sceneIndex][38] = (int.Parse(Mainload.Fudi_now[_sceneIndex][38]) + 1).ToString();
 					}
 				}
-				else if (SceneClass == "Z")
+				else if (_sceneClass == "Z")
 				{
 					Mainload.BuildID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][1];
 					Mainload.BuildPosiID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][3];
@@ -595,7 +587,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 					Mainload.BuildTaoZhuangID_SelectNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][10];
 					FormulaData.ChangeCoins(-Mathf.RoundToInt(float.Parse(Mainload.AllBuilddata[int.Parse(Mainload.BuildID_CreatNow)][1].Split('|')[0]) * 0.5f));
 				}
-				else if (SceneClass == "S")
+				else if (_sceneClass == "S")
 				{
 					if (Mainload.BuildGroupdata[6][1].Contains(Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][1]))
 					{
@@ -616,7 +608,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 						else
 						{
 							Mainload.BuildCityClass = "S0";
-							Mainload.CityData_now[SceneIndex][0][9] = (int.Parse(Mainload.CityData_now[SceneIndex][0][9]) - Mathf.RoundToInt(float.Parse(Mainload.AllBuilddata[int.Parse(Mainload.BuildID_CreatNow)][1].Split('|')[0]) * num2)).ToString();
+							Mainload.CityData_now[_sceneIndex][0][9] = (int.Parse(Mainload.CityData_now[_sceneIndex][0][9]) - Mathf.RoundToInt(float.Parse(Mainload.AllBuilddata[int.Parse(Mainload.BuildID_CreatNow)][1].Split('|')[0]) * num2)).ToString();
 						}
 					}
 					else
@@ -631,10 +623,10 @@ public class PerBackMapSceneEx : MonoBehaviour
 						{
 							num3 = 0.2f;
 						}
-						Mainload.CityData_now[SceneIndex][0][9] = (int.Parse(Mainload.CityData_now[SceneIndex][0][9]) - Mathf.RoundToInt(float.Parse(Mainload.AllBuilddata[int.Parse(Mainload.BuildID_CreatNow)][1].Split('|')[0]) * num3)).ToString();
+						Mainload.CityData_now[_sceneIndex][0][9] = (int.Parse(Mainload.CityData_now[_sceneIndex][0][9]) - Mathf.RoundToInt(float.Parse(Mainload.AllBuilddata[int.Parse(Mainload.BuildID_CreatNow)][1].Split('|')[0]) * num3)).ToString();
 					}
 				}
-				else if (SceneClass == "H")
+				else if (_sceneClass == "H")
 				{
 					Mainload.BuildID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][1];
 					Mainload.BuildPosiID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][3];
@@ -642,7 +634,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 					Mainload.BuildTaoZhuangID_SelectNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][5];
 					FormulaData.CostKing_FromGuoKu(7, Mathf.RoundToInt(float.Parse(Mainload.AllBuilddata[int.Parse(Mainload.BuildID_CreatNow)][1].Split('|')[0]) * 0.5f));
 				}
-				else if (SceneClass == "L")
+				else if (_sceneClass == "L")
 				{
 					Mainload.BuildID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][1];
 					Mainload.BuildPosiID_CreatNow = Mainload.BuildData_Delete_Temp[Mainload.BuildData_Delete_Temp.Count - 1][3];
@@ -663,9 +655,9 @@ public class PerBackMapSceneEx : MonoBehaviour
 			{
 				transform.Find("BuildPosiGet").gameObject.SetActive(value: true);
 			}
-			if (!isDestroyNPC)
+			if (!_isDestroyNpc)
 			{
-				isDestroyNPC = true;
+				_isDestroyNpc = true;
 				for (int k = 0; k < transform.Find("QNPC").childCount; k++)
 				{
 					Destroy(transform.Find("QNPC").GetChild(k).gameObject);
@@ -678,28 +670,28 @@ public class PerBackMapSceneEx : MonoBehaviour
 			{
 				transform.Find("BuildPosiGet").gameObject.SetActive(value: false);
 			}
-			isDestroyNPC = false;
+			_isDestroyNpc = false;
 		}
 		if (!Mainload.isBuildEdit && !Mainload.isBuildMode && !Mainload.isShiFeiMode)
 		{
-			if (isUpdateMemQ)
+			if (_isUpdateMemQ)
 			{
 				return;
 			}
-			isUpdateMemQ = true;
+			_isUpdateMemQ = true;
 			Mainload.QMemberID_Remove = new List<string>();
 			Mainload.QMemberID_Change = new List<string>();
-			if (SceneClass == "M")
+			if (_sceneClass == "M")
 			{
 				Mainload.MemQShiJiaCanShow_Now = new List<string>();
-				Mainload.PLNQCanShowNow = int.Parse(Mainload.Fudi_now[SceneIndex][2]);
+				Mainload.PLNQCanShowNow = int.Parse(Mainload.Fudi_now[_sceneIndex][2]);
 				if (Mainload.PLNQCanShowNow > Mainload.MemberQShowNum[0])
 				{
 					Mainload.PLNQCanShowNow = Mainload.MemberQShowNum[0];
 				}
 				for (int l = 0; l < Mainload.Member_now.Count; l++)
 				{
-					if (int.Parse(Mainload.Member_now[l][6]) >= Mainload.OldFenjie[0] && Mainload.Member_now[l][3].Split('|')[0] == SceneIndex.ToString() && Mainload.Member_now[l][15] == "0")
+					if (int.Parse(Mainload.Member_now[l][6]) >= Mainload.OldFenjie[0] && Mainload.Member_now[l][3].Split('|')[0] == _sceneIndex.ToString() && Mainload.Member_now[l][15] == "0")
 					{
 						string text = "0";
 						if (int.Parse(Mainload.Member_now[l][6]) >= Mainload.OldFenjie[1])
@@ -717,7 +709,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 				}
 				for (int m = 0; m < Mainload.Member_qu.Count; m++)
 				{
-					if (int.Parse(Mainload.Member_qu[m][5]) >= Mainload.OldFenjie[0] && Mainload.Member_qu[m][4].Split('|')[0] == SceneIndex.ToString() && (Mainload.Member_qu[m][11] == "0" || Mainload.Member_qu[m][11] == "1"))
+					if (int.Parse(Mainload.Member_qu[m][5]) >= Mainload.OldFenjie[0] && Mainload.Member_qu[m][4].Split('|')[0] == _sceneIndex.ToString() && (Mainload.Member_qu[m][11] == "0" || Mainload.Member_qu[m][11] == "1"))
 					{
 						Mainload.MemQShiJiaCanShow_Now.Add(Mainload.Member_qu[m][0] + "|-1|1|" + Mainload.Member_qu[m][2].Split('|')[4] + "|1|" + Mainload.Member_qu[m][1].Split('|')[1] + "|-1");
 						Mainload.PLNQCanShowNow++;
@@ -728,10 +720,10 @@ public class PerBackMapSceneEx : MonoBehaviour
 					}
 				}
 			}
-			else if (SceneClass == "S")
+			else if (_sceneClass == "S")
 			{
 				Mainload.MemQShiJiaCanShow_Now = new List<string>();
-				Mainload.PLNQCanShowNow = FormulaData.CityQMemberNumShow(int.Parse(Mainload.CityData_now[SceneIndex][0][10]));
+				Mainload.PLNQCanShowNow = FormulaData.CityQMemberNumShow(int.Parse(Mainload.CityData_now[_sceneIndex][0][10]));
 				if (Mainload.PLNQCanShowNow > Mainload.MemberQShowNum[2])
 				{
 					Mainload.PLNQCanShowNow = Mainload.MemberQShowNum[2];
@@ -739,7 +731,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 				List<int> list = new List<int>();
 				for (int n = 0; n < Mainload.ShiJia_Now.Count; n++)
 				{
-					if (Mainload.ShiJia_Now[n][0] == "0" && Mainload.ShiJia_Now[n][5].Split('|')[0] == SceneIndex.ToString())
+					if (Mainload.ShiJia_Now[n][0] == "0" && Mainload.ShiJia_Now[n][5].Split('|')[0] == _sceneIndex.ToString())
 					{
 						list.Add(n);
 					}
@@ -763,7 +755,7 @@ public class PerBackMapSceneEx : MonoBehaviour
 				if (Mainload.Member_now.Count > 0)
 				{
 					int ranom = TrueRandom.GetRanom(Mainload.Member_now.Count);
-					if (int.Parse(Mainload.Member_now[ranom][6]) >= Mainload.OldFenjie[1] && Mainload.Fudi_now[int.Parse(Mainload.Member_now[ranom][3].Split('|')[0])][0].Split('|')[0] == SceneIndex.ToString() && Mainload.Member_now[ranom][15] == "0")
+					if (int.Parse(Mainload.Member_now[ranom][6]) >= Mainload.OldFenjie[1] && Mainload.Fudi_now[int.Parse(Mainload.Member_now[ranom][3].Split('|')[0])][0].Split('|')[0] == _sceneIndex.ToString() && Mainload.Member_now[ranom][15] == "0")
 					{
 						string text3 = "0";
 						if (int.Parse(Mainload.Member_now[ranom][6]) >= Mainload.OldFenjie[1])
@@ -777,36 +769,36 @@ public class PerBackMapSceneEx : MonoBehaviour
 				if (Mainload.Member_qu.Count > 0)
 				{
 					int ranom2 = TrueRandom.GetRanom(Mainload.Member_qu.Count);
-					if (int.Parse(Mainload.Member_qu[ranom2][5]) >= Mainload.OldFenjie[0] && Mainload.Fudi_now[int.Parse(Mainload.Member_qu[ranom2][4].Split('|')[0])][0].Split('|')[0] == SceneIndex.ToString() && Mainload.Member_qu[ranom2][11] == "0")
+					if (int.Parse(Mainload.Member_qu[ranom2][5]) >= Mainload.OldFenjie[0] && Mainload.Fudi_now[int.Parse(Mainload.Member_qu[ranom2][4].Split('|')[0])][0].Split('|')[0] == _sceneIndex.ToString() && Mainload.Member_qu[ranom2][11] == "0")
 					{
 						Mainload.MemQShiJiaCanShow_Now.Add(Mainload.Member_qu[ranom2][0] + "|-1|1|" + Mainload.Member_qu[ranom2][2].Split('|')[4] + "|1|" + Mainload.Member_qu[ranom2][1].Split('|')[1] + "|-1");
 					}
 				}
 			}
-			else if (SceneClass == "Z")
+			else if (_sceneClass == "Z")
 			{
-				Mainload.PLNQCanShowNow = int.Parse(Mainload.NongZ_now[SceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|')[0]) + int.Parse(Mainload.NongZ_now[SceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|')[1]) + int.Parse(Mainload.NongZ_now[SceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|')[2]);
+				Mainload.PLNQCanShowNow = int.Parse(Mainload.NongZ_now[_sceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|')[0]) + int.Parse(Mainload.NongZ_now[_sceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|')[1]) + int.Parse(Mainload.NongZ_now[_sceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][24].Split('|')[2]);
 				if (Mainload.PLNQCanShowNow > Mainload.MemberQShowNum[1])
 				{
 					Mainload.PLNQCanShowNow = Mainload.MemberQShowNum[1];
 				}
 			}
-			else if (SceneClass == "H")
+			else if (_sceneClass == "H")
 			{
 				Mainload.PLNQCanShowNow = Mainload.MemberQShowNum[3];
 			}
-			else if (SceneClass == "L")
+			else if (_sceneClass == "L")
 			{
-				Mainload.PLNQCanShowNow = int.Parse(Mainload.Mudi_now[SceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][9]);
+				Mainload.PLNQCanShowNow = int.Parse(Mainload.Mudi_now[_sceneIndex][int.Parse(Mainload.SceneID.Split('|')[2])][9]);
 				if (Mainload.PLNQCanShowNow > Mainload.MemberQShowNum[4])
 				{
 					Mainload.PLNQCanShowNow = Mainload.MemberQShowNum[4];
 				}
 			}
 		}
-		else if (isUpdateMemQ)
+		else if (_isUpdateMemQ)
 		{
-			isUpdateMemQ = false;
+			_isUpdateMemQ = false;
 		}
 	}
 
