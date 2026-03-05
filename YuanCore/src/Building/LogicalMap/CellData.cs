@@ -1,33 +1,88 @@
-﻿using System.Collections.Generic;
-
-namespace YuanCore.Building;
+﻿namespace YuanCore.Building;
 
 public record struct CellOccupant(int EntityId, CellOccupancyLayer CellOccupancyLayer);
 
-public struct CellData()
+public struct CellData
 {
     public CellOccupancyLayer CellOccupancyLayer { get; private set; }
 
-    public int Count { get; private set; } = 0;
+    private int _count;
+    private CellOccupant _occupant1;
+    private CellOccupant _occupant2;
 
-    // 使用List会导致创建万数List对象，有分配和GC问题风险
-    // 后续应该使用更优的策略或者数据结构
-    private List<CellOccupant> _list = [];
-
-    public void Add(CellOccupant cellOccupant)
+    public void Add(CellOccupant occupant)
     {
-        ++Count;
-        _list.Add(cellOccupant);
-        CellOccupancyLayer |= cellOccupant.CellOccupancyLayer;
+        switch (_count)
+        {
+            case 2:
+                throw new System.InvalidOperationException("CellData already contains two occupants.");
+            case 1:
+                _occupant2 = occupant;
+                break;
+            case 0:
+                _occupant1 = occupant;
+                break;
+        }
+        ++_count;
+        CellOccupancyLayer |= occupant.CellOccupancyLayer;
     }
 
-    public void Remove(CellOccupant cellOccupant)
+    public void Remove(CellOccupant occupant)
     {
-        --Count;
+        switch (_count)
+        {
+            case 2:
+                if (_occupant2.Equals(occupant))
+                {
+                    _occupant2 = default;
+                    break;
+                }
+                if (_occupant1.Equals(occupant))
+                {
+                    _occupant1 = _occupant2;
+                    _occupant2 = default;
+                    break;
+                }
+                return;
+            case 1:
+                if (_occupant1.Equals(occupant))
+                {
+                    _occupant1 = default;
+                    break;
+                }
+                return;
+            case 0:
+                return;
+        }
+        --_count;
+        RebuildLayer();
+    }
+
+    public CellOccupant[] Get()
+    {
+        return _count switch
+        {
+            0 => [],
+            1 => [_occupant1],
+            2 => [_occupant1, _occupant2],
+            _ => throw new System.InvalidOperationException("Invalid CellData count.")
+        };
+    }
+
+    private void RebuildLayer()
+    {
         CellOccupancyLayer = CellOccupancyLayer.None;
-        _list.Remove(cellOccupant);
-        foreach (var o in _list)
-            CellOccupancyLayer |= o.CellOccupancyLayer;
-    }
 
+        switch (_count)
+        {
+            case 2:
+                CellOccupancyLayer |= _occupant2.CellOccupancyLayer;
+                goto case 1;
+            case 1:
+                CellOccupancyLayer |= _occupant1.CellOccupancyLayer;
+                break;
+            default:
+                throw new System.InvalidOperationException("Invalid CellData count.");
+        }
+    }
 }
