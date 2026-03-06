@@ -102,10 +102,15 @@ public sealed class BuildingShapeDefinition
 
         yield return (baseRotation, baseShape);
 
+        if (Rotations.Length == 1)
+            yield break;
+
+        var context = RotationContext.Create(baseShape);
+
         for (var i = 1; i < Rotations.Length; ++i)
         {
             var targetRotation = Rotations[i];
-            yield return (targetRotation, DeriveShape(baseShape, baseRotation, targetRotation));
+            yield return (targetRotation, DeriveShape(context, baseRotation, targetRotation));
         }
     }
 
@@ -113,11 +118,95 @@ public sealed class BuildingShapeDefinition
     /// 旋转推导函数
     /// </summary>
     private static BuildingShape DeriveShape(
-        BuildingShape baseShape,
+        RotationContext context,
         BuildingRotation baseRotation,
         BuildingRotation targetRotation)
     {
-        return baseShape;
+        var rotateCount = (int)targetRotation - (int)baseRotation;
+        if (rotateCount == 0)
+            return context.BaseShape;
+
+        var sourceCells = context.BaseShape.Cells;
+        var sourceEdges = context.BaseShape.Edges;
+
+        var cells = new BuildingCellShape[sourceCells.Length];
+        for (var i = 0; i < sourceCells.Length; ++i)
+        {
+            var source = sourceCells[i];
+            cells[i] = new BuildingCellShape(
+                RotatePoint(source.Position, rotateCount, context),
+                source.Layer);
+        }
+
+        var edges = new BuildingEdgeShape[sourceEdges.Length];
+        for (var i = 0; i < sourceEdges.Length; ++i)
+        {
+            var source = sourceEdges[i];
+            edges[i] = new BuildingEdgeShape(
+                RotatePoint(source.Position, rotateCount, context),
+                RotateDirection(source.Direction, rotateCount),
+                source.Layer);
+        }
+
+        return new BuildingShape(cells, edges);
+    }
+
+    private static Vector2Int RotatePoint(Vector2Int point, int rotateCount, RotationContext context)
+    {
+        return rotateCount switch
+        {
+            0 => point,
+
+            // 0 -> 1
+            1 => new Vector2Int(
+                -point.y + (context.YMin + context.YMax),
+                point.x),
+
+            // 0 -> 2
+            2 => new Vector2Int(
+                -point.x + (context.XMin + context.XMax),
+                -point.y + (context.YMin + context.YMax)),
+
+            // 0 -> 3
+            3 => new Vector2Int(
+                point.y,
+                -point.x + (context.XMin + context.XMax)),
+
+            _ => throw new InvalidOperationException($"Invalid rotate count: {rotateCount}")
+        };
+    }
+
+    private static BuildingDirection RotateDirection(BuildingDirection direction, int rotateCount)
+    {
+        return rotateCount switch
+        {
+            0 => direction,
+            1 => direction switch
+            {
+                BuildingDirection.North => BuildingDirection.West,
+                BuildingDirection.West => BuildingDirection.South,
+                BuildingDirection.South => BuildingDirection.East,
+                BuildingDirection.East => BuildingDirection.North,
+                _ => throw new InvalidOperationException($"Invalid Direction: {direction}")
+            },
+            2 => direction switch
+            {
+                BuildingDirection.North => BuildingDirection.South,
+                BuildingDirection.West => BuildingDirection.East,
+                BuildingDirection.South => BuildingDirection.North,
+                BuildingDirection.East => BuildingDirection.West,
+                _ => throw new InvalidOperationException($"Invalid Direction: {direction}")
+            },
+            3 => direction switch
+            {
+                BuildingDirection.North => BuildingDirection.East,
+                BuildingDirection.West => BuildingDirection.North,
+                BuildingDirection.South => BuildingDirection.West,
+                BuildingDirection.East => BuildingDirection.South,
+                _ => throw new InvalidOperationException($"Invalid Direction: {direction}")
+            },
+            _ => throw new InvalidOperationException($"Invalid rotate count: {rotateCount}")
+        };
     }
 
     private static CellOccupancyLayer ParseCellLayer(string value)
@@ -145,6 +234,60 @@ public sealed class BuildingShapeDefinition
     }
 
     private readonly record struct EdgeKey(int X, int Y, BuildingDirection Direction);
+
+    private readonly record struct RotationContext(
+        BuildingShape BaseShape,
+        int XMin,
+        int YMin,
+        int XMax,
+        int YMax)
+    {
+        public static RotationContext Create(BuildingShape baseShape)
+        {
+            var hasAny = false;
+            var xMin = 0;
+            var yMin = 0;
+            var xMax = 0;
+            var yMax = 0;
+
+            foreach (var cell in baseShape.Cells)
+            {
+                Include(cell.Position, ref hasAny, ref xMin, ref yMin, ref xMax, ref yMax);
+            }
+
+            foreach (var edge in baseShape.Edges)
+            {
+                Include(edge.Position, ref hasAny, ref xMin, ref yMin, ref xMax, ref yMax);
+            }
+
+            if (!hasAny)
+                return new RotationContext(baseShape, 0, 0, 0, 0);
+
+            return new RotationContext(baseShape, xMin, yMin, xMax, yMax);
+        }
+
+        private static void Include(
+            Vector2Int position,
+            ref bool hasAny,
+            ref int xMin,
+            ref int yMin,
+            ref int xMax,
+            ref int yMax)
+        {
+            if (!hasAny)
+            {
+                hasAny = true;
+                xMin = xMax = position.x;
+                yMin = yMax = position.y;
+                return;
+            }
+
+            if (position.x < xMin) xMin = position.x;
+            if (position.x > xMax) xMax = position.x;
+            if (position.y < yMin) yMin = position.y;
+            if (position.y > yMax) yMax = position.y;
+        }
+    }
 }
 
 public sealed class BuildingFootprintDefinition
