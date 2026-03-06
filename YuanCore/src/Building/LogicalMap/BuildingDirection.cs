@@ -5,10 +5,10 @@
 /// x 轴正方向 = South
 /// y 轴正方向 = East
 /// </summary>
-public enum Direction
+public enum BuildingDirection
 {
-    North,
-    West,
-    South,
-    East,
+    North = 0,
+    West = 1,
+    South = 2,
+    East = 3,
 }

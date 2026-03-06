@@ -61,26 +61,26 @@ public sealed class GridMap<TCell, TEdge>
     /// <summary>
     /// 获取边数据引用
     /// </summary>
-    public ref TEdge GetEdge(int x, int y, Direction direction)
+    public ref TEdge GetEdge(int x, int y, BuildingDirection buildingDirection)
     {
         var localX = x - MinX;
         var localY = y - MinY;
 
-        switch (direction)
+        switch (buildingDirection)
         {
-            case Direction.North:
+            case BuildingDirection.North:
                 return ref _xEdges[localX, localY];
-            case Direction.South:
+            case BuildingDirection.South:
                 return ref _xEdges[localX + 1, localY];
-            case Direction.West:
+            case BuildingDirection.West:
                 return ref _yEdges[localX, localY];
-            case Direction.East:
+            case BuildingDirection.East:
                 return ref _yEdges[localX, localY + 1];
             default:
-                throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+                throw new ArgumentOutOfRangeException(nameof(buildingDirection), buildingDirection, null);
         }
     }
 
-    public ref TEdge GetEdge(Vector2Int gridPosition, Direction direction)
-        => ref GetEdge(gridPosition.x, gridPosition.y, direction);
+    public ref TEdge GetEdge(Vector2Int gridPosition, BuildingDirection buildingDirection)
+        => ref GetEdge(gridPosition.x, gridPosition.y, buildingDirection);
 }

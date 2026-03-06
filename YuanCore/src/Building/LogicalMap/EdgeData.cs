@@ -1,6 +1,6 @@
 ﻿namespace YuanCore.Building;
 
-public record struct EdgeOccupant(int EntityId, Direction OccupiedAs, EdgeOccupancyLayer EdgeOccupancyLayer);
+public readonly record struct EdgeOccupant(int EntityId, BuildingDirection OccupiedAs, EdgeOccupancyLayer EdgeOccupancyLayer);
 
 public struct EdgeData
 {

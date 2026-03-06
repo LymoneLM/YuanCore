@@ -1,6 +1,6 @@
 ﻿namespace YuanCore.Building;
 
-public record struct CellOccupant(int EntityId, CellOccupancyLayer CellOccupancyLayer);
+public readonly record struct CellOccupant(int EntityId, CellOccupancyLayer CellOccupancyLayer);
 
 public struct CellData
 {
