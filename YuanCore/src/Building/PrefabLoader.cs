@@ -1,6 +1,7 @@
 ﻿// 这是一个兼容性工具，加载原版预制体并修改为YuanCore需求的结构
 
 using UnityEngine;
+using YuanCore.Core;
 
 namespace YuanCore.Building;
 
@@ -8,60 +9,28 @@ public static class PrefabLoader
 {
     /// <summary>
     /// 代理 Resources.Load,对 GameObject 预制体进行预处理：<br/>
-    /// 根节点挂载 A.cs <br/>
+    /// 根节点挂载 BuildingPlacementView.cs <br/>
     /// 清理 UI/AllDrag 下所有节点的刚体、碰撞体、脚本 <br/>
     /// 仅推荐用于加载 AllBuild/x/BuildTip/x/x
     /// </summary>
-    public static T Load<T>(string path) where T : Object
+    public static T LoadAsBuildingPlacement<T>(string path) where T : Object
     {
         var asset = Resources.Load<T>(path);
         if (asset == null)
         {
-            Debug.LogWarning($"ResourcesProxy.Load failed, path = {path}");
+            YuanCorePlugin.Logger.LogWarning($"PrefabLoader: Load failed, path = {path}");
             return null;
         }
 
-        if (asset is GameObject prefab)
-        {
-            ProcessPrefabInPlace(prefab);
-        }
-
-        return asset;
-    }
-
-    public static Object Load(string path, System.Type systemTypeInstance)
-    {
-        var asset = Resources.Load(path, systemTypeInstance);
-        if (asset == null)
-        {
-            Debug.LogWarning($"ResourcesProxy.Load failed, path = {path}, type = {systemTypeInstance}");
-            return null;
-        }
-
-        if (asset is GameObject prefab)
-        {
-            ProcessPrefabInPlace(prefab);
-        }
-
-        return asset;
-    }
-
-    private static void ProcessPrefabInPlace(GameObject prefab)
-    {
-        if (prefab == null)
-            return;
-
-        if (prefab.GetComponent<BuildingPlacementView>() != null)
-            return;
-
-        prefab.AddComponent<BuildingPlacementView>();
+        if (asset is not GameObject prefab || prefab.GetComponent<BuildingPlacementView>() != null)
+            return asset;
 
         // UI/AllDrag
         var allDrag = prefab.transform.Find("UI/AllDrag");
         if (allDrag == null)
         {
-            Debug.LogWarning($"ResourcesProxy: prefab '{prefab.name}' does not contain path 'UI/AllDrag'");
-            return;
+            YuanCorePlugin.Logger.LogWarning($"PrefabLoader: prefab '{prefab.name}' does not contain path 'UI/AllDrag'");
+            return asset;
         }
 
         for (var i = 0; i < allDrag.childCount; i++)
@@ -71,6 +40,10 @@ public static class PrefabLoader
             RemoveColliders(go);
             RemoveAllScripts(go);
         }
+
+        prefab.AddComponent<BuildingPlacementView>();
+
+        return asset;
     }
 
     /// <summary>
