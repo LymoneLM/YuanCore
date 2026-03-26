@@ -11,5 +11,11 @@
     <ItemGroup>
         <Reference Include="Assembly-CSharp" HintPath="..\Libs\Assembly-CSharp.dll" Private="false"/>
         <Reference Include="Assembly-CSharp-firstpass" HintPath="..\Libs\Assembly-CSharp-firstpass.dll" Private="false"/>
+        <Reference Include="Entitas" HintPath="..\Libs\Entitas\Entitas.dll" Private="false"/>
+        <Reference Include="Entitas.Generators.Attributes" HintPath="..\Libs\Entitas\Entitas.Generators.Attributes.dll" Private="false"/>
+        <Reference Include="Entitas.Unity" HintPath="..\Libs\Entitas\Entitas.Unity.dll" Private="false"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Analyzer Include="..\Libs\Entitas\Entitas.Generators.dll" />
     </ItemGroup>
 </Project>
