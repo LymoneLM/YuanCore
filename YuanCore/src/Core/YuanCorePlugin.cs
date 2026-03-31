@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using HarmonyLib;
 
 namespace YuanCore.Core;
 
@@ -11,9 +12,11 @@ public class YuanCorePlugin : BaseUnityPlugin
     public const string VERSION = "0.1.0";
 
     internal new static ManualLogSource Logger;
+    internal static Harmony Harmony = new(MODGUID);
 
-    public void Awake()
+    private void Awake()
     {
         Logger = base.Logger;
+        Harmony.PatchAll();
     }
 }
