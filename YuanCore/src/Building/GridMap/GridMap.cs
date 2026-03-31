@@ -24,10 +24,7 @@ public sealed class GridMap<TCell, TEdge>
     // cell 的 West / East 边
     private readonly TEdge[,] _yEdges;
 
-    public int MinX { get; }
-    public int MinY { get; }
-    public int Width { get; }
-    public int Height { get; }
+    public readonly int MinX, MinY, Width, Height;
 
     public int MaxX => MinX + Width - 1;
     public int MaxY => MinY + Height - 1;
