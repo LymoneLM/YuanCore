@@ -1,6 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using UnityEngine;
+using YuanCore.Building;
 
 namespace YuanCore.Core;
 
@@ -18,5 +20,14 @@ public class YuanCorePlugin : BaseUnityPlugin
     {
         Logger = base.Logger;
         Harmony.PatchAll();
+
+        LoadBuildingConfig();
+    }
+
+    private void LoadBuildingConfig()
+    {
+        var obj = new GameObject(name = "YuanCoreBuildingManager")
+            .AddComponent<BuildingManager>();
+        DontDestroyOnLoad(obj);
     }
 }
