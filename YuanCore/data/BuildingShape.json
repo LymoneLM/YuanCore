@@ -1,0 +1,4664 @@
+[
+  {
+    "ID": 0,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 1,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 2,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -2,
+        "YMin": -1,
+        "XMax": 2,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 3,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -2,
+        "YMin": -1,
+        "XMax": 2,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 4,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 5,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 6,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -2,
+        "YMin": -2,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 7,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 8,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 9,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 10,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 11,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 12,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 13,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 14,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 15,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 16,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 17,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 18,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 19,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 20,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 21,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 22,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 23,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 24,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 25,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 26,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 27,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 28,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 29,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 30,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 31,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 32,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 33,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 34,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 35,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 36,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 37,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 38,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 39,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 40,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 41,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 42,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 43,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 44,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 45,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 46,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 47,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 48,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 49,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 50,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 51,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 52,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 53,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 54,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 55,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 56,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 57,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 58,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 59,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 60,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 61,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 62,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 63,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 64,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 65,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 66,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 67,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 68,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 69,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 70,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 71,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 72,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 73,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 74,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 75,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 76,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 77,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 78,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 79,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 80,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 81,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -2,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 82,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 83,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 84,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 85,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 86,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 87,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 88,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 89,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 90,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 91,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 92,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 93,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 94,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 95,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 96,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 97,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 98,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 99,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 100,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 101,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -2,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 102,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -2,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 103,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 104,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 105,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 106,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 107,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 108,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 109,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 110,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 111,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 112,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 113,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 114,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 115,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 116,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 117,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 118,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 119,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 120,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 121,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 122,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 123,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 124,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 125,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 126,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 127,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 128,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 129,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 130,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 131,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 132,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 133,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 134,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 135,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 136,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 137,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 138,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 139,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 140,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 141,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 142,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 143,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 144,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 145,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 146,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 147,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 148,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 149,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 150,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 151,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 152,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 153,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 154,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 155,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 156,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 157,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 158,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 159,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 160,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 161,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 162,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 163,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 164,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 165,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 166,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 167,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 168,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 169,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 170,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 171,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 172,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": -3,
+        "XMax": 5,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 172,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": -3,
+        "XMax": 4,
+        "YMax": 3,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 172,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": 0,
+        "XMax": 5,
+        "YMax": 4,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 172,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": -1,
+        "XMax": 4,
+        "YMax": 5,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 173,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": -4,
+        "YMin": 0,
+        "XMax": 4,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 173,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": 0,
+        "XMax": 4,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 173,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": -4,
+        "YMin": 0,
+        "XMax": 4,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 173,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": -1,
+        "XMax": 4,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 174,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 175,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 176,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 177,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 178,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 179,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 180,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 180,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 180,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 180,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 181,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 182,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 183,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 184,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 185,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 186,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 187,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 188,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 189,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 190,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 191,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 192,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 193,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 194,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 195,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 196,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 196,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 196,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 196,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 197,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 197,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 197,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 197,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 198,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 199,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 200,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 201,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 202,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 203,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 204,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 205,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 206,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 207,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 208,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 209,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -3,
+        "XMax": 3,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 209,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": -4,
+        "YMin": 0,
+        "XMax": 3,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 209,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": -2,
+        "YMin": 0,
+        "XMax": 2,
+        "YMax": 3,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 209,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": 1,
+        "XMax": 4,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 210,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -3,
+        "XMax": 3,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 210,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": -4,
+        "YMin": 0,
+        "XMax": 3,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 210,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": -2,
+        "YMin": 0,
+        "XMax": 2,
+        "YMax": 3,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 210,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -3,
+        "YMin": 1,
+        "XMax": 4,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 211,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 3,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 211,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 211,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": 1,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 211,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 212,
+    "Rotations": [
+      0
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 3,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 212,
+    "Rotations": [
+      1
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": 0,
+        "XMax": 3,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 212,
+    "Rotations": [
+      2
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": 2,
+        "XMax": 2,
+        "YMax": 4,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 212,
+    "Rotations": [
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 4,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 213,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 214,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 215,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 3,
+        "YMax": 5,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 216,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 217,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 218,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 219,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 220,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 221,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 222,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 223,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 224,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 225,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 226,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": -1,
+        "XMax": 0,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 227,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -2,
+        "YMin": -2,
+        "XMax": 2,
+        "YMax": 2,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 228,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 229,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": -1,
+        "YMin": -1,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 230,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 231,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 1,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 232,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 233,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 234,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 235,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 236,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 237,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 238,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  },
+  {
+    "ID": 239,
+    "Rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Footprints": [
+      {
+        "XMin": 0,
+        "YMin": 0,
+        "XMax": 0,
+        "YMax": 0,
+        "Layer": "MainBuilding"
+      }
+    ]
+  }
+]
