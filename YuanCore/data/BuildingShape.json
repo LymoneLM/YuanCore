@@ -25,13 +25,18 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -313,13 +318,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": -1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -331,13 +347,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -481,7 +496,7 @@
         "YMin": 0,
         "XMax": 0,
         "YMax": 0,
-        "Layer": "MainBuilding"
+        "Layer": "Water"
       }
     ]
   },
@@ -931,7 +946,7 @@
         "YMin": 0,
         "XMax": 1,
         "YMax": 1,
-        "Layer": "MainBuilding"
+        "Layer": "Water"
       }
     ]
   },
@@ -1537,13 +1552,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": -1,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1555,13 +1581,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1573,13 +1598,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1591,13 +1615,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1609,13 +1632,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1633,7 +1655,7 @@
         "YMin": 0,
         "XMax": 0,
         "YMax": 0,
-        "Layer": "MainBuilding"
+        "Layer": "Water"
       }
     ]
   },
@@ -1681,13 +1703,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": -1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1699,13 +1732,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1717,13 +1749,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1741,7 +1772,7 @@
         "YMin": 0,
         "XMax": 0,
         "YMax": 0,
-        "Layer": "MainBuilding"
+        "Layer": "WaterDecoration"
       }
     ]
   },
@@ -1753,13 +1784,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1771,13 +1801,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1861,13 +1890,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1879,13 +1907,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1897,13 +1924,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1915,13 +1941,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1933,13 +1958,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -1951,13 +1975,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -2326,7 +2349,7 @@
         "YMin": 0,
         "XMax": 0,
         "YMax": 0,
-        "Layer": "MainBuilding"
+        "Layer": "WaterDecoration"
       }
     ]
   },
@@ -2344,7 +2367,7 @@
         "YMin": 0,
         "XMax": 0,
         "YMax": 0,
-        "Layer": "MainBuilding"
+        "Layer": "WaterDecoration"
       }
     ]
   },
@@ -2362,7 +2385,7 @@
         "YMin": 0,
         "XMax": 1,
         "YMax": 1,
-        "Layer": "MainBuilding"
+        "Layer": "Water"
       }
     ]
   },
@@ -2965,13 +2988,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": -1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -2983,13 +3017,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3001,13 +3034,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3019,13 +3051,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": -1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3037,13 +3080,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Cells": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
+        "X": 0,
+        "Y": -1,
         "Layer": "MainBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Layer": "MainBuilding"
+      }
+    ],
+    "Edges": [
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3055,13 +3109,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Cells": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
+        "X": 0,
+        "Y": -1,
         "Layer": "MainBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Layer": "MainBuilding"
+      }
+    ],
+    "Edges": [
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3073,13 +3138,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3211,13 +3275,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3229,13 +3292,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3247,13 +3309,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3265,13 +3326,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3283,13 +3343,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": -1,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3595,13 +3666,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3613,13 +3683,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Cells": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
+        "X": 0,
+        "Y": -1,
         "Layer": "MainBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Layer": "MainBuilding"
+      }
+    ],
+    "Edges": [
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -3793,7 +3874,7 @@
         "YMin": 0,
         "XMax": 0,
         "YMax": 0,
-        "Layer": "MainBuilding"
+        "Layer": "WaterDecoration"
       }
     ]
   },
@@ -4224,8 +4305,103 @@
         "XMin": 0,
         "YMin": -1,
         "XMax": 3,
+        "YMax": -1,
+        "Layer": "MainBuilding"
+      },
+      {
+        "XMin": 0,
+        "YMin": 1,
+        "XMax": 3,
+        "YMax": 1,
+        "Layer": "MainBuilding"
+      },
+      {
+        "XMin": 0,
+        "YMin": 3,
+        "XMax": 3,
+        "YMax": 3,
+        "Layer": "MainBuilding"
+      },
+      {
+        "XMin": 0,
+        "YMin": 5,
+        "XMax": 3,
         "YMax": 5,
         "Layer": "MainBuilding"
+      }
+    ],
+    "Edges": [
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 1,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 2,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 3,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 2,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 1,
+        "Y": 2,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 2,
+        "Y": 2,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 3,
+        "Y": 2,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 4,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 1,
+        "Y": 4,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 2,
+        "Y": 4,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 3,
+        "Y": 4,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4255,13 +4431,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4273,13 +4448,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "West",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4291,13 +4465,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "West",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4309,13 +4482,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "West",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4327,13 +4499,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "West",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4381,13 +4552,30 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 1,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "East",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 1,
+        "Y": 1,
+        "Direction": "North",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 1,
+        "Y": 1,
+        "Direction": "West",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4399,13 +4587,12 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": 0,
-        "XMax": 0,
-        "YMax": 0,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": 0,
+        "Direction": "West",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
@@ -4417,13 +4604,24 @@
       2,
       3
     ],
-    "Footprints": [
+    "Edges": [
       {
-        "XMin": 0,
-        "YMin": -1,
-        "XMax": 0,
-        "YMax": 1,
-        "Layer": "MainBuilding"
+        "X": 0,
+        "Y": -1,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 0,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Direction": "South",
+        "Layer": "EdgeBuilding"
       }
     ]
   },
