@@ -1,0 +1,30 @@
+{
+  "Cells": [
+    [
+      "MainBuilding",
+      "MainBuilding"
+    ],
+    [
+      "Water",
+      "Water"
+    ],
+    [
+      "WaterDecoration",
+      "WaterDecoration"
+    ],
+    [
+      "MainBuilding",
+      "Water"
+    ],
+    [
+      "MainBuilding",
+      "WaterDecoration"
+    ]
+  ],
+  "Edges": [
+    [
+      "EdgeBuilding",
+      "EdgeBuilding"
+    ]
+  ]
+}
