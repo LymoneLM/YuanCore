@@ -8,16 +8,15 @@ namespace YuanCore.Building;
 
 public static class LayerMaskBuilder
 {
-    public static CollisionMasks LoadFromJson(string json)
+    public static (CellOccupancyLayer[], EdgeOccupancyLayer[]) LoadFromJson(string json)
     {
         var config = JsonConvert.DeserializeObject<LayerCollision>(json)
                      ?? throw new InvalidOperationException("Failed to deserialize collision config.");
 
-        return new CollisionMasks
-        {
-            CellLayerMask = BuildMasks<CellOccupancyLayer>(config.Cells),
-            EdgeLayerMask = BuildMasks<EdgeOccupancyLayer>(config.Edges)
-        };
+        return (
+            BuildMasks<CellOccupancyLayer>(config.Cells),
+            BuildMasks<EdgeOccupancyLayer>(config.Edges)
+        );
     }
 
     private static TEnum[] BuildMasks<TEnum>(List<List<string>> rules)
@@ -107,10 +106,4 @@ public sealed class LayerCollision
 
     [JsonProperty("Edges")]
     public List<List<string>> Edges { get; set; } = [];
-}
-
-public sealed class CollisionMasks
-{
-    public CellOccupancyLayer[] CellLayerMask { get; init; } = [];
-    public EdgeOccupancyLayer[] EdgeLayerMask { get; init; } = [];
 }
