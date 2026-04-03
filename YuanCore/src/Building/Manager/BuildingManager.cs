@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using Entitas;
+using UnityEngine;
 
 namespace YuanCore.Building;
 
@@ -10,8 +15,9 @@ namespace YuanCore.Building;
 public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager Instance;
+    public BuildingState State;
 
-    private BuildingController _buildingController;
+    private BuildingController _controller;
 
     private string _sceneIDLast;
     private const string _defaultSceneID = "null|0";
@@ -19,31 +25,27 @@ public class BuildingManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _buildingController = BuildingController.Instance;
+        _controller = BuildingController.Instance;
+        State = BuildingState.Instance;
 
+        // Current Class
         _sceneIDLast = _defaultSceneID;
     }
 
     private void Start()
     {
-        _buildingController.Initialize();
+        _controller.Initialize();
     }
 
     private void Update()
     {
-        _buildingController.Execute();
+        _controller.Execute();
 
         CheckUpdateScene();
     }
 
     private void CheckUpdateScene()
     {
-        // 可能为冗余代码
-        // if (Mainload.isClearNongZBuild)
-        // {
-        //     Mainload.isClearNongZBuild = false;
-        //     DesOldScene();
-        // }
         if (_sceneIDLast != Mainload.SceneID || Mainload.isUpdateScene)
         {
             Mainload.isCreatSceneFinish = false;
@@ -70,7 +72,6 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-
     private static void ResetSceneState()
     {
         Mainload.MemberData_Enter = "null";
@@ -91,6 +92,8 @@ public class BuildingManager : MonoBehaviour
     {
         var (sceneClass, sceneIndex)= ParseSceneID(_sceneIDLast);
         BuildingSignals.InvokeSceneChanged(sceneClass, sceneIndex);
+        BuildingState.Instance.InitializeMap(sceneClass, sceneIndex);
+        MapContext.Instance.DestroyAllEntities();
     }
 
     private static (string SceneClass, int SceneIndex) ParseSceneID(string sceneID)
