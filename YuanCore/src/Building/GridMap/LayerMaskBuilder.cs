@@ -10,70 +10,58 @@ public static class LayerMaskBuilder
 {
     public static CollisionMasks LoadFromJson(string json)
     {
-        var obj = JsonConvert.DeserializeObject<LayerCollision>(json);
-        if (obj == null)
-            throw new InvalidOperationException("Failed to deserialize collision config.");
+        var config = JsonConvert.DeserializeObject<LayerCollision>(json)
+                     ?? throw new InvalidOperationException("Failed to deserialize collision config.");
 
         return new CollisionMasks
         {
-            CellLayerMask = BuildLayerMask<CellOccupancyLayer>(obj.Cells),
-            EdgeLayerMask = BuildLayerMask<EdgeOccupancyLayer>(obj.Edges)
+            CellLayerMask = BuildMasks<CellOccupancyLayer>(config.Cells),
+            EdgeLayerMask = BuildMasks<EdgeOccupancyLayer>(config.Edges)
         };
     }
 
-    private static TEnum[] BuildLayerMask<TEnum>(List<List<string>> groups)
+    private static TEnum[] BuildMasks<TEnum>(List<List<string>> rules)
         where TEnum : struct, Enum
     {
-        var allLayers = GetAllLayersExceptNone<TEnum>();
-        var maxIndex = GetLayerIndex(allLayers.Max());
-        var result = new TEnum[maxIndex+1];
+        var result = new TEnum[GetMaskArrayLength<TEnum>()];
 
-        if (groups == null)
+        if (rules == null)
             return result;
 
-        foreach (var group in groups)
+        foreach (var rule in rules)
         {
-            if (group == null || group.Count == 0)
-                continue;
+            if (rule is not { Count: 2 })
+                throw new JsonSerializationException(
+                    $"{typeof(TEnum).Name} collision rule must contain exactly 2 layer names.");
 
-            var flagsInGroup = new HashSet<TEnum>();
+            var left = ParseLayer<TEnum>(rule[0]);
+            var right = ParseLayer<TEnum>(rule[1]);
 
-            foreach (var name in group)
-            {
-                var parsed = ParseLayer<TEnum>(name);
+            if (IsNone(left) || IsNone(right))
+                throw new JsonSerializationException(
+                    $"{typeof(TEnum).Name} collision rule cannot use None.");
 
-                foreach (var flag in SplitFlags(parsed, allLayers))
-                {
-                    if (!IsNone(flag))
-                        flagsInGroup.Add(flag);
-                }
-            }
-
-            var groupFlags = flagsInGroup.ToArray();
-
-            foreach (var current in groupFlags)
-            {
-                ulong conflictMaskValue = 0;
-
-                foreach (var t in groupFlags)
-                {
-                    conflictMaskValue |= ToUInt64(t);
-                }
-
-                var index = GetLayerIndex(current);
-                var existing = ToUInt64(result[index]);
-                result[index] = FromUInt64<TEnum>(existing | conflictMaskValue);
-            }
+            AddCollision(result, left, right);
+            AddCollision(result, right, left);
         }
 
         return result;
+    }
+
+    private static void AddCollision<TEnum>(TEnum[] masks, TEnum source, TEnum target)
+        where TEnum : struct, Enum
+    {
+        var index = GetLayerIndex(source);
+        var existing = ToUInt64(masks[index]);
+        var updated = existing | ToUInt64(target);
+        masks[index] = FromUInt64<TEnum>(updated);
     }
 
     private static TEnum ParseLayer<TEnum>(string name)
         where TEnum : struct, Enum
     {
         if (string.IsNullOrWhiteSpace(name))
-            return default;
+            throw new JsonSerializationException($"Empty {typeof(TEnum).Name} name.");
 
         if (!Enum.TryParse<TEnum>(name, ignoreCase: false, out var value))
             throw new JsonSerializationException($"Unknown {typeof(TEnum).Name}: '{name}'");
@@ -81,33 +69,16 @@ public static class LayerMaskBuilder
         return value;
     }
 
-    private static TEnum[] GetAllLayersExceptNone<TEnum>()
+    private static int GetMaskArrayLength<TEnum>()
         where TEnum : struct, Enum
     {
-        return Enum.GetValues(typeof(TEnum))
-            .Cast<TEnum>()
-            .Where(x => !IsNone(x))
-            .ToArray();
-    }
-
-    private static IEnumerable<TEnum> SplitFlags<TEnum>(TEnum value, TEnum[] allLayers)
-        where TEnum : struct, Enum
-    {
-        var rawValue = ToUInt64(value);
-
-        foreach (var layer in allLayers)
-        {
-            var rawLayer = ToUInt64(layer);
-            if ((rawValue & rawLayer) != 0)
-                yield return layer;
-        }
+        return GetLayerIndex(Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Max()) + 1;
     }
 
     private static int GetLayerIndex<TEnum>(TEnum layer)
         where TEnum : struct, Enum
     {
-        var raw = ToUInt64(layer);
-        return BitOperations.TrailingZeroCount(raw);
+        return BitOperations.TrailingZeroCount(ToUInt64(layer));
     }
 
     private static bool IsNone<TEnum>(TEnum value)
