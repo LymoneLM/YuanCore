@@ -66,7 +66,7 @@ public class BuildingManager : MonoBehaviour
         if (Mainload.isSaveFinish)
         {
             Mainload.isSaveFinish = false;
-            BuildingSignals.InvokeMapChanged(_sceneIDLast);
+            ChangeScene();
         }
     }
 
@@ -85,5 +85,31 @@ public class BuildingManager : MonoBehaviour
         Mainload.KingMemberID_OutBuild = [];
         Mainload.HanMen_City = [];
         Mainload.ClanMember_City = [];
+    }
+
+    private void ChangeScene()
+    {
+        var (sceneClass, sceneIndex)= ParseSceneID(_sceneIDLast);
+        BuildingSignals.InvokeSceneChanged(sceneClass, sceneIndex);
+    }
+
+    private static (string SceneClass, int SceneIndex) ParseSceneID(string sceneID)
+    {
+        var parts = sceneID.Split('|');
+        var sceneClass = parts[0];
+        var index = int.Parse(parts[1]);
+        var index2 = parts.Length > 2 ? int.Parse(parts[2]) : 0;
+
+        var sceneIndex = sceneClass switch
+        {
+            "M" => int.Parse(Mainload.Fudi_now[index][37]),
+            "Z" => int.Parse(Mainload.NongZ_now[index][index2][5]),
+            "S" => index,
+            "F" => -1,
+            "H" => index,
+            "L" => int.Parse(Mainload.Mudi_now[index][index2][2]),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        return (sceneClass, sceneIndex);
     }
 }

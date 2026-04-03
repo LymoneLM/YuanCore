@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace YuanCore.Building;
 
 public class AllBuildEx : MonoBehaviour
 {
-    private string _sceneID;
+    private string _sceneClass;
+    private int _sceneIndex;
     private Transform _backMap;
 
     private void Awake()
@@ -14,17 +16,18 @@ public class AllBuildEx : MonoBehaviour
 
     private void OnEnable()
     {
-        BuildingSignals.OnMapChanged += SwitchScene;
+        BuildingSignals.OnSceneChanged += SwitchScene;
     }
 
     private void OnDisable()
     {
-        BuildingSignals.OnMapChanged -= SwitchScene;
+        BuildingSignals.OnSceneChanged -= SwitchScene;
     }
 
-    private void SwitchScene(string sceneID)
+    private void SwitchScene(string sceneClass, int sceneIndex)
     {
-        _sceneID = sceneID;
+        _sceneClass = sceneClass;
+        _sceneIndex = sceneIndex;
         _backMap.transform.DestroyAllChildren();
         this.DelayInvoke(LoadScene, 0.4f);
     }
@@ -39,31 +42,23 @@ public class AllBuildEx : MonoBehaviour
 
     private GameObject GetScenePrefab()
     {
-        var parts = _sceneID.Split('|');
-        var sceneClass = parts[0];
-        var sceneIndex = int.Parse(parts[1]);
-        var sceneIndex2 = parts.Length > 2 ? int.Parse(parts[2]) : 0;
-
-        switch (sceneClass)
+        switch (_sceneClass)
         {
             case "M":
-                return Resources.Load<GameObject>(
-                    "AllBackMap/M/" + Mainload.Fudi_now[sceneIndex][37]);
+                return Resources.Load<GameObject>("AllBackMap/M/" + _sceneIndex);
             case "Z":
                 FormulaData.SetNeiGameGuide(1);
-                return Resources.Load<GameObject>(
-                    "AllBackMap/Z/" + Mainload.NongZ_now[sceneIndex][sceneIndex2][5]);
+                return Resources.Load<GameObject>("AllBackMap/Z/" + _sceneIndex);
             case "S":
-                return Resources.Load<GameObject>("AllBackMap/S/" + sceneIndex);
+                return Resources.Load<GameObject>("AllBackMap/S/" + _sceneIndex);
             case "F":
                 return Resources.Load<GameObject>("PerFengdiScene");
             case "H":
-                return Resources.Load<GameObject>("AllBackMap/H/" + sceneIndex);
+                return Resources.Load<GameObject>("AllBackMap/H/" + _sceneIndex);
             case "L":
-                return Resources.Load<GameObject>(
-                    "AllBackMap/L/" + Mainload.Mudi_now[sceneIndex][sceneIndex2][2]);
+                return Resources.Load<GameObject>("AllBackMap/L/" + _sceneIndex);
             default:
-                return null;
+                throw new ArgumentOutOfRangeException();
         }
     }
 }
