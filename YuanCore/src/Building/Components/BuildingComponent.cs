@@ -1,11 +1,10 @@
 ﻿using Entitas;
 using Entitas.Generators.Attributes;
-using UnityEngine;
 
 namespace YuanCore.Building;
 
 [Context(typeof(MapContext))]
-public sealed class GridPositionComponent : IComponent
+public sealed class BuildingComponent : IComponent
 {
-    public Vector2Int Value;
+    public string Uid;
 }
