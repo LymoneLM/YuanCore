@@ -1,8 +1,6 @@
 ﻿// 这是一个兼容性工具，加载原版预制体并修改为YuanCore需求的结构
-
 using System;
 using UnityEngine;
-using YuanCore.Core;
 using Object = UnityEngine.Object;
 
 namespace YuanCore.Building;
@@ -53,29 +51,19 @@ public static class PrefabLoader
         return asset;
     }
 
-    public static T LoadAsBuilding<T>(string path) where T : Object
+    public static T LoadAsBuildingShow<T>(string path) where T : Object
     {
         var asset = Resources.Load<T>(path);
         if (asset == null)
             throw new NullReferenceException($"PrefabLoader: Load failed, path = {path}");
 
-        if (asset is not GameObject prefab || prefab.GetComponent<BuildingView>() != null)
+        if (asset is not GameObject prefab || prefab.GetComponent<BuildingShowView>() != null)
             return asset;
 
-        // UI/AllDrag
-        var allDrag = prefab.transform.Find("UI/AllDrag");
-        if (allDrag == null)
-            throw new NullReferenceException($"PrefabLoader: prefab '{prefab.name}' does not contain path 'UI/AllDrag'");
-
-        for (var i = 0; i < allDrag.childCount; i++)
-        {
-            var go = allDrag.GetChild(i).gameObject;
-            RemoveRigidbodies(go);
-            RemoveColliders(go);
-            RemoveAllScripts(go);
-        }
-
-        string[] arr = ["UI/TouMing", "UIBT", "LineCollider", "RangeColliderA", "RangeColliderB", "NPC", "OutQMember"];
+        string[] arr = [
+            "UI/TouMing", "UI/AllDrag", "UIBT",
+            "LineCollider", "RangeColliderA", "RangeColliderB", "NPC", "OutQMember"
+        ];
         foreach (var name in arr)
         {
             var obj = prefab.transform.Find(name).gameObject;
@@ -84,7 +72,7 @@ public static class PrefabLoader
         }
 
         RemoveAllScripts(prefab);
-        prefab.AddComponent<BuildingView>();
+        prefab.AddComponent<BuildingShowView>();
 
         return asset;
     }
