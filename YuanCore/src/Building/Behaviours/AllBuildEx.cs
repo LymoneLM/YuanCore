@@ -47,18 +47,18 @@ public class AllBuildEx : MonoBehaviour
         switch (_sceneClass)
         {
             case "M":
-                return Resources.Load<GameObject>("AllBackMap/M/" + _sceneIndex);
+                return PrefabLoader.LoadAsBackMap<GameObject>("AllBackMap/M/" + _sceneIndex);
             case "Z":
                 FormulaData.SetNeiGameGuide(1);
-                return Resources.Load<GameObject>("AllBackMap/Z/" + _sceneIndex);
+                return PrefabLoader.LoadAsBackMap<GameObject>("AllBackMap/Z/" + _sceneIndex);
             case "S":
-                return Resources.Load<GameObject>("AllBackMap/S/" + _sceneIndex);
+                return PrefabLoader.LoadAsBackMap<GameObject>("AllBackMap/S/" + _sceneIndex);
             case "F":
-                return Resources.Load<GameObject>("PerFengdiScene");
+                return PrefabLoader.LoadAsBackMap<GameObject>("PerFengdiScene");
             case "H":
-                return Resources.Load<GameObject>("AllBackMap/H/" + _sceneIndex);
+                return PrefabLoader.LoadAsBackMap<GameObject>("AllBackMap/H/" + _sceneIndex);
             case "L":
-                return Resources.Load<GameObject>("AllBackMap/L/" + _sceneIndex);
+                return PrefabLoader.LoadAsBackMap<GameObject>("AllBackMap/L/" + _sceneIndex);
             default:
                 throw new ArgumentOutOfRangeException();
         }
