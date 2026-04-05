@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using Newtonsoft.Json;
 
 namespace YuanCore.Building;
@@ -77,7 +76,7 @@ public static class LayerMaskBuilder
     private static int GetLayerIndex<TEnum>(TEnum layer)
         where TEnum : struct, Enum
     {
-        return BitOperations.TrailingZeroCount(ToUInt64(layer));
+        return BitOperations.TrailingZeroCount64(ToUInt64(layer));
     }
 
     private static bool IsNone<TEnum>(TEnum value)

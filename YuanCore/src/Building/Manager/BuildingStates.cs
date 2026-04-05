@@ -107,7 +107,7 @@ public class BuildingStates
         {
             var pos = posi + cell.Position;
             var res = _gridMap.Contains(pos) && (_gridMap.GetCell(pos).CellOccupancyLayer &
-                _cellOccupancyMask[BitOperations.TrailingZeroCount((ulong)cell.Layer)]) == CellOccupancyLayer.None;
+                _cellOccupancyMask[BitOperations.TrailingZeroCount64((ulong)cell.Layer)]) == CellOccupancyLayer.None;
             flag &= res;
             result[idx++] = (cell.Position, res);
         }
@@ -116,7 +116,7 @@ public class BuildingStates
         {
             var pos = posi + edge.Position;
             var res = _gridMap.Contains(pos) && (_gridMap.GetEdge(pos, edge.Direction).EdgeOccupancyLayer &
-                _edgeOccupancyMask[BitOperations.TrailingZeroCount((ulong)edge.Layer)]) == EdgeOccupancyLayer.None;
+                _edgeOccupancyMask[BitOperations.TrailingZeroCount64((ulong)edge.Layer)]) == EdgeOccupancyLayer.None;
             flag &= res;
             result[idx++] = (edge.Position, res);
         }
