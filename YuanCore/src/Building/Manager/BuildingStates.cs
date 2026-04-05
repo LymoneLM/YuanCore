@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Newtonsoft.Json;
+using YuanCore.Core;
 
 namespace YuanCore.Building;
 
@@ -22,7 +23,7 @@ public class BuildingStates
 
     private Dictionary<(string, int),(int, int, int, int)> _mapShape;
 
-    private BuildingState()
+    private BuildingStates()
     {
         // BuildingShapeRegistry 初始化
         var executingAssembly = Assembly.GetExecutingAssembly();
@@ -52,6 +53,7 @@ public class BuildingStates
     public void InitializeMap(string sceneClass, int sceneIndex)
     {
         var (x, y, w, h) = _mapShape[(sceneClass, sceneIndex)];
+        YuanCorePlugin.Logger.LogDebug($"InitializeMap[{sceneClass}|{sceneIndex}]:({x}, {y}, {w}, {h})");
         InitializeMap(x, y, w, h);
     }
 
@@ -59,6 +61,12 @@ public class BuildingStates
     {
         if(_gridMap == null)
             throw new InvalidOperationException("GridMap has not been initialized.");
+
+        if (!CheckCanBuild(buildingID, rotation, posi, out _))
+        {
+            YuanCorePlugin.Logger.LogError($"Can't add building {uID}({buildingID}|{rotation}) in {posi}");
+            return;
+        }
 
         _buildings[uID] = (buildingID, rotation, posi);
         var shape = BuildingShapeRegistry.Get(buildingID, rotation);

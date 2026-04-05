@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
+using YuanCore.Core;
 using static YuanCore.Building.YuanCoreBuildingMapBuildingStateMatcher;
 
 namespace YuanCore.Building;
@@ -32,6 +33,8 @@ public sealed class CreateViewSystem : ReactiveSystem<Map.Entity>
                 $"AllBuild/{state.TaoZhuangID}/BuildTip/{building.BuildingID}/{state.VanillaStateID}") :
             PrefabLoader.LoadAsBuildingShow<GameObject>(
                 $"AllBuild/{state.TaoZhuangID}/Scene/{building.BuildingID}/{state.VanillaStateID}");
+        if (prefab == null)
+            return null;
         var view = Object.Instantiate(prefab, BuildingManager.Instance.BuildViewRoot).GetComponent<IView>();
         view.Link(entity);
         return view;

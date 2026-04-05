@@ -1,6 +1,7 @@
 ﻿// 这是一个兼容性工具，加载原版预制体并修改为YuanCore需求的结构
 using System;
 using UnityEngine;
+using YuanCore.Core;
 using Object = UnityEngine.Object;
 
 namespace YuanCore.Building;
@@ -11,7 +12,10 @@ public static class PrefabLoader
     {
         var asset = Resources.Load<T>(path);
         if (asset == null)
-            throw new NullReferenceException($"PrefabLoader: Load failed, path = {path}");
+        {
+            YuanCorePlugin.Logger.LogError($"PrefabLoader: Load failed, path = {path}");
+            return asset;
+        }
 
         if (asset is not GameObject prefab)
             return asset;
@@ -55,7 +59,10 @@ public static class PrefabLoader
     {
         var asset = Resources.Load<T>(path);
         if (asset == null)
-            throw new NullReferenceException($"PrefabLoader: Load failed, path = {path}");
+        {
+            YuanCorePlugin.Logger.LogError($"PrefabLoader: Load failed, path = {path}");
+            return asset;
+        }
 
         if (asset is not GameObject prefab || prefab.GetComponent<BuildingShowView>() != null)
             return asset;
@@ -91,7 +98,10 @@ public static class PrefabLoader
     {
         var asset = Resources.Load<T>(path);
         if (asset == null)
-            throw new NullReferenceException($"PrefabLoader: Load failed, path = {path}");
+        {
+            YuanCorePlugin.Logger.LogError($"PrefabLoader: Load failed, path = {path}");
+            return asset;
+        }
 
         if (asset is not GameObject prefab || prefab.GetComponent<BuildingPlacementView>() != null)
             return asset;
