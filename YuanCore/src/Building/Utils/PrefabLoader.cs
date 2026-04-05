@@ -17,7 +17,7 @@ public static class PrefabLoader
             return asset;
         }
 
-        if (asset is not GameObject prefab)
+        if (asset is not GameObject prefab || prefab.GetComponent<MonoBehaviour>() == null)
             return asset;
 
         if (path.IndexOf("/l/", StringComparison.Ordinal) != -1 || path.IndexOf("/z/", StringComparison.Ordinal) != -1)
