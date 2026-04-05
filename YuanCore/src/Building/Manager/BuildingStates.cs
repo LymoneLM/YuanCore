@@ -62,6 +62,9 @@ public class BuildingStates
         if(_gridMap == null)
             throw new InvalidOperationException("GridMap has not been initialized.");
 
+        if(_buildings.ContainsKey(uID))
+            YuanCorePlugin.Logger.LogWarning($"Can't add registered building {uID}");
+
         _buildings[uID] = (buildingID, rotation, posi);
         var shape = BuildingShapeRegistry.Get(buildingID, rotation);
         foreach (var cell in shape.Cells)
@@ -80,6 +83,10 @@ public class BuildingStates
     {
         if(_gridMap == null)
             throw new InvalidOperationException("GridMap has not been initialized.");
+
+        if(!_buildings.ContainsKey(uID))
+            YuanCorePlugin.Logger.LogWarning($"Can't remove unregistered building {uID}");
+        _buildings.Remove(uID);
 
         var (buildingID, rotation, posi) = _buildings[uID];
         var shape = BuildingShapeRegistry.Get(buildingID, rotation);
