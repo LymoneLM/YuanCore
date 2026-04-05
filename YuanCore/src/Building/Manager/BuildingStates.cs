@@ -62,12 +62,6 @@ public class BuildingStates
         if(_gridMap == null)
             throw new InvalidOperationException("GridMap has not been initialized.");
 
-        if (!CheckCanBuild(buildingID, rotation, posi, out _))
-        {
-            YuanCorePlugin.Logger.LogError($"Can't add building {uID}({buildingID}|{rotation}) in {posi}");
-            return;
-        }
-
         _buildings[uID] = (buildingID, rotation, posi);
         var shape = BuildingShapeRegistry.Get(buildingID, rotation);
         foreach (var cell in shape.Cells)

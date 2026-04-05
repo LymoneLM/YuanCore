@@ -1,4 +1,6 @@
-﻿namespace YuanCore.Building;
+﻿using YuanCore.Core;
+
+namespace YuanCore.Building;
 
 public static class BuildingSceneBootstrap
 {
@@ -15,18 +17,21 @@ public static class BuildingSceneBootstrap
 
         foreach (var dto in dtoList)
         {
+            if (!BuildingStates.Instance.CheckCanBuild(
+                    dto.BuildingID, dto.Rotation, dto.GridPosition, out _))
+            {
+                YuanCorePlugin.Logger.LogError($"[BuildingSceneBootstrap] Can't load building " +
+                                               $"{dto.Uid}({dto.BuildingID}|{dto.Rotation}) in {dto.GridPosition}");
+                continue;
+            }
+
             var entity = mapContext.CreateEntity();
             entity.AddBuilding(dto.Uid, dto.BuildingID);
             entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined);
             entity.AddGridPosition(dto.GridPosition);
             entity.AddWorldPosition(PositionConvertor.GridToWorld(dto.GridPosition));
 
-            BuildingStates.Instance.AddBuilding(
-                dto.BuildingID,
-                dto.Rotation,
-                dto.GridPosition,
-                dto.Uid
-            );
+            BuildingStates.Instance.AddBuilding(dto.BuildingID, dto.Rotation, dto.GridPosition, dto.Uid);
         }
 
         Mainload.isCreatSceneFinish = true;
