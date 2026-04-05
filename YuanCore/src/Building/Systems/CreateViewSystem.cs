@@ -20,7 +20,9 @@ public sealed class CreateViewSystem : ReactiveSystem<Map.Entity>
     {
         foreach (var entity in entities)
         {
-            entity.AddView(InstantiateView(entity));
+            var view = InstantiateView(entity);
+            if (view != null)
+                entity.AddView(view);
         }
     }
 
@@ -29,9 +31,9 @@ public sealed class CreateViewSystem : ReactiveSystem<Map.Entity>
         var building = entity.GetBuilding();
         var state = entity.GetBuildingState();
         var prefab = entity.HasPlacement() ?
-            PrefabLoader.LoadAsBuildingPlacement<GameObject>(
+            PrefabFactory.LoadAsBuildingPlacement<GameObject>(
                 $"AllBuild/{state.TaoZhuangID}/BuildTip/{building.BuildingID}/{state.VanillaStateID}") :
-            PrefabLoader.LoadAsBuildingShow<GameObject>(
+            PrefabFactory.LoadAsBuildingShow<GameObject>(
                 $"AllBuild/{state.TaoZhuangID}/Scene/{building.BuildingID}/{state.VanillaStateID}");
         if (prefab == null)
             return null;

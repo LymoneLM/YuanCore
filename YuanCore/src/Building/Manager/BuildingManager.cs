@@ -45,7 +45,6 @@ public class BuildingManager : MonoBehaviour
         SceneBootstrap(_sceneIDLast);
     }
 
-
     private void Update()
     {
         CheckUpdateScene();
@@ -100,9 +99,6 @@ public class BuildingManager : MonoBehaviour
 
     private void ChangeScene()
     {
-        BuildingController.Instance.Systems.DeactivateReactiveSystems();
-        MapContext.Instance.DestroyAllEntities();
-
         var (sceneClass, sceneIndex)= ParseSceneID(_sceneIDLast);
         BuildingStates.Instance.InitializeMap(sceneClass, sceneIndex);
         BuildingSignals.InvokeSceneChanged(sceneClass, sceneIndex);
@@ -133,7 +129,7 @@ public class BuildingManager : MonoBehaviour
         Mainload.TempMemberIndex_now = 0;
         Mainload.BuildPosiID_Now = "0|0";
         Mainload.BuildID_CreatNow = "null";
-
+        MapContext.Instance.DestroyAllEntities();
         var dtoList = BuildingDataAdapter.Load(sceneID);
 
         foreach (var dto in dtoList)

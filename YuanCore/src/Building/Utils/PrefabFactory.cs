@@ -1,12 +1,11 @@
-﻿// 这是一个兼容性工具，加载原版预制体并修改为YuanCore需求的结构
-using System;
+﻿using System;
 using UnityEngine;
 using YuanCore.Core;
 using Object = UnityEngine.Object;
 
 namespace YuanCore.Building;
 
-public static class PrefabLoader
+public static class PrefabFactory
 {
     public static T LoadAsBackMap<T>(string path) where T : Object
     {
@@ -20,19 +19,33 @@ public static class PrefabLoader
         if (asset is not GameObject prefab || prefab.GetComponent<MonoBehaviour>() == null)
             return asset;
 
-        if (path.IndexOf("/l/", StringComparison.Ordinal) != -1 || path.IndexOf("/z/", StringComparison.Ordinal) != -1)
+        if (path.IndexOf("/s/", StringComparison.OrdinalIgnoreCase) != -1)
+        {
+            prefab.transform.Find("BuildShop").gameObject.name = "BuildShow";
+            Object.DestroyImmediate(prefab.transform.Find("BuildCity").gameObject.gameObject);
+        }
+
+        if (path.IndexOf("/l/", StringComparison.OrdinalIgnoreCase) != -1 ||
+            path.IndexOf("/z/", StringComparison.OrdinalIgnoreCase) != -1)
         {
             var ts = prefab.transform.Find("AddClickBack");
             for (var i = 0; i < ts.childCount; ++i)
             {
-                RemoveAllScripts(ts.GetChild(i).gameObject);
+                var obj = ts.GetChild(i).GetComponent<AddClickBack>();
+                if (obj != null)
+                    Object.DestroyImmediate(obj);
             }
 
             ts.gameObject.name = "AllBack";
             ts = ts.Find("AllKuai");
             for (var i = 0; i < ts.childCount; ++i)
             {
-                RemoveAllScripts(ts.GetChild(i).gameObject);
+                var obj = ts.GetChild(i).GetComponent<PerFeiWoRange>();
+                if (obj != null)
+                    Object.DestroyImmediate(obj);
+                var go = ts.GetChild(i).gameObject;
+                RemoveColliders(go);
+                RemoveRigidbodies(go);
             }
         }
         else
@@ -45,7 +58,7 @@ public static class PrefabLoader
         string[] arr = ["BuildPosiGet", "AllZuDang", "BuildTip"];
         foreach (var name in arr)
         {
-            var obj = prefab.transform.Find(name).gameObject;
+            var obj = prefab.transform.Find(name)?.gameObject;
             if (obj != null)
                 Object.DestroyImmediate(obj);
         }
@@ -73,12 +86,12 @@ public static class PrefabLoader
         ];
         foreach (var name in arr)
         {
-            var obj = prefab.transform.Find(name).gameObject;
+            var obj = prefab.transform.Find(name)?.gameObject;
             if (obj != null)
                 Object.DestroyImmediate(obj);
         }
 
-        var go = prefab.transform.Find("UI/OpenBT").gameObject;
+        var go = prefab.transform.Find("UI/OpenBT")?.gameObject;
         RemoveAllScripts(go);
         // TODO: 添加光标Hover与Click处理脚本
 
