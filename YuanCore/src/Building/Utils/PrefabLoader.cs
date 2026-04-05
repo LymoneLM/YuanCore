@@ -71,6 +71,10 @@ public static class PrefabLoader
                 Object.DestroyImmediate(obj);
         }
 
+        var go = prefab.transform.Find("UI/OpenBT").gameObject;
+        RemoveAllScripts(go);
+        // TODO: 添加光标Hover与Click处理脚本
+
         RemoveAllScripts(prefab);
         prefab.AddComponent<BuildingShowView>();
 
