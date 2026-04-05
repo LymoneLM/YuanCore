@@ -9,7 +9,7 @@ public static class BuildingSignals
     public static void InvokeSceneChanged(string sceneClass, int sceneIndex)
         => OnSceneChanged?.Invoke(sceneClass, sceneIndex);
 
-    public static event Action<GameObject> OnSceneCreated;
-    public static void InvokeSceneCreated(GameObject buildShow)
-        => OnSceneCreated?.Invoke(buildShow);
+    public static event Action<Transform> OnSceneCreated;
+    public static void InvokeSceneCreated(Transform buildViewRoot)
+        => OnSceneCreated?.Invoke(buildViewRoot);
 }

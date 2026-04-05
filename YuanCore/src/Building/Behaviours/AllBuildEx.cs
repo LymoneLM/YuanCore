@@ -38,8 +38,8 @@ public class AllBuildEx : MonoBehaviour
         var instance = Instantiate(prefab, _backMap).transform;
         instance.localScale = Vector3.one;
         instance.localPosition = Vector3.zero;
-        var obj = instance.Find("BuildShow").gameObject;
-        BuildingSignals.InvokeSceneCreated(obj);
+        var ts = instance.Find("BuildShow");
+        BuildingSignals.InvokeSceneCreated(ts);
     }
 
     private GameObject GetScenePrefab()

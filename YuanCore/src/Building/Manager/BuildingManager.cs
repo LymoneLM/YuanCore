@@ -16,7 +16,8 @@ public class BuildingManager : MonoBehaviour
     private string _sceneIDLast;
     private const string _defaultSceneID = "null|0";
 
-    private GameObject _buildShow;
+    [NonSerialized]
+    public Transform BuildViewRoot;
 
     private void Awake()
     {
@@ -29,18 +30,20 @@ public class BuildingManager : MonoBehaviour
 
     private void OnEnable()
     {
-
+        BuildingSignals.OnSceneCreated += OnSceneCreated;
     }
 
     private void OnDisable()
     {
-
+        BuildingSignals.OnSceneCreated -= OnSceneCreated;
     }
 
-    private void Start()
+    private void OnSceneCreated(Transform buildShow)
     {
-        _controller.Initialize();
+        BuildViewRoot = buildShow;
+        BuildingSceneBootstrap.Bootstrap(_sceneIDLast);
     }
+
 
     private void Update()
     {
@@ -75,8 +78,11 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    private static void ResetSceneState()
+    private void ResetSceneState()
     {
+        BuildViewRoot = null;
+
+        // Vanilla
         Mainload.MemberData_Enter = "null";
         Mainload.BuildID_IsYour_Enter[0] = -1;
         Mainload.TradeSR_index = 0;
