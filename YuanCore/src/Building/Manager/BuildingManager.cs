@@ -22,6 +22,8 @@ public class BuildingManager : MonoBehaviour
     private string _sceneIDLast;
     private const string _defaultSceneID = "null|0";
 
+    private GameObject _buildShow;
+
     private void Awake()
     {
         Instance = this;
@@ -30,6 +32,16 @@ public class BuildingManager : MonoBehaviour
 
         // Current Class
         _sceneIDLast = _defaultSceneID;
+    }
+
+    private void OnEnable()
+    {
+
+    }
+
+    private void OnDisable()
+    {
+
     }
 
     private void Start()
@@ -90,10 +102,10 @@ public class BuildingManager : MonoBehaviour
 
     private void ChangeScene()
     {
+        MapContext.Instance.DestroyAllEntities();
         var (sceneClass, sceneIndex)= ParseSceneID(_sceneIDLast);
         BuildingSignals.InvokeSceneChanged(sceneClass, sceneIndex);
         BuildingState.Instance.InitializeMap(sceneClass, sceneIndex);
-        MapContext.Instance.DestroyAllEntities();
     }
 
     private static (string SceneClass, int SceneIndex) ParseSceneID(string sceneID)
