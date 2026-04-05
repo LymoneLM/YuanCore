@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace YuanCore.Building;
 
-public class BuildingStateComponent : IComponent
+[Context(typeof(MapContext))]
+public sealed class BuildingStateComponent : IComponent
 {
-    public int ID;
+    public int TaoZhuangID;
     public BuildingRotation Rotation;
+    public bool IsRuined;
+
+    public int VanillaStateID => IsRuined ? -(int)Rotation-1 : (int)Rotation;
 }

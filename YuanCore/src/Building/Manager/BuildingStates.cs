@@ -4,16 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using System.Numerics;
 using Newtonsoft.Json;
 
 namespace YuanCore.Building;
 
 // 地图建筑全局状态，全局可读有限写入
 // 本质上是被 Manager 控制的，不隶属只是为了便于访问
-public class BuildingState
+public class BuildingStates
 {
-    public static BuildingState Instance { get; } = new();
+    public static BuildingStates Instance { get; } = new();
 
     private GridMap<CellData, EdgeData>  _gridMap;
     private Dictionary<string, (int, BuildingRotation, Vector2Int)> _buildings;

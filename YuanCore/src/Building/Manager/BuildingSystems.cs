@@ -7,7 +7,6 @@ public sealed class BuildingSystems : Feature
     public BuildingSystems(MapContext mapContext)
     {
         Add(new ConvertGridPositionSystem(mapContext));
-
-
+        Add(new CreateViewSystem(mapContext));
     }
 }

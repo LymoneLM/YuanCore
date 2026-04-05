@@ -4,8 +4,7 @@ using Entitas.Generators.Attributes;
 namespace YuanCore.Building;
 
 [Context(typeof(MapContext))]
-public sealed class BuildingComponent : IComponent
+public sealed class ViewComponent : IComponent
 {
-    public string Uid;
-    public int BuildingID;
+    public IView View;
 }
