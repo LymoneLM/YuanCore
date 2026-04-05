@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using YuanCore.Core;
 
 namespace YuanCore.Building;
 
@@ -41,7 +42,7 @@ public class BuildingManager : MonoBehaviour
     private void OnSceneCreated(Transform buildShow)
     {
         BuildViewRoot = buildShow;
-        BuildingSceneBootstrap.Bootstrap(_sceneIDLast);
+        SceneBootstrap(_sceneIDLast);
     }
 
 
@@ -99,6 +100,9 @@ public class BuildingManager : MonoBehaviour
 
     private void ChangeScene()
     {
+        BuildingController.Instance.Systems.DeactivateReactiveSystems();
+        MapContext.Instance.DestroyAllEntities();
+
         var (sceneClass, sceneIndex)= ParseSceneID(_sceneIDLast);
         BuildingStates.Instance.InitializeMap(sceneClass, sceneIndex);
         BuildingSignals.InvokeSceneChanged(sceneClass, sceneIndex);
@@ -122,5 +126,36 @@ public class BuildingManager : MonoBehaviour
             _ => throw new ArgumentOutOfRangeException()
         };
         return (sceneClass, sceneIndex);
+    }
+
+    public static void SceneBootstrap(string sceneID)
+    {
+        Mainload.TempMemberIndex_now = 0;
+        Mainload.BuildPosiID_Now = "0|0";
+        Mainload.BuildID_CreatNow = "null";
+
+        var dtoList = BuildingDataAdapter.Load(sceneID);
+
+        foreach (var dto in dtoList)
+        {
+            if (!BuildingStates.Instance.CheckCanBuild(
+                    dto.BuildingID, dto.Rotation, dto.GridPosition, out _))
+            {
+                YuanCorePlugin.Logger.LogWarning($"[SceneBootstrap] Can't load building " +
+                                               $"{dto.Uid}({dto.BuildingID}|{dto.Rotation}) in {dto.GridPosition}");
+                continue;
+            }
+
+            var entity = MapContext.Instance.CreateEntity();
+            entity.AddBuilding(dto.Uid, dto.BuildingID);
+            entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined);
+            entity.AddGridPosition(dto.GridPosition);
+            entity.AddWorldPosition(PositionConvertor.GridToWorld(dto.GridPosition));
+
+            BuildingStates.Instance.AddBuilding(dto.BuildingID, dto.Rotation, dto.GridPosition, dto.Uid);
+        }
+
+        Mainload.isCreatSceneFinish = true;
+        Mainload.isSwichPanelOpen = false;
     }
 }

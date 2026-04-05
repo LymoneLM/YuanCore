@@ -8,7 +8,7 @@ namespace YuanCore.Building;
 public class BuildingController : MonoBehaviour
 {
     public static BuildingController Instance;
-    private Systems _systems;
+    public Systems Systems;
 
     private void Awake()
     {
@@ -21,17 +21,17 @@ public class BuildingController : MonoBehaviour
 
         mapContext.CreateContextObserver();
 
-        _systems = new BuildingSystems(mapContext);
+        Systems = new BuildingSystems(mapContext);
     }
 
     public void Start()
     {
-        _systems.Initialize();
+        Systems.Initialize();
     }
 
     public void Update()
     {
-        _systems.Execute();
-        _systems.Cleanup();
+        Systems.Execute();
+        Systems.Cleanup();
     }
 }
