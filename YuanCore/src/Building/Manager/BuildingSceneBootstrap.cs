@@ -19,6 +19,7 @@ public static class BuildingSceneBootstrap
             entity.AddBuilding(dto.Uid, dto.BuildingID);
             entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined);
             entity.AddGridPosition(dto.GridPosition);
+            entity.AddWorldPosition(PositionConvertor.GridToWorld(dto.GridPosition));
 
             BuildingStates.Instance.AddBuilding(
                 dto.BuildingID,

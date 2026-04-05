@@ -100,8 +100,8 @@ public class BuildingManager : MonoBehaviour
     private void ChangeScene()
     {
         var (sceneClass, sceneIndex)= ParseSceneID(_sceneIDLast);
-        BuildingSignals.InvokeSceneChanged(sceneClass, sceneIndex);
         BuildingStates.Instance.InitializeMap(sceneClass, sceneIndex);
+        BuildingSignals.InvokeSceneChanged(sceneClass, sceneIndex);
     }
 
     private static (string SceneClass, int SceneIndex) ParseSceneID(string sceneID)
