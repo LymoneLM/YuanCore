@@ -1,16 +1,21 @@
-﻿using Entitas;
+﻿using System;
+using Entitas;
 using Entitas.Unity;
+using UnityEngine;
 
 namespace YuanCore.Building;
 
-// ECS挂载点
-public class BuildingController
+public class BuildingController : MonoBehaviour
 {
-    public static BuildingController Instance => field ??= new BuildingController();
-    private readonly Systems _systems;
+    public static BuildingController Instance;
+    private Systems _systems;
 
-    public BuildingController()
+    private void Awake()
     {
+        if (Instance != null)
+            throw new InvalidOperationException("BuildingController is already instantiated!");
+        Instance = this;
+
         BuildingContextInitialization.Initialize();
         var mapContext = MapContext.Instance;
 
@@ -19,12 +24,12 @@ public class BuildingController
         _systems = new BuildingSystems(mapContext);
     }
 
-    public void Initialize()
+    public void Start()
     {
         _systems.Initialize();
     }
 
-    public void Execute()
+    public void Update()
     {
         _systems.Execute();
         _systems.Cleanup();

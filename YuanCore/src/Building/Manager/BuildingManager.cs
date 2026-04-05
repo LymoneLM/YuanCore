@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using Entitas;
 using UnityEngine;
 
 namespace YuanCore.Building;
@@ -15,9 +11,7 @@ namespace YuanCore.Building;
 public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager Instance;
-    public BuildingState State;
-
-    private BuildingController _controller;
+    public BuildingStates States;
 
     private string _sceneIDLast;
     private const string _defaultSceneID = "null|0";
@@ -27,8 +21,7 @@ public class BuildingManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _controller = BuildingController.Instance;
-        State = BuildingState.Instance;
+        States = BuildingStates.Instance;
 
         // Current Class
         _sceneIDLast = _defaultSceneID;
@@ -51,8 +44,6 @@ public class BuildingManager : MonoBehaviour
 
     private void Update()
     {
-        _controller.Execute();
-
         CheckUpdateScene();
     }
 

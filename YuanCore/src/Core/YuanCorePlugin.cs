@@ -26,8 +26,8 @@ public class YuanCorePlugin : BaseUnityPlugin
 
     private void LoadBuildingConfig()
     {
-        var obj = new GameObject(name = "YuanCoreBuildingManager")
-            .AddComponent<BuildingManager>();
+        var obj = new GameObject(name = "YuanCoreBuildingController")
+            .AddComponent<BuildingController>();
         DontDestroyOnLoad(obj);
     }
 }

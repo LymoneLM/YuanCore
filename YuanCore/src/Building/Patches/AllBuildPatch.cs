@@ -10,9 +10,9 @@ public class AllBuildPatch
     [HarmonyPatch("Awake")]
     public static bool ReplaceScript(AllBuild __instance)
     {
-        var abc = __instance.gameObject.GetComponent<AllBuild>();
-        Object.DestroyImmediate(abc);
+        __instance.enabled = false;
         __instance.gameObject.AddComponent<AllBuildEx>();
+        __instance.gameObject.AddComponent<BuildingManager>();
         return false;
     }
 }
