@@ -73,13 +73,13 @@ public static class BuildingDataAdapter
             result.Add(new BuildingDtoM
             {
                 Uid = row[0],
-                BuildingLevel = int.Parse(row[2]),
                 TaoZhuangID = int.Parse(row[7]),
                 BuildingID = int.Parse(row[1]),
                 Rotation = rotate,
                 IsRuined = isRuin,
                 GridPosition = ParseGrid(row[5]),
 
+                BuildingLevel = int.Parse(row[2]),
                 ServantCount = int.Parse(row[3]),
                 MonthlyPaymentLevel = int.Parse(row[4]),
             });
@@ -90,14 +90,17 @@ public static class BuildingDataAdapter
     private static List<BuildingDto> AdaptZ(int sceneIndex, int subSceneIndex)
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_z.Count);
-        for (int i = 0; i < Mainload.BuildInto_z.Count; i++)
+        foreach (var row in Mainload.BuildInto_z)
         {
-            var row = Mainload.BuildInto_z[i];
+            var (rotate, isRuin) = ParseRotation(row[4]);
             result.Add(new BuildingDto
             {
-                Uid = $"Z:{sceneIndex}:{subSceneIndex}:{i}",
-                BuildingID = int.Parse(row[1]),
+                Uid = row[0],
                 TaoZhuangID = int.Parse(row[10]),
+                BuildingID = int.Parse(row[1]),
+                Rotation = rotate,
+                IsRuined = isRuin,
+                GridPosition = ParseGrid(row[3])
             });
         }
         return result;
@@ -107,25 +110,31 @@ public static class BuildingDataAdapter
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_s.Count + Mainload.BuildInto_c.Count);
 
-        for (int i = 0; i < Mainload.BuildInto_s.Count; i++)
+        foreach (var row in Mainload.BuildInto_s)
         {
-            var row = Mainload.BuildInto_s[i];
+            var (rotation, isRuined) = ParseRotation(row[5]);
             result.Add(new BuildingDto
             {
-                Uid = $"S:{sceneIndex}:S:{i}",
+                Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 TaoZhuangID = int.Parse(row[11]),
+                Rotation = rotation,
+                IsRuined = isRuined,
+                GridPosition = ParseGrid(row[4]),
             });
         }
 
-        for (int i = 0; i < Mainload.BuildInto_c.Count; i++)
+        foreach (var row in Mainload.BuildInto_c)
         {
-            var row = Mainload.BuildInto_c[i];
+            var (rotation, isRuined) = ParseRotation(row[4]);
             result.Add(new BuildingDto
             {
-                Uid = $"S:{sceneIndex}:C:{i}",
+                Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 TaoZhuangID = int.Parse(row[6]),
+                Rotation = rotation,
+                IsRuined = isRuined,
+                GridPosition = ParseGrid(row[3]),
             });
         }
 
@@ -135,14 +144,17 @@ public static class BuildingDataAdapter
     private static List<BuildingDto> AdaptH(int sceneIndex)
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_h.Count);
-        for (int i = 0; i < Mainload.BuildInto_h.Count; i++)
+        foreach (var row in Mainload.BuildInto_h)
         {
-            var row = Mainload.BuildInto_h[i];
+            var (rotation, isRuined) = ParseRotation(row[4]);
             result.Add(new BuildingDto
             {
-                Uid = $"H:{sceneIndex}:{i}",
+                Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 TaoZhuangID = int.Parse(row[5]),
+                Rotation = rotation,
+                IsRuined = isRuined,
+                GridPosition = ParseGrid(row[3]),
             });
         }
         return result;
@@ -151,18 +163,22 @@ public static class BuildingDataAdapter
     private static List<BuildingDto> AdaptL(int sceneIndex, int subSceneIndex)
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_l.Count);
-        for (int i = 0; i < Mainload.BuildInto_l.Count; i++)
+        foreach (var row in Mainload.BuildInto_l)
         {
-            var row = Mainload.BuildInto_l[i];
+            var (rotation, isRuined) = ParseRotation(row[4]);
             result.Add(new BuildingDto
             {
-                Uid = $"L:{sceneIndex}:{subSceneIndex}:{i}",
+                Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 TaoZhuangID = int.Parse(row[5]),
+                Rotation = rotation,
+                IsRuined = isRuined,
+                GridPosition = ParseGrid(row[3]),
             });
         }
         return result;
     }
+
 
     private static Vector2Int ParseGrid(string value)
     {
