@@ -19,8 +19,8 @@ def convert_csv_to_json(input_csv_path, output_json_path):
                 "Index": int(row['Index']),
                 "MinX": min_x,
                 "MinY": min_y,
-                "Width": max_x - min_x,
-                "Height": max_y - min_y
+                "Width": max_x - min_x + 1,
+                "Height": max_y - min_y + 1
             }
             data.append(item)
 
