@@ -20,6 +20,7 @@ public sealed class LinkMaterialUpdateSystem : IExecuteSystem
                 continue;
             }
             view.UpdateLinkMaterial(entity.GetLinkMaterialUpdate().DiffuseLevel);
+            entity.RemoveLinkMaterialUpdate();
         }
     }
 }

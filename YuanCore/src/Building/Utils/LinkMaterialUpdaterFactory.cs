@@ -9,16 +9,19 @@ public static class LinkMaterialUpdaterFactory
 
     private enum GroupID
     {
-        Road,
-        SingleWater,
+        Road = 0,
+        Pond = 1,
+        DeepPond,
         RiverWay,
+        SingleWall,
+        MultiWall,
     }
 
     private static readonly Dictionary<int, GroupID> BuildingGroupMap = new()
     {
         {82, GroupID.Road}, {83, GroupID.Road}, {84, GroupID.Road},
-        {26, GroupID.SingleWater},
-        {90, GroupID.RiverWay},
+        {26, GroupID.Pond},
+        {90, GroupID.DeepPond},
     };
 
     public static LinkMaterialUpdater GetUpdater(int buildingID)
@@ -27,9 +30,9 @@ public static class LinkMaterialUpdaterFactory
             return null;
         return group switch
         {
-            GroupID.Road => RoadUpdater(),
-            GroupID.SingleWater => SingleWaterUpdater(),
-            GroupID.RiverWay => RiverWayUpdater(),
+            GroupID.Road => FlatQuadUpdater(GroupID.Road),
+            GroupID.Pond => FlatQuadUpdater(GroupID.Pond),
+            GroupID.DeepPond => DeepPondUpdater(),
             _ => null
         };
     }
@@ -38,8 +41,12 @@ public static class LinkMaterialUpdaterFactory
     [
         new(0,-1), new(-1,0), new(0, 1), new(1, 0)
     ];
+    private static readonly Vector2Int[] PondCheckGridOffset =
+    [
+        new(1,0), new(0,1), new(0, -1), new(-1, 0)
+    ];
 
-    private static LinkMaterialUpdater RoadUpdater()
+    private static LinkMaterialUpdater FlatQuadUpdater(GroupID groupID)
     {
         SpriteRenderer[] sprites = null;
         return (transform, entity, diffuseLevel) =>
@@ -60,15 +67,16 @@ public static class LinkMaterialUpdaterFactory
             var map = MapContext.Instance;
             var diffuse = diffuseLevel > 0;
             var posi = entity.GetGridPosition().Value;
+            var offset = groupID == GroupID.Road ? RoadCheckGridOffset : PondCheckGridOffset;
             for (var i = 0; i < 4; ++i)
             {
-                var uids = BuildingStates.Instance.GetCellBuildingsUid(posi + RoadCheckGridOffset[i]);
+                var uids = BuildingStates.Instance.GetCellBuildingsUid(posi + offset[i]);
                 foreach (var uid in uids)
                 {
                     var ett = map.GetBuildingByUid(uid);
                     if(!BuildingGroupMap.TryGetValue(ett.GetBuilding().BuildingID, out var group))
                         continue;
-                    var flag = group == GroupID.Road;
+                    var flag = group == groupID;
                     sprites[i].enabled = !flag;
                     if (flag && diffuse && !ett.HasLinkMaterialUpdate())
                         ett.AddLinkMaterialUpdate(diffuseLevel - 1);
@@ -78,16 +86,7 @@ public static class LinkMaterialUpdaterFactory
         };
     }
 
-    private static LinkMaterialUpdater SingleWaterUpdater()
-    {
-
-        return (transform, entity, diffuseLevel) =>
-        {
-
-        };
-    }
-
-    private static LinkMaterialUpdater RiverWayUpdater()
+    private static LinkMaterialUpdater DeepPondUpdater()
     {
 
         return (transform, entity, diffuseLevel) =>
