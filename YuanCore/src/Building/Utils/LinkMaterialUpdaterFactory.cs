@@ -147,9 +147,9 @@ public static class LinkMaterialUpdaterFactory
             (new Vector2Int(-1,  0), BuildingDirection.West)
         ],
         [
-            (new Vector2Int( 0, -1), BuildingDirection.North),
+            (new Vector2Int( 0,  0), BuildingDirection.North),
             (new Vector2Int(-1,  0), BuildingDirection.West),
-            (new Vector2Int( 0,  0), BuildingDirection.North)
+            (new Vector2Int( 0, -1), BuildingDirection.North)
         ],
         [
             (new Vector2Int( 1,  0), BuildingDirection.West),
@@ -157,9 +157,9 @@ public static class LinkMaterialUpdaterFactory
             (new Vector2Int( 0,  0), BuildingDirection.West)
         ],
         [
-            (new Vector2Int( 0,  0), BuildingDirection.North),
+            (new Vector2Int( 0,  1), BuildingDirection.North),
             (new Vector2Int(-1,  0), BuildingDirection.East),
-            (new Vector2Int( 0,  1), BuildingDirection.North)
+            (new Vector2Int( 0,  0), BuildingDirection.North)
         ]
     ];
 
@@ -171,9 +171,9 @@ public static class LinkMaterialUpdaterFactory
             (new Vector2Int( 0,  0), BuildingDirection.East)
         ],
         [
-            (new Vector2Int( 0,  0), BuildingDirection.South),
+            (new Vector2Int( 0, -1), BuildingDirection.South),
             (new Vector2Int( 1,  0), BuildingDirection.West),
-            (new Vector2Int( 0, -1), BuildingDirection.South)
+            (new Vector2Int( 0,  0), BuildingDirection.South)
         ],
         [
             (new Vector2Int( 0,  0), BuildingDirection.East),
@@ -181,9 +181,9 @@ public static class LinkMaterialUpdaterFactory
             (new Vector2Int( 1,  0), BuildingDirection.East)
         ],
         [
-            (new Vector2Int( 0,  1), BuildingDirection.South),
+            (new Vector2Int( 0,  0), BuildingDirection.South),
             (new Vector2Int( 1,  0), BuildingDirection.East),
-            (new Vector2Int( 0,  0), BuildingDirection.South)
+            (new Vector2Int( 0,  1), BuildingDirection.South)
         ]
     ];
 
