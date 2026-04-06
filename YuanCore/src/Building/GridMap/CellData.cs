@@ -58,13 +58,24 @@ public struct CellData
         RebuildLayer();
     }
 
-    public CellOccupant[] Get()
+    public CellOccupant[] GetOccupant()
     {
         return _count switch
         {
             0 => [],
             1 => [_occupant1],
             2 => [_occupant1, _occupant2],
+            _ => throw new System.InvalidOperationException("Invalid CellData count.")
+        };
+    }
+
+    public string[] GetUid()
+    {
+        return _count switch
+        {
+            0 => [],
+            1 => [_occupant1.Uid],
+            2 => [_occupant1.Uid, _occupant2.Uid],
             _ => throw new System.InvalidOperationException("Invalid CellData count.")
         };
     }

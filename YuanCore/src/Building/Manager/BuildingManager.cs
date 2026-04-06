@@ -146,7 +146,7 @@ public class BuildingManager : MonoBehaviour
             entity.AddBuilding(dto.Uid, dto.BuildingID);
             entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined);
             entity.AddGridPosition(dto.GridPosition);
-            entity.AddWorldPosition(PositionConvertor.GridToWorld(dto.GridPosition));
+            entity.AddLinkMaterialUpdate(1);
 
             BuildingStates.Instance.AddBuilding(dto.BuildingID, dto.Rotation, dto.GridPosition, dto.Uid);
         }

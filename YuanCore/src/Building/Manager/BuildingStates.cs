@@ -132,6 +132,14 @@ public class BuildingStates
 
         return flag;
     }
+
+    public string[] GetCellBuildingsUid(Vector2Int posi)
+    {
+        if(_gridMap == null)
+            throw new InvalidOperationException("GridMap has not been initialized.");
+
+        return _gridMap.Contains(posi) ? _gridMap.GetCell(posi).GetUid() : [];
+    }
 }
 
 public class MapShapeDefinition

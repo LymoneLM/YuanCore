@@ -17,7 +17,7 @@ public class BuildingController : MonoBehaviour
         Instance = this;
 
         BuildingContextInitialization.Initialize();
-        var mapContext = MapContext.Instance;
+        var mapContext = MapContext.Instance.AddCustomEntityIndexes();
 
         mapContext.CreateContextObserver();
 

@@ -8,5 +8,6 @@ public sealed class BuildingSystems : Feature
     {
         Add(new ConvertGridPositionSystem(mapContext));
         Add(new CreateViewSystem(mapContext));
+        Add(new LinkMaterialUpdateSystem());
     }
 }
