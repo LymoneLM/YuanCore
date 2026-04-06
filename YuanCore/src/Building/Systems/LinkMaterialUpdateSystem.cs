@@ -18,8 +18,10 @@ public sealed class LinkMaterialUpdateSystem : IExecuteSystem
     {
         _buffer.Clear();
         _buffer.AddRange(_group.GetEntities());
-        foreach (var entity in _buffer)
+        var len = _buffer.Count;
+        for (var i = 0; i < len; ++i)
         {
+            var entity = _buffer[i];
             if (!entity.HasLinkMaterialUpdate())
                 continue;
             if (!entity.HasView() || entity.GetView().View is not BuildingShowView view)

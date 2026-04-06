@@ -32,8 +32,13 @@ public struct EdgeData
         EdgeOccupancyLayer = EdgeOccupancyLayer.None;
     }
 
-    public EdgeOccupant[] Get()
+    public EdgeOccupant[] GetOccupant()
     {
         return _hasOccupant ? [_occupant] : [];
+    }
+
+    public string[] GetUid()
+    {
+        return _hasOccupant ? [_occupant.Uid] : [];
     }
 }

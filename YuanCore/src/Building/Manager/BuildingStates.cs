@@ -141,6 +141,14 @@ public class BuildingStates
 
         return _gridMap.Contains(posi) ? _gridMap.GetCell(posi).GetUid() : [];
     }
+
+    public string[] GetEdgeBuildingsUid(Vector2Int posi, BuildingDirection direction)
+    {
+        if(_gridMap == null)
+            throw new InvalidOperationException("GridMap has not been initialized.");
+
+        return _gridMap.Contains(posi) ? _gridMap.GetEdge(posi, direction).GetUid() : [];
+    }
 }
 
 public class MapShapeDefinition
