@@ -9,8 +9,8 @@ public static class LinkMaterialUpdaterFactory
 
     private enum GroupID
     {
-        Road = 0,
-        Pond = 1,
+        Road,
+        Pond,
         DeepPond,
         RiverWay,
         SingleWall,
@@ -37,12 +37,10 @@ public static class LinkMaterialUpdaterFactory
         };
     }
 
-    private static readonly Vector2Int[] RoadCheckGridOffset =
-    [
+    private static readonly Vector2Int[] RoadCheckGridOffset = [
         new(0,-1), new(-1,0), new(0, 1), new(1, 0)
     ];
-    private static readonly Vector2Int[] PondCheckGridOffset =
-    [
+    private static readonly Vector2Int[] PondCheckGridOffset = [
         new(1,0), new(0,1), new(0, -1), new(-1, 0)
     ];
 
@@ -86,12 +84,48 @@ public static class LinkMaterialUpdaterFactory
         };
     }
 
+    private static readonly Vector2Int[] DeepPondCheckGridOffset = [
+        new(1,0), new(0,1), new(0, -1), new(-1, 0), new(-1, -1), new(-1, -1)
+    ];
+
     private static LinkMaterialUpdater DeepPondUpdater()
     {
-
+        SpriteRenderer[] sprites = null;
         return (transform, entity, diffuseLevel) =>
         {
+            if (sprites == null)
+            {
+                sprites = new SpriteRenderer[6];
+                transform = transform.Find("Build");
+                for (var i = 0; i < transform.childCount; ++i)
+                {
+                    var ts = transform.GetChild(i);
+                    var parts = ts.name.Split('|');
+                    if (parts.Length < 3 || parts[2] == "4")
+                        continue;
+                    var num = int.Parse(parts[2]);
+                    sprites[num > 4 ? num - 1 : num] = ts.GetComponent<SpriteRenderer>();
+                }
+            }
 
+            var map = MapContext.Instance;
+            var diffuse = diffuseLevel > 0;
+            var posi = entity.GetGridPosition().Value;
+            for (var i = 0; i < 6; ++i)
+            {
+                var uids = BuildingStates.Instance.GetCellBuildingsUid(posi + DeepPondCheckGridOffset[i]);
+                foreach (var uid in uids)
+                {
+                    var ett = map.GetBuildingByUid(uid);
+                    if(!BuildingGroupMap.TryGetValue(ett.GetBuilding().BuildingID, out var group))
+                        continue;
+                    var flag = group == GroupID.DeepPond;
+                    sprites[i].enabled = !flag;
+                    if (flag && diffuse && !ett.HasLinkMaterialUpdate())
+                        ett.AddLinkMaterialUpdate(diffuseLevel - 1);
+                    break;
+                }
+            }
         };
     }
 }
