@@ -1,16 +1,24 @@
-﻿using Entitas;
+﻿using System.Collections.Generic;
+using Entitas;
 using lmm = YuanCore.Building.YuanCoreBuildingMapLinkMaterialUpdateMatcher;
-using vm = YuanCore.Building.YuanCoreBuildingMapViewMatcher;
 
 namespace YuanCore.Building;
 
 public sealed class LinkMaterialUpdateSystem : IExecuteSystem
 {
+    private readonly IGroup<Map.Entity> _group;
+    private readonly List<Map.Entity> _buffer = [];
+
+    public LinkMaterialUpdateSystem()
+    {
+        _group = MapContext.Instance.GetGroup(Matcher<Map.Entity>.AllOf(lmm.LinkMaterialUpdate));
+    }
+
     public void Execute()
     {
-        var entities = MapContext.Instance.GetGroup(Matcher<Map.Entity>
-            .AllOf(lmm.LinkMaterialUpdate, vm.View));
-        foreach (var entity in entities)
+        _buffer.Clear();
+        _buffer.AddRange(_group.GetEntities());
+        foreach (var entity in _buffer)
         {
             if (!entity.HasLinkMaterialUpdate())
                 continue;
