@@ -12,7 +12,7 @@ public sealed class ConvertGridPositionSystem : ReactiveSystem<Map.Entity>
         => context.CreateCollector(GridPosition);
 
     protected override bool Filter(Map.Entity entity)
-        => entity.HasGridPosition() && entity.HasWorldPosition();
+        => entity.HasGridPosition();
 
     protected override void Execute(List<Map.Entity> entities)
     {

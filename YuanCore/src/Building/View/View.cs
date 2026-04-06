@@ -14,7 +14,8 @@ public class View : MonoBehaviour, IView, IYuanCoreBuildingMapWorldPositionAdded
         LinkedEntity = (Map.Entity)entity;
         LinkedEntity.AddWorldPositionAddedListener(this);
 
-        OnWorldPositionAdded(LinkedEntity, LinkedEntity.GetWorldPosition().Value);
+        if(LinkedEntity.HasWorldPosition())
+            OnWorldPositionAdded(LinkedEntity, LinkedEntity.GetWorldPosition().Value);
     }
 
     public void OnWorldPositionAdded(Map.Entity entity, Vector2 value)

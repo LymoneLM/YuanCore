@@ -26,7 +26,8 @@ public class BuildingView : View , IYuanCoreBuildingMapGridPositionAddedListener
         base.Link(entity);
         LinkedEntity.AddGridPositionAddedListener(this);
 
-        OnGridPositionAdded(LinkedEntity, LinkedEntity.GetGridPosition().Value);
+        if(LinkedEntity.HasGridPosition())
+            OnGridPositionAdded(LinkedEntity, LinkedEntity.GetGridPosition().Value);
     }
 
     public void OnGridPositionAdded(Map.Entity entity, Vector2Int value)
