@@ -86,7 +86,6 @@ public class BuildingStates
 
         if(!_buildings.ContainsKey(uID))
             YuanCorePlugin.Logger.LogWarning($"Can't remove unregistered building {uID}");
-        _buildings.Remove(uID);
 
         var (buildingID, rotation, posi) = _buildings[uID];
         var shape = BuildingShapeRegistry.Get(buildingID, rotation);
@@ -100,6 +99,8 @@ public class BuildingStates
             var pos = posi + edge.Position;
             _gridMap.GetEdge(pos, edge.Direction).Remove(new EdgeOccupant(uID, edge.Direction, edge.Layer));
         }
+
+        _buildings.Remove(uID);
     }
 
     public bool CheckCanBuild(int buildingID, BuildingRotation rotation, Vector2Int posi, out (Vector2Int, bool)[] result)
