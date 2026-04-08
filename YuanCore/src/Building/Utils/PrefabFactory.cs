@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using YuanCore.Core;
 using Object = UnityEngine.Object;
@@ -7,122 +8,126 @@ namespace YuanCore.Building;
 
 public static class PrefabFactory
 {
+    private static readonly Dictionary<string, GameObject> BackMapCache = new();
+    private static readonly Dictionary<string, GameObject> BuildingShowCache = new();
+    private static readonly Dictionary<string, GameObject> BuildingPlacementCache = new();
+
+    private static GameObject _templateHolder;
+
+    private static Transform GetTemplateHolder()
+    {
+        if (_templateHolder != null) return _templateHolder.transform;
+        _templateHolder = new GameObject("[PrefabFactory_Templates]");
+        _templateHolder.SetActive(false);
+        Object.DontDestroyOnLoad(_templateHolder);
+        return _templateHolder.transform;
+    }
+
     public static T LoadAsBackMap<T>(string path) where T : Object
     {
-        var asset = Resources.Load<T>(path);
-        if (asset == null)
+        if (BackMapCache.TryGetValue(path, out var cached))
+            return cached as T;
+
+        var raw = Resources.Load<GameObject>(path);
+        if (raw == null)
         {
             YuanCorePlugin.Logger.LogError($"PrefabLoader: Load failed, path = {path}");
-            return asset;
+            return null as T;
         }
 
-        if (asset is not GameObject prefab || prefab.GetComponent<MonoBehaviour>() == null)
-            return asset;
+        var template = Object.Instantiate(raw, GetTemplateHolder());
 
         if (path.IndexOf("/s/", StringComparison.OrdinalIgnoreCase) != -1)
         {
-            prefab.transform.Find("BuildShop").gameObject.name = "BuildShow";
-            Object.DestroyImmediate(prefab.transform.Find("BuildCity").gameObject.gameObject);
+            template.transform.Find("BuildShop").gameObject.name = "BuildShow";
+            Object.DestroyImmediate(template.transform.Find("BuildCity").gameObject);
         }
 
         if (path.IndexOf("/l/", StringComparison.OrdinalIgnoreCase) != -1 ||
             path.IndexOf("/z/", StringComparison.OrdinalIgnoreCase) != -1)
         {
-            var ts = prefab.transform.Find("AddClickBack");
+            var ts = template.transform.Find("AddClickBack");
             for (var i = 0; i < ts.childCount; ++i)
             {
                 var obj = ts.GetChild(i).GetComponent<AddClickBack>();
-                if (obj != null)
-                    Object.DestroyImmediate(obj);
+                if (obj != null) Object.DestroyImmediate(obj);
             }
-
             ts.gameObject.name = "AllBack";
             ts = ts.Find("AllKuai");
             for (var i = 0; i < ts.childCount; ++i)
             {
                 var obj = ts.GetChild(i).GetComponent<PerFeiWoRange>();
-                if (obj != null)
-                    Object.DestroyImmediate(obj);
-                var go = ts.GetChild(i).gameObject;
-                RemoveColliders(go);
-                RemoveRigidbodies(go);
+                if (obj != null) Object.DestroyImmediate(obj);
+                RemoveColliders(ts.GetChild(i).gameObject);
+                RemoveRigidbodies(ts.GetChild(i).gameObject);
             }
         }
         else
         {
-            var obj = prefab.transform.Find("AddClickBack").gameObject;
-            if (obj != null)
-                Object.DestroyImmediate(obj);
+            var obj = template.transform.Find("AddClickBack")?.gameObject;
+            if (obj != null) Object.DestroyImmediate(obj);
         }
 
-        string[] arr = ["BuildPosiGet", "AllZuDang", "BuildTip"];
-        foreach (var name in arr)
+        foreach (var name in new[] { "BuildPosiGet", "AllZuDang", "BuildTip" })
         {
-            var obj = prefab.transform.Find(name)?.gameObject;
-            if (obj != null)
-                Object.DestroyImmediate(obj);
+            var obj = template.transform.Find(name)?.gameObject;
+            if (obj != null) Object.DestroyImmediate(obj);
         }
 
-        RemoveAllScripts(prefab);
+        RemoveAllScripts(template);
 
-        return asset;
+        BackMapCache[path] = template;
+        return template as T;
     }
 
     public static T LoadAsBuildingShow<T>(string path) where T : Object
     {
-        var asset = Resources.Load<T>(path);
-        if (asset == null)
+        if (BuildingShowCache.TryGetValue(path, out var cached))
+            return cached as T;
+
+        var raw = Resources.Load<GameObject>(path);
+        if (raw == null)
         {
             YuanCorePlugin.Logger.LogError($"PrefabLoader: Load failed, path = {path}");
-            return asset;
+            return null as T;
         }
 
-        if (asset is not GameObject prefab || prefab.GetComponent<BuildingShowView>() != null)
-            return asset;
+        var template = Object.Instantiate(raw, GetTemplateHolder());
 
-        string[] arr = [
+        foreach (var name in new[] {
             "UI/TouMing", "UI/AllDrag", "UIBT",
-            "LineCollider", "RangeColliderA", "RangeColliderB", "NPC", "OutQMember"
-        ];
-        foreach (var name in arr)
+            "LineCollider", "RangeColliderA", "RangeColliderB", "NPC", "OutQMember" })
         {
-            var obj = prefab.transform.Find(name)?.gameObject;
-            if (obj != null)
-                Object.DestroyImmediate(obj);
+            var obj = template.transform.Find(name)?.gameObject;
+            if (obj != null) Object.DestroyImmediate(obj);
         }
 
-        var go = prefab.transform.Find("UI/OpenBT")?.gameObject;
-        RemoveAllScripts(go);
-        // TODO: 添加光标Hover与Click处理脚本
+        RemoveAllScripts(template.transform.Find("UI/OpenBT")?.gameObject);
+        RemoveAllScripts(template);
+        template.AddComponent<BuildingShowView>();
 
-        RemoveAllScripts(prefab);
-        prefab.AddComponent<BuildingShowView>();
-
-        return asset;
+        BuildingShowCache[path] = template;
+        return template as T;
     }
 
-    /// <summary>
-    /// 代理 Resources.Load,对 GameObject 预制体进行预处理：<br/>
-    /// 根节点挂载 BuildingPlacementView.cs <br/>
-    /// 清理 UI/AllDrag 下所有节点的刚体、碰撞体、脚本 <br/>
-    /// 仅推荐用于加载 AllBuild/x/BuildTip/x/x
-    /// </summary>
     public static T LoadAsBuildingPlacement<T>(string path) where T : Object
     {
-        var asset = Resources.Load<T>(path);
-        if (asset == null)
+        if (BuildingPlacementCache.TryGetValue(path, out var cached))
+            return cached as T;
+
+        var raw = Resources.Load<GameObject>(path);
+        if (raw == null)
         {
             YuanCorePlugin.Logger.LogError($"PrefabLoader: Load failed, path = {path}");
-            return asset;
+            return null as T;
         }
 
-        if (asset is not GameObject prefab || prefab.GetComponent<BuildingPlacementView>() != null)
-            return asset;
+        var template = Object.Instantiate(raw, GetTemplateHolder());
 
-        // UI/AllDrag
-        var allDrag = prefab.transform.Find("UI/AllDrag");
+        var allDrag = template.transform.Find("UI/AllDrag");
         if (allDrag == null)
-            throw new NullReferenceException($"PrefabLoader: prefab '{prefab.name}' does not contain path 'UI/AllDrag'");
+            throw new NullReferenceException(
+                $"PrefabLoader: prefab '{raw.name}' does not contain path 'UI/AllDrag'");
 
         for (var i = 0; i < allDrag.childCount; i++)
         {
@@ -132,15 +137,13 @@ public static class PrefabFactory
             RemoveAllScripts(go);
         }
 
-        RemoveAllScripts(prefab);
-        prefab.AddComponent<BuildingPlacementView>();
+        RemoveAllScripts(template);
+        template.AddComponent<BuildingPlacementView>();
 
-        return asset;
+        BuildingPlacementCache[path] = template;
+        return template as T;
     }
 
-    /// <summary>
-    /// 删除 2D 刚体
-    /// </summary>
     private static void RemoveRigidbodies(GameObject go)
     {
         if (go == null)
@@ -153,10 +156,6 @@ public static class PrefabFactory
         }
     }
 
-    /// <summary>
-    /// 删除所有 2D 碰撞体
-    /// 包括 PolygonCollider2D、CircleCollider2D
-    /// </summary>
     private static void RemoveColliders(GameObject go)
     {
         if (go == null)
@@ -172,9 +171,6 @@ public static class PrefabFactory
         }
     }
 
-    /// <summary>
-    /// 删除节点上所有 MonoBehaviour 脚本
-    /// </summary>
     private static void RemoveAllScripts(GameObject go)
     {
         if (go == null)
