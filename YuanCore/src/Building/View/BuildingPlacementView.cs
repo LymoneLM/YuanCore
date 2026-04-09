@@ -32,6 +32,8 @@ public class BuildingPlacementView : BuildingView, IYuanCoreBuildingMapPlacement
         base.Link(entity);
         LinkedEntity.AddPlacementAddedListener(this);
 
+        if (!LinkedEntity.HasPlacement())
+            return;
         var cmp = LinkedEntity.GetPlacement();
         OnPlacementAdded(LinkedEntity, cmp.Offset, cmp.Flags);
     }
