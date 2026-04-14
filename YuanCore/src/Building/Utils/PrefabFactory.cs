@@ -102,7 +102,12 @@ public static class PrefabFactory
             if (obj != null) Object.DestroyImmediate(obj);
         }
 
-        RemoveAllScripts(template.transform.Find("UI/OpenBT")?.gameObject);
+        var go = template.transform.Find("UI/OpenBT")?.gameObject;
+        if (go != null)
+        {
+            RemoveAllScripts(go);
+            go.AddComponent<BuildingOpenBT>();
+        }
         RemoveAllScripts(template);
         template.AddComponent<BuildingShowView>();
 
