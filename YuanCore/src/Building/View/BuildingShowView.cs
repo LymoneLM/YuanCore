@@ -24,7 +24,7 @@ public class BuildingShowView : BuildingView
 
     public void OnPointerEnterForwarded()
     {
-        if (InputBlocker.IsPointerOverUI()) return;
+        if (PointChecker.IsPointerOverUI()) return;
         if (BuildingModeManager.CurrentMode != BuildingInteractionMode.Normal &&
             BuildingModeManager.CurrentMode != BuildingInteractionMode.EditSelect)
             return;
@@ -41,7 +41,7 @@ public class BuildingShowView : BuildingView
     {
         if (button != PointerEventData.InputButton.Left) return;
 
-        if (InputBlocker.IsPointerOverUI()) return;
+        if (PointChecker.IsPointerOverUI()) return;
         if (BuildingModeManager.CurrentMode != BuildingInteractionMode.Normal) return;
 
         if (LinkedEntity != null && LinkedEntity.IsEnabled)
