@@ -71,15 +71,15 @@ public static class BuildingDataAdapter
             var (rotate, isRuin) = ParseRotation(row[6]);
             result.Add(new BuildingDtoM
             {
-                Uid                 = row[0],
-                BuildingID          = int.Parse(row[1]),
-                BuildingLevel       = int.Parse(row[2]),
-                ServantCount        = int.Parse(row[3]),
+                Uid = row[0],
+                BuildingID = int.Parse(row[1]),
+                BuildingLevel = int.Parse(row[2]),
+                ServantCount = int.Parse(row[3]),
                 MonthlyPaymentLevel = int.Parse(row[4]),
-                GridPosition        = ParseGrid(row[5]),
-                Rotation            = rotate,
-                IsRuined            = isRuin,
-                TaoZhuangID         = int.Parse(row[7]),
+                GridPosition = ParseGrid(row[5]),
+                Rotation = rotate,
+                IsRuined = isRuin,
+                TaoZhuangID = int.Parse(row[7]),
             });
         }
         return result;
@@ -93,19 +93,19 @@ public static class BuildingDataAdapter
             var (rotate, isRuin) = ParseRotation(row[4]);
             result.Add(new BuildingDtoZ
             {
-                Uid             = row[0],
-                BuildingID      = int.Parse(row[1]),
-                BuildingLevel   = int.Parse(row[2]),
-                GridPosition    = ParseGrid(row[3]),
-                Rotation        = rotate,
-                IsRuined        = isRuin,
-                FieldSize       = float.Parse(row[5]),
-                PlantTime       = row[6],
-                OutputAmountA   = int.Parse(row[7]),
+                Uid = row[0],
+                BuildingID = int.Parse(row[1]),
+                BuildingLevel = int.Parse(row[2]),
+                GridPosition = ParseGrid(row[3]),
+                Rotation = rotate,
+                IsRuined = isRuin,
+                FieldSize = float.Parse(row[5]),
+                PlantTime = row[6],
+                OutputAmountA = int.Parse(row[7]),
                 NextHarvestTime = row[8],
-                WorkState       = int.Parse(row[9]),
-                TaoZhuangID     = int.Parse(row[10]),
-                OutputAmountB   = int.Parse(row[11]),
+                WorkState = int.Parse(row[9]),
+                TaoZhuangID = int.Parse(row[10]),
+                OutputAmountB = int.Parse(row[11]),
             });
         }
         return result;
@@ -120,20 +120,20 @@ public static class BuildingDataAdapter
             var (rotation, isRuined) = ParseRotation(row[5]);
             result.Add(new BuildingDtoS
             {
-                Uid               = row[0],
-                BuildingID        = int.Parse(row[1]),
-                BuildingLevel     = int.Parse(row[2]),
-                EmployeeCount     = int.Parse(row[3]),
-                GridPosition      = ParseGrid(row[4]),
-                Rotation          = rotation,
-                IsRuined          = isRuined,
-                ShopOwnerID       = row[6],
-                IsOpen            = row[7] == "1",
-                SalaryBase        = int.Parse(row[8]),
+                Uid = row[0],
+                BuildingID = int.Parse(row[1]),
+                BuildingLevel = int.Parse(row[2]),
+                EmployeeCount = int.Parse(row[3]),
+                GridPosition = ParseGrid(row[4]),
+                Rotation = rotation,
+                IsRuined = isRuined,
+                ShopOwnerID = row[6],
+                IsOpen = row[7] == "1",
+                SalaryBase = int.Parse(row[8]),
                 AccumulatedProfit = int.Parse(row[9]),
-                LastUpdateTime    = row[10],
-                TaoZhuangID       = int.Parse(row[11]),
-                YuanbaoSpent      = int.Parse(row[12]),
+                LastUpdateTime = row[10],
+                TaoZhuangID = int.Parse(row[11]),
+                YuanbaoSpent = int.Parse(row[12]),
             });
         }
 
@@ -142,15 +142,15 @@ public static class BuildingDataAdapter
             var (rotation, isRuined) = ParseRotation(row[4]);
             result.Add(new BuildingDtoC
             {
-                Uid            = row[0],
-                BuildingID     = int.Parse(row[1]),
-                BuildingLevel  = int.Parse(row[2]),
-                GridPosition   = ParseGrid(row[3]),
-                Rotation       = rotation,
-                IsRuined       = isRuined,
-                XueFengClass   = int.Parse(row[5]),
-                TaoZhuangID    = int.Parse(row[6]),
-                TuitionCost    = int.Parse(row[7]),
+                Uid = row[0],
+                BuildingID = int.Parse(row[1]),
+                BuildingLevel = int.Parse(row[2]),
+                GridPosition = ParseGrid(row[3]),
+                Rotation = rotation,
+                IsRuined = isRuined,
+                XueFengClass = int.Parse(row[5]),
+                TaoZhuangID = int.Parse(row[6]),
+                TuitionCost = int.Parse(row[7]),
                 LastUpdateTime = row[8],
             });
         }
@@ -166,13 +166,13 @@ public static class BuildingDataAdapter
             var (rotation, isRuined) = ParseRotation(row[4]);
             result.Add(new BuildingDto
             {
-                Uid           = row[0],
-                BuildingID    = int.Parse(row[1]),
+                Uid = row[0],
+                BuildingID = int.Parse(row[1]),
                 BuildingLevel = int.Parse(row[2]),
-                GridPosition  = ParseGrid(row[3]),
-                Rotation      = rotation,
-                IsRuined      = isRuined,
-                TaoZhuangID   = int.Parse(row[5]),
+                GridPosition = ParseGrid(row[3]),
+                Rotation = rotation,
+                IsRuined = isRuined,
+                TaoZhuangID = int.Parse(row[5]),
             });
         }
         return result;
@@ -186,14 +186,14 @@ public static class BuildingDataAdapter
             var (rotation, isRuined) = ParseRotation(row[4]);
             result.Add(new BuildingDtoL
             {
-                Uid          = row[0],
-                BuildingID   = int.Parse(row[1]),
+                Uid = row[0],
+                BuildingID = int.Parse(row[1]),
                 BuildingLevel = int.Parse(row[2]),
                 GridPosition = ParseGrid(row[3]),
-                Rotation     = rotation,
-                IsRuined     = isRuined,
-                TaoZhuangID  = int.Parse(row[5]),
-                DaiZangData  = row[6] == "null" ? null : row[6],
+                Rotation = rotation,
+                IsRuined = isRuined,
+                TaoZhuangID = int.Parse(row[5]),
+                DaiZangData = row[6] == "null" ? null : row[6],
             });
         }
         return result;
@@ -210,7 +210,7 @@ public static class BuildingDataAdapter
     {
         var value = int.Parse(raw);
         return value < 0 ?
-            ((BuildingRotation)(-value-1), true) :
+            ((BuildingRotation)(-value - 1), true) :
             ((BuildingRotation)value, false);
     }
 }
