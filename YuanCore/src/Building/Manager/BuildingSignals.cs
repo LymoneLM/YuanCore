@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace YuanCore.Building;
@@ -12,4 +12,8 @@ public static class BuildingSignals
     public static event Action<Transform> OnSceneCreated;
     public static void InvokeSceneCreated(Transform buildViewRoot)
         => OnSceneCreated?.Invoke(buildViewRoot);
+
+    public static event Action<string, int> OnBuildingClicked;
+    public static void InvokeBuildingClicked(string uid, int buildingID)
+        => OnBuildingClicked?.Invoke(uid, buildingID);
 }
