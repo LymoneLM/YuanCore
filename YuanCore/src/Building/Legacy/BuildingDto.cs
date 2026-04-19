@@ -21,10 +21,10 @@ public class BuildingDtoM : BuildingDto
 
 public class BuildingDtoZ : BuildingDto
 {
-    public float FieldSize;
-    public string PlantTime;
+    public float FertilityRate;
+    public Vector2Int PlantTime;
     public int OutputAmountA;
-    public string NextHarvestTime;
+    public Vector2Int LastUpdateTime;
     public int WorkState;
     public int OutputAmountB;
 }
@@ -32,22 +32,57 @@ public class BuildingDtoZ : BuildingDto
 public class BuildingDtoS : BuildingDto
 {
     public int EmployeeCount;
-    public string ShopOwnerID;
-    public bool IsOpen;
+    public int ShopOwnerID;
+    public bool IsSelling;
     public int SalaryBase;
     public int AccumulatedProfit;
-    public string LastUpdateTime;
+    public Vector2Int LastUpdateTime;
     public int YuanbaoSpent;
 }
 
 public class BuildingDtoC : BuildingDto
 {
     public int XueFengClass;
-    public int TuitionCost;
-    public string LastUpdateTime;
+    public int MonthlyCost;
+    public Vector2Int LastUpdateTime;
 }
 
 public class BuildingDtoL : BuildingDto
 {
-    public string DaiZangData;
+    public Deceased? DeceasedData;
+
+    public struct Deceased(int generation, Gender gender, string name, int age)
+    {
+        public int Generation = generation;
+        public Gender Gender = gender;
+        public string Name = name;
+        public int Age = age;
+
+        public static Deceased? Parse(string str)
+        {
+            var parts = str.Split('|');
+            if (str == "null" || parts.Length < 4)
+                return null;
+
+            return new Deceased(
+                int.Parse(parts[0]),
+                (Gender)int.Parse(parts[1]),
+                parts[2],
+                int.Parse(parts[3])
+            );
+        }
+
+        public static string ToString(Deceased? deceased)
+        {
+            return deceased == null ? "null" : deceased.ToString();
+        }
+
+        public override string ToString()
+        {
+            return $"{Generation}|{(int)Gender}|{Name}|{Age}";
+        }
+    }
 }
+
+
+

@@ -16,11 +16,11 @@ public static class BuildingDataAdapter
 
         return sceneClass switch
         {
-            "M" => AdaptM(sceneIndex),
-            "Z" => AdaptZ(sceneIndex, subSceneIndex),
-            "S" => AdaptS(sceneIndex),
-            "H" => AdaptH(sceneIndex),
-            "L" => AdaptL(sceneIndex, subSceneIndex),
+            "M" => AdaptM(),
+            "Z" => AdaptZ(),
+            "S" => AdaptS(),
+            "H" => AdaptH(),
+            "L" => AdaptL(),
             _ => []
         };
     }
@@ -63,7 +63,7 @@ public static class BuildingDataAdapter
         }
     }
 
-    private static List<BuildingDto> AdaptM(int sceneIndex)
+    private static List<BuildingDto> AdaptM()
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_m.Count);
         foreach (var row in Mainload.BuildInto_m)
@@ -76,7 +76,7 @@ public static class BuildingDataAdapter
                 BuildingLevel = int.Parse(row[2]),
                 ServantCount = int.Parse(row[3]),
                 MonthlyPaymentLevel = int.Parse(row[4]),
-                GridPosition = ParseGrid(row[5]),
+                GridPosition = ParseVector2Int(row[5]),
                 Rotation = rotate,
                 IsRuined = isRuin,
                 TaoZhuangID = int.Parse(row[7]),
@@ -85,7 +85,7 @@ public static class BuildingDataAdapter
         return result;
     }
 
-    private static List<BuildingDto> AdaptZ(int sceneIndex, int subSceneIndex)
+    private static List<BuildingDto> AdaptZ()
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_z.Count);
         foreach (var row in Mainload.BuildInto_z)
@@ -96,13 +96,13 @@ public static class BuildingDataAdapter
                 Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 BuildingLevel = int.Parse(row[2]),
-                GridPosition = ParseGrid(row[3]),
+                GridPosition = ParseVector2Int(row[3]),
                 Rotation = rotate,
                 IsRuined = isRuin,
-                FieldSize = float.Parse(row[5]),
-                PlantTime = row[6],
+                FertilityRate = float.Parse(row[5]),
+                PlantTime = ParseVector2Int(row[6]),
                 OutputAmountA = int.Parse(row[7]),
-                NextHarvestTime = row[8],
+                LastUpdateTime = ParseVector2Int(row[8]),
                 WorkState = int.Parse(row[9]),
                 TaoZhuangID = int.Parse(row[10]),
                 OutputAmountB = int.Parse(row[11]),
@@ -111,7 +111,7 @@ public static class BuildingDataAdapter
         return result;
     }
 
-    private static List<BuildingDto> AdaptS(int sceneIndex)
+    private static List<BuildingDto> AdaptS()
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_s.Count + Mainload.BuildInto_c.Count);
 
@@ -124,14 +124,14 @@ public static class BuildingDataAdapter
                 BuildingID = int.Parse(row[1]),
                 BuildingLevel = int.Parse(row[2]),
                 EmployeeCount = int.Parse(row[3]),
-                GridPosition = ParseGrid(row[4]),
+                GridPosition = ParseVector2Int(row[4]),
                 Rotation = rotation,
                 IsRuined = isRuined,
-                ShopOwnerID = row[6],
-                IsOpen = row[7] == "1",
+                ShopOwnerID = int.Parse(row[6]),
+                IsSelling = row[7] == "1",
                 SalaryBase = int.Parse(row[8]),
                 AccumulatedProfit = int.Parse(row[9]),
-                LastUpdateTime = row[10],
+                LastUpdateTime = ParseVector2Int(row[10]),
                 TaoZhuangID = int.Parse(row[11]),
                 YuanbaoSpent = int.Parse(row[12]),
             });
@@ -145,20 +145,20 @@ public static class BuildingDataAdapter
                 Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 BuildingLevel = int.Parse(row[2]),
-                GridPosition = ParseGrid(row[3]),
+                GridPosition = ParseVector2Int(row[3]),
                 Rotation = rotation,
                 IsRuined = isRuined,
                 XueFengClass = int.Parse(row[5]),
                 TaoZhuangID = int.Parse(row[6]),
-                TuitionCost = int.Parse(row[7]),
-                LastUpdateTime = row[8],
+                MonthlyCost = int.Parse(row[7]),
+                LastUpdateTime = ParseVector2Int(row[8]),
             });
         }
 
         return result;
     }
 
-    private static List<BuildingDto> AdaptH(int sceneIndex)
+    private static List<BuildingDto> AdaptH()
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_h.Count);
         foreach (var row in Mainload.BuildInto_h)
@@ -169,7 +169,7 @@ public static class BuildingDataAdapter
                 Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 BuildingLevel = int.Parse(row[2]),
-                GridPosition = ParseGrid(row[3]),
+                GridPosition = ParseVector2Int(row[3]),
                 Rotation = rotation,
                 IsRuined = isRuined,
                 TaoZhuangID = int.Parse(row[5]),
@@ -178,7 +178,7 @@ public static class BuildingDataAdapter
         return result;
     }
 
-    private static List<BuildingDto> AdaptL(int sceneIndex, int subSceneIndex)
+    private static List<BuildingDto> AdaptL()
     {
         var result = new List<BuildingDto>(Mainload.BuildInto_l.Count);
         foreach (var row in Mainload.BuildInto_l)
@@ -189,18 +189,18 @@ public static class BuildingDataAdapter
                 Uid = row[0],
                 BuildingID = int.Parse(row[1]),
                 BuildingLevel = int.Parse(row[2]),
-                GridPosition = ParseGrid(row[3]),
+                GridPosition = ParseVector2Int(row[3]),
                 Rotation = rotation,
                 IsRuined = isRuined,
                 TaoZhuangID = int.Parse(row[5]),
-                DaiZangData = row[6] == "null" ? null : row[6],
+                DeceasedData = BuildingDtoL.Deceased.Parse(row[6]),
             });
         }
         return result;
     }
 
 
-    private static Vector2Int ParseGrid(string value)
+    private static Vector2Int ParseVector2Int(string value)
     {
         var arr = value.Split('|');
         return new Vector2Int(int.Parse(arr[0]), int.Parse(arr[1]));
