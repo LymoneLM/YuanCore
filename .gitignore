@@ -2,6 +2,9 @@
 .idea
 .vs
 **.user
+# Ignore Agent Generate files
+**/.claude
+**/CLAUDE.md
 # Ignore build output directories
 ModPack/BepInEx/
 ModPack/*.zip

@@ -10,6 +10,7 @@ public sealed class BuildingStateComponent : IComponent
     public int TaoZhuangID;
     public BuildingRotation Rotation;
     public bool IsRuined;
+    public bool IsPlacement = false;
 
     public int VanillaStateID => IsRuined ? -(int)Rotation-1 : (int)Rotation;
 }

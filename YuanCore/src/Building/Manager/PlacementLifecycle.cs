@@ -1,0 +1,345 @@
+using System.Collections.Generic;
+using Entitas;
+using UnityEngine;
+using YuanCore.Core;
+
+namespace YuanCore.Building;
+
+/// <summary>
+/// Placement 生命周期管理。
+/// 负责建造/编辑中 Placement 的创建、取消恢复、提交确认、旋转。
+/// 不包含输入采集逻辑——由各 System 调用。
+/// </summary>
+public static class PlacementLifecycle
+{
+    private static readonly List<Map.Entity> Buffer = [];
+
+    // ═══════════════════════════════════════════════════
+    //  建造模式：创建新 Placement
+    // ═══════════════════════════════════════════════════
+
+    /// <summary>
+    /// 进入建造模式时调用，创建一个新建筑 Placement 实体。
+    /// </summary>
+    public static Map.Entity BeginNewPlacement(MapContext ctx, int buildingID, int taoZhuangID,
+        BuildingRotation rotation)
+    {
+        var sessionId = BuildingModeManager.AllocateSession();
+
+        var entity = ctx.CreateEntity();
+
+        // 生成临时 UID
+        var uid = $"_placement_{sessionId}_{buildingID}";
+        entity.AddBuilding(uid, buildingID);
+        entity.AddBuildingState(taoZhuangID, rotation, false, false);
+        entity.AddPlacement(Vector2Int.zero, []);
+        entity.AddPlacementSession(sessionId, false);
+
+        // GridPosition 由 PlacementFollowSystem 在下一帧设定
+        if (ctx.HasCursor())
+        {
+            var cursorGrid = ctx.GetCursor().GridPosition;
+            entity.AddGridPosition(cursorGrid);
+        }
+        else
+        {
+            entity.AddGridPosition(Vector2Int.zero);
+        }
+
+        return entity;
+    }
+
+    // ═══════════════════════════════════════════════════
+    //  编辑模式：已有建筑 → Placement
+    // ═══════════════════════════════════════════════════
+
+    /// <summary>
+    /// 编辑选中建筑，进入 EditMove。
+    /// 1. 从占用图临时移除旧建筑
+    /// 2. 切换 View: Show → Placement
+    /// 3. 挂 Placement / EditMoveSession 组件
+    /// 4. 切换模式
+    /// </summary>
+    public static void BeginEditMove(MapContext ctx, string uid)
+    {
+        var entity = ctx.GetBuildingByUid(uid);
+        if (entity == null)
+        {
+            YuanCorePlugin.Logger.LogWarning($"[PlacementLifecycle] Entity not found: {uid}");
+            return;
+        }
+
+        var sessionId = BuildingModeManager.AllocateSession();
+        var gridPos = entity.GetGridPosition().Value;
+        var rotation = entity.GetBuildingState().Rotation;
+
+        // 1. 从占用图移除
+        BuildingStates.Instance.RemoveBuilding(uid);
+
+        // 2. 挂编辑会话组件
+        entity.AddEditMoveSession(uid, gridPos, rotation, true);
+        entity.AddPlacement(Vector2Int.zero, new (Vector2Int, bool)[0]);
+        entity.AddPlacementSession(sessionId, true);
+
+        // 3. 请求视图切换
+        entity.AddViewSwitchRequest(true); // → PlacementView
+
+        // 4. 兼容层同步
+        MainloadCompatibility.SyncEditTarget(uid);
+
+        // 5. 切换模式
+        BuildingModeManager.SetMode(BuildingInteractionMode.EditMove);
+    }
+
+    // ═══════════════════════════════════════════════════
+    //  取消所有当前会话的 Placement
+    // ═══════════════════════════════════════════════════
+
+    public static void CancelAllSessionPlacements(MapContext ctx)
+    {
+        var sessionId = BuildingModeManager.CurrentSessionId;
+        CollectSessionPlacements(ctx, sessionId);
+
+        foreach (var entity in Buffer)
+        {
+            if (entity.HasEditMoveSession())
+            {
+                // 已有建筑——恢复原状
+                var session = entity.GetEditMoveSession();
+
+                // 恢复旋转
+                if (entity.HasBuildingState())
+                {
+                    var bs = entity.GetBuildingState();
+                    entity.ReplaceBuildingState(bs.TaoZhuangID, session.OriginalRotation, bs.IsRuined, false);
+                }
+
+                // 恢复位置
+                entity.ReplaceGridPosition(session.OriginalGridPosition);
+
+                // 恢复占用
+                if (session.OccupancyRemoved)
+                {
+                    var building = entity.GetBuilding();
+                    BuildingStates.Instance.AddBuilding(
+                        building.BuildingID, session.OriginalRotation,
+                        session.OriginalGridPosition, session.Uid);
+                }
+
+                // 清理组件
+                entity.RemoveEditMoveSession();
+                entity.RemovePlacement();
+                entity.RemovePlacementSession();
+
+                // 请求切回 ShowView
+                if (!entity.HasViewSwitchRequest())
+                    entity.AddViewSwitchRequest(false);
+                else
+                    entity.ReplaceViewSwitchRequest(false);
+            }
+            else
+            {
+                // 新建筑——直接销毁
+                DestroyPlacementEntity(entity);
+            }
+        }
+    }
+
+    // ═══════════════════════════════════════════════════
+    //  建造模式提交
+    // ═══════════════════════════════════════════════════
+
+    public static bool TrySubmitBuild(MapContext ctx)
+    {
+        var sessionId = BuildingModeManager.CurrentSessionId;
+        CollectSessionPlacements(ctx, sessionId);
+
+        // 1. 复检所有 Placement
+        if (!RecheckAll())
+        {
+            YuanCorePlugin.Logger.LogDebug("[PlacementLifecycle] Build recheck failed.");
+            return false;
+        }
+
+        // 2. 业务可建造检查（简化：检查场景是否就绪）
+        if (!MainloadCompatibility.IsSceneCreated)
+        {
+            YuanCorePlugin.Logger.LogDebug("[PlacementLifecycle] Scene not ready.");
+            return false;
+        }
+
+        // 3. TODO: 扣除资源（需接入原版资源系统）
+        //    BusinessBuildCheck.DeductResources(...)
+
+        // 4. 提交每个 Placement
+        foreach (var entity in Buffer)
+        {
+            var building = entity.GetBuilding();
+            var state = entity.GetBuildingState();
+            var gridPos = entity.GetGridPosition().Value;
+
+            // 分配正式 UID
+            var newUid = "X000"; // TODO: 采用原版的递增UID
+            entity.ReplaceBuilding(newUid, building.BuildingID);
+
+            // 写入占用图
+            BuildingStates.Instance.AddBuilding(building.BuildingID, state.Rotation, gridPos, newUid);
+
+            // TODO: 写回原版建筑数据（SaveData / Mainload.BuildInto_x）
+            //       SyncBuildingToVanilla(entity);
+
+            // 清理 Placement 组件
+            entity.RemovePlacement();
+            entity.RemovePlacementSession();
+
+            // 切换 View
+            if (!entity.HasViewSwitchRequest())
+                entity.AddViewSwitchRequest(false);
+            else
+                entity.ReplaceViewSwitchRequest(false);
+        }
+
+        // 5. 退出建造模式（或可选继续放置）
+        BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
+        MainloadCompatibility.SyncBuildPanelOpen(false);
+        return true;
+    }
+
+    // ═══════════════════════════════════════════════════
+    //  编辑移动提交
+    // ═══════════════════════════════════════════════════
+
+    public static bool TrySubmitEditMove(MapContext ctx)
+    {
+        var sessionId = BuildingModeManager.CurrentSessionId;
+        CollectSessionPlacements(ctx, sessionId);
+
+        // 1. 复检
+        if (!RecheckAll())
+        {
+            YuanCorePlugin.Logger.LogDebug("[PlacementLifecycle] EditMove recheck failed.");
+            return false;
+        }
+
+        // 2. 提交
+        foreach (var entity in Buffer)
+        {
+            var building = entity.GetBuilding();
+            var state = entity.GetBuildingState();
+            var gridPos = entity.GetGridPosition().Value;
+
+            // 写入新占用
+            BuildingStates.Instance.AddBuilding(
+                building.BuildingID, state.Rotation, gridPos, building.Uid);
+
+            // TODO: 写回原版数据中的位置/旋转
+            //       SyncBuildingPositionToVanilla(entity);
+
+            // 清理组件
+            if (entity.HasEditMoveSession())
+                entity.RemoveEditMoveSession();
+            entity.RemovePlacement();
+            entity.RemovePlacementSession();
+
+            // 切换回 ShowView
+            if (!entity.HasViewSwitchRequest())
+                entity.AddViewSwitchRequest(false);
+            else
+                entity.ReplaceViewSwitchRequest(false);
+
+            // 触发 LinkMaterial 更新
+            entity.AddLinkMaterialUpdate(1);
+        }
+
+        // 回到 EditSelect（或 Normal，取决于交互设计）
+        BuildingModeManager.SetMode(BuildingInteractionMode.EditSelect);
+        MainloadCompatibility.SyncEditTarget("null");
+        return true;
+    }
+
+    // ═══════════════════════════════════════════════════
+    //  旋转
+    // ═══════════════════════════════════════════════════
+
+    public static void RotateSessionPlacements(MapContext ctx)
+    {
+        var sessionId = BuildingModeManager.CurrentSessionId;
+        CollectSessionPlacements(ctx, sessionId);
+
+        foreach (var entity in Buffer)
+        {
+            if (!entity.HasBuildingState()) continue;
+            var bs = entity.GetBuildingState();
+            var newRot = (BuildingRotation)(((int)bs.Rotation + 1) % 4);
+
+            // 检查该旋转是否在 ShapeRegistry 中注册
+            var bid = entity.GetBuilding().BuildingID;
+            if (!BuildingShapeRegistry.Contains(bid, newRot))
+            {
+                YuanCorePlugin.Logger.LogDebug(
+                    $"[PlacementLifecycle] Rotation {newRot} not registered for {bid}, skipping.");
+                continue;
+            }
+
+            entity.ReplaceBuildingState(bs.TaoZhuangID, newRot, bs.IsRuined, false);
+            // PlacementValidationSystem 会在下一帧重新检测
+            // 视图需要重建——因旋转改变了 VanillaStateID
+            if (!entity.HasViewSwitchRequest())
+                entity.AddViewSwitchRequest(true); // rebuild as placement
+            else
+                entity.ReplaceViewSwitchRequest(true);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════
+    //  内部工具
+    // ═══════════════════════════════════════════════════
+
+    private static void CollectSessionPlacements(MapContext ctx, int sessionId)
+    {
+        Buffer.Clear();
+        var group = ctx.GetGroup(
+            Matcher<Map.Entity>.AllOf(
+                YuanCoreBuildingMapPlacementSessionMatcher.PlacementSession));
+        foreach (var entity in group.GetEntities())
+        {
+            if (entity.GetPlacementSession().SessionId == sessionId)
+                Buffer.Add(entity);
+        }
+    }
+
+    /// <summary>
+    /// 对缓冲区内所有 Placement 执行完整复检。
+    /// </summary>
+    private static bool RecheckAll()
+    {
+        foreach (var entity in Buffer)
+        {
+            if (!entity.HasBuilding() || !entity.HasBuildingState() || !entity.HasGridPosition())
+                return false;
+
+            var building = entity.GetBuilding();
+            var state = entity.GetBuildingState();
+            var gridPos = entity.GetGridPosition().Value;
+
+            if (!BuildingStates.Instance.CheckCanBuild(
+                    building.BuildingID, state.Rotation, gridPos, out _))
+                return false;
+        }
+        return true;
+    }
+
+    private static void DestroyPlacementEntity(Map.Entity entity)
+    {
+        // 先销毁 View GameObject
+        if (entity.HasView())
+        {
+            var view = entity.GetView().View;
+            if (view is MonoBehaviour mb && mb != null)
+                Object.Destroy(mb.gameObject);
+            entity.RemoveView();
+        }
+
+        entity.Destroy();
+    }
+}

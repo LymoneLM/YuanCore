@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using YuanCore.Core;
 
@@ -82,6 +82,9 @@ public class BuildingManager : MonoBehaviour
     {
         BuildViewRoot = null;
 
+        // 重置 Core 模式状态
+        BuildingModeManager.Reset();
+
         // Vanilla
         Mainload.MemberData_Enter = "null";
         Mainload.BuildID_IsYour_Enter[0] = -1;
@@ -144,7 +147,7 @@ public class BuildingManager : MonoBehaviour
 
             var entity = MapContext.Instance.CreateEntity();
             entity.AddBuilding(dto.Uid, dto.BuildingID);
-            entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined);
+            entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined, false);
             entity.AddGridPosition(dto.GridPosition);
             entity.AddLinkMaterialUpdate(1);
 

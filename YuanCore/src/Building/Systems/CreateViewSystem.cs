@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
-using YuanCore.Core;
 using static YuanCore.Building.YuanCoreBuildingMapBuildingStateMatcher;
 
 namespace YuanCore.Building;
@@ -14,12 +13,15 @@ public sealed class CreateViewSystem : ReactiveSystem<Map.Entity>
         => context.CreateCollector(BuildingState);
 
     protected override bool Filter(Map.Entity entity)
-        => entity.HasBuilding() && entity.HasBuildingState() && !entity.HasView();
+        => entity.HasBuilding() && entity.HasBuildingState();
 
     protected override void Execute(List<Map.Entity> entities)
     {
         foreach (var entity in entities)
         {
+            if (entity.HasView() && entity.GetView().View is View v)
+                Object.Destroy(v.gameObject);
+
             var view = InstantiateView(entity);
             if (view != null)
                 entity.AddView(view);
@@ -30,7 +32,7 @@ public sealed class CreateViewSystem : ReactiveSystem<Map.Entity>
     {
         var building = entity.GetBuilding();
         var state = entity.GetBuildingState();
-        var prefab = entity.HasPlacement() ?
+        var prefab = state.IsPlacement ?
             PrefabFactory.LoadAsBuildingPlacement<GameObject>(
                 $"AllBuild/{state.TaoZhuangID}/BuildTip/{building.BuildingID}/{state.VanillaStateID}") :
             PrefabFactory.LoadAsBuildingShow<GameObject>(
