@@ -28,15 +28,3 @@ public sealed class EditMoveSessionComponent : IComponent
     public BuildingRotation OriginalRotation;
     public bool OccupancyRemoved;
 }
-
-/// <summary>
-/// 建造会话组件——标记一个 Placement 属于哪个建造/编辑会话。
-/// </summary>
-[Context(typeof(MapContext))]
-public sealed class PlacementSessionComponent : IComponent
-{
-    /// <summary>会话 ID，同一次建造/编辑操作共享同一个 SessionId。</summary>
-    public int SessionId;
-}
-
-

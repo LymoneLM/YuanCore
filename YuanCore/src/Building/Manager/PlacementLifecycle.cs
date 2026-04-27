@@ -24,16 +24,13 @@ public static class PlacementLifecycle
     public static Map.Entity BeginNewPlacement(MapContext ctx, int buildingID, int taoZhuangID,
         BuildingRotation rotation)
     {
-        var sessionId = BuildingModeManager.AllocateSession();
-
         var entity = ctx.CreateEntity();
 
         // 生成临时 UID
-        var uid = $"_placement_{sessionId}_{buildingID}";
+        var uid = $"_placement_{buildingID}";
         entity.AddBuilding(uid, buildingID);
         entity.AddBuildingState(taoZhuangID, rotation, false, false);
         entity.AddPlacement(Vector2Int.zero, []);
-        entity.AddPlacementSession(sessionId);
 
         // GridPosition 由 PlacementFollowSystem 在下一帧设定
         entity.AddGridPosition(CursorState.GridPosition);
@@ -61,7 +58,6 @@ public static class PlacementLifecycle
             return;
         }
 
-        var sessionId = BuildingModeManager.AllocateSession();
         var gridPos = entity.GetGridPosition().Value;
         var rotation = entity.GetBuildingState().Rotation;
 
@@ -71,7 +67,6 @@ public static class PlacementLifecycle
         // 2. 挂编辑会话组件
         entity.AddEditMoveSession(uid, gridPos, rotation, true);
         entity.AddPlacement(Vector2Int.zero, new (Vector2Int, bool)[0]);
-        entity.AddPlacementSession(sessionId);
 
         // 3. 请求视图切换 → PlacementView
         var state = entity.GetBuildingState();
@@ -90,8 +85,7 @@ public static class PlacementLifecycle
 
     public static void CancelAllSessionPlacements(MapContext ctx)
     {
-        var sessionId = BuildingModeManager.CurrentSessionId;
-        CollectSessionPlacements(ctx, sessionId);
+        CollectSessionPlacements(ctx);
 
         foreach (var entity in Buffer)
         {
@@ -122,7 +116,6 @@ public static class PlacementLifecycle
                 // 清理组件
                 entity.RemoveEditMoveSession();
                 entity.RemovePlacement();
-                entity.RemovePlacementSession();
 
             }
             else
@@ -139,8 +132,7 @@ public static class PlacementLifecycle
 
     public static bool TrySubmitBuild(MapContext ctx)
     {
-        var sessionId = BuildingModeManager.CurrentSessionId;
-        CollectSessionPlacements(ctx, sessionId);
+        CollectSessionPlacements(ctx);
 
         // 1. 复检所有 Placement
         if (!RecheckAll())
@@ -178,7 +170,6 @@ public static class PlacementLifecycle
 
             // 清理 Placement 组件
             entity.RemovePlacement();
-            entity.RemovePlacementSession();
 
             // 切换 View
             entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, false);
@@ -196,8 +187,7 @@ public static class PlacementLifecycle
 
     public static bool TrySubmitEditMove(MapContext ctx)
     {
-        var sessionId = BuildingModeManager.CurrentSessionId;
-        CollectSessionPlacements(ctx, sessionId);
+        CollectSessionPlacements(ctx);
 
         // 1. 复检
         if (!RecheckAll())
@@ -224,7 +214,6 @@ public static class PlacementLifecycle
             if (entity.HasEditMoveSession())
                 entity.RemoveEditMoveSession();
             entity.RemovePlacement();
-            entity.RemovePlacementSession();
 
             // 切换回 ShowView
             entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, false);
@@ -245,8 +234,7 @@ public static class PlacementLifecycle
 
     public static void RotateSessionPlacements(MapContext ctx)
     {
-        var sessionId = BuildingModeManager.CurrentSessionId;
-        CollectSessionPlacements(ctx, sessionId);
+        CollectSessionPlacements(ctx);
 
         foreach (var entity in Buffer)
         {
@@ -273,17 +261,14 @@ public static class PlacementLifecycle
     //  内部工具
     // ═══════════════════════════════════════════════════
 
-    private static void CollectSessionPlacements(MapContext ctx, int sessionId)
+    private static void CollectSessionPlacements(MapContext ctx)
     {
         Buffer.Clear();
         var group = ctx.GetGroup(
             Matcher<Map.Entity>.AllOf(
-                YuanCoreBuildingMapPlacementSessionMatcher.PlacementSession));
+                YuanCoreBuildingMapPlacementMatcher.Placement));
         foreach (var entity in group.GetEntities())
-        {
-            if (entity.GetPlacementSession().SessionId == sessionId)
-                Buffer.Add(entity);
-        }
+            Buffer.Add(entity);
     }
 
     /// <summary>

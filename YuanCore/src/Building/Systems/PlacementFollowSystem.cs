@@ -20,8 +20,7 @@ public sealed class PlacementFollowSystem : IExecuteSystem
         _context = context;
         _placementGroup = context.GetGroup(
             Matcher<Map.Entity>.AllOf(
-                YuanCoreBuildingMapPlacementMatcher.Placement,
-                YuanCoreBuildingMapPlacementSessionMatcher.PlacementSession));
+                YuanCoreBuildingMapPlacementMatcher.Placement));
     }
 
     public void Execute()
@@ -38,12 +37,8 @@ public sealed class PlacementFollowSystem : IExecuteSystem
         _buffer.Clear();
         _buffer.AddRange(_placementGroup.GetEntities());
 
-        var sessionId = BuildingModeManager.CurrentSessionId;
-
         foreach (var entity in _buffer)
         {
-            if (entity.GetPlacementSession().SessionId != sessionId) continue;
-
             var offset = entity.GetPlacement().Offset;
             entity.ReplaceGridPosition(CursorState.GridPosition + offset);
         }

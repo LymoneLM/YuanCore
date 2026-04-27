@@ -5,10 +5,8 @@ namespace YuanCore.Building;
 public static class BuildingModeManager
 {
     private static BuildingInteractionMode _currentMode = BuildingInteractionMode.Normal;
-    private static int _nextSessionId = 1;
 
     public static BuildingInteractionMode CurrentMode => _currentMode;
-    public static int CurrentSessionId { get; private set; }
 
     public static void SetMode(BuildingInteractionMode newMode)
     {
@@ -20,12 +18,6 @@ public static class BuildingModeManager
         MainloadCompatibility.SyncModeToVanilla(newMode);
 
         YuanCorePlugin.Logger.LogDebug($"[BuildingMode] {oldMode} -> {newMode}");
-    }
-
-    public static int AllocateSession()
-    {
-        CurrentSessionId = _nextSessionId++;
-        return CurrentSessionId;
     }
 
     /// <summary>
@@ -55,7 +47,6 @@ public static class BuildingModeManager
     public static void Reset()
     {
         _currentMode = BuildingInteractionMode.Normal;
-        CurrentSessionId = 0;
     }
 }
 
