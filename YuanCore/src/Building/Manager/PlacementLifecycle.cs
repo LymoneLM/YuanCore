@@ -65,7 +65,7 @@ public static class PlacementLifecycle
         BuildingStates.Instance.RemoveBuilding(uid);
 
         // 2. 挂编辑会话组件
-        entity.AddEditMoveSession(uid, gridPos, rotation, true);
+        entity.AddBuildingRollback(gridPos, rotation);
         entity.AddPlacement(Vector2Int.zero, new (Vector2Int, bool)[0]);
 
         // 3. 请求视图切换 → PlacementView
@@ -89,10 +89,10 @@ public static class PlacementLifecycle
 
         foreach (var entity in Buffer)
         {
-            if (entity.HasEditMoveSession())
+            if (entity.HasBuildingRollback())
             {
                 // 已有建筑——恢复原状
-                var session = entity.GetEditMoveSession();
+                var session = entity.GetBuildingRollback();
 
                 // 恢复旋转
                 if (entity.HasBuildingState())
@@ -105,16 +105,13 @@ public static class PlacementLifecycle
                 entity.ReplaceGridPosition(session.OriginalGridPosition);
 
                 // 恢复占用
-                if (session.OccupancyRemoved)
-                {
-                    var building = entity.GetBuilding();
-                    BuildingStates.Instance.AddBuilding(
-                        building.BuildingID, session.OriginalRotation,
-                        session.OriginalGridPosition, session.Uid);
-                }
+                var building = entity.GetBuilding();
+                BuildingStates.Instance.AddBuilding(
+                    building.BuildingID, session.OriginalRotation,
+                    session.OriginalGridPosition, building.Uid);
 
                 // 清理组件
-                entity.RemoveEditMoveSession();
+                entity.RemoveBuildingRollback();
                 entity.RemovePlacement();
 
             }
@@ -211,8 +208,7 @@ public static class PlacementLifecycle
             //       SyncBuildingPositionToVanilla(entity);
 
             // 清理组件
-            if (entity.HasEditMoveSession())
-                entity.RemoveEditMoveSession();
+            entity.RemoveBuildingRollback();
             entity.RemovePlacement();
 
             // 切换回 ShowView
