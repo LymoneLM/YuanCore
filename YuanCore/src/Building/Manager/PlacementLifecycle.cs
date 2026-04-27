@@ -81,8 +81,9 @@ public static class PlacementLifecycle
         entity.AddPlacement(Vector2Int.zero, new (Vector2Int, bool)[0]);
         entity.AddPlacementSession(sessionId, true);
 
-        // 3. 请求视图切换
-        entity.AddViewSwitchRequest(true); // → PlacementView
+        // 3. 请求视图切换 → PlacementView
+        var state = entity.GetBuildingState();
+        entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, true);
 
         // 4. 兼容层同步
         MainloadCompatibility.SyncEditTarget(uid);
@@ -131,11 +132,6 @@ public static class PlacementLifecycle
                 entity.RemovePlacement();
                 entity.RemovePlacementSession();
 
-                // 请求切回 ShowView
-                if (!entity.HasViewSwitchRequest())
-                    entity.AddViewSwitchRequest(false);
-                else
-                    entity.ReplaceViewSwitchRequest(false);
             }
             else
             {
@@ -193,10 +189,7 @@ public static class PlacementLifecycle
             entity.RemovePlacementSession();
 
             // 切换 View
-            if (!entity.HasViewSwitchRequest())
-                entity.AddViewSwitchRequest(false);
-            else
-                entity.ReplaceViewSwitchRequest(false);
+            entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, false);
         }
 
         // 5. 退出建造模式（或可选继续放置）
@@ -242,10 +235,7 @@ public static class PlacementLifecycle
             entity.RemovePlacementSession();
 
             // 切换回 ShowView
-            if (!entity.HasViewSwitchRequest())
-                entity.AddViewSwitchRequest(false);
-            else
-                entity.ReplaceViewSwitchRequest(false);
+            entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, false);
 
             // 触发 LinkMaterial 更新
             entity.AddLinkMaterialUpdate(1);
@@ -281,13 +271,9 @@ public static class PlacementLifecycle
                 continue;
             }
 
-            entity.ReplaceBuildingState(bs.TaoZhuangID, newRot, bs.IsRuined, false);
+            entity.ReplaceBuildingState(bs.TaoZhuangID, newRot, bs.IsRuined, true);
             // PlacementValidationSystem 会在下一帧重新检测
-            // 视图需要重建——因旋转改变了 VanillaStateID
-            if (!entity.HasViewSwitchRequest())
-                entity.AddViewSwitchRequest(true); // rebuild as placement
-            else
-                entity.ReplaceViewSwitchRequest(true);
+            // CreateViewSystem 会在 BuildingState 替换时重建 Placement 视图
         }
     }
 

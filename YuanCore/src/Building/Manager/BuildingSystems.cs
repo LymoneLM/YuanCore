@@ -20,7 +20,6 @@ public sealed class BuildingSystems : Feature
         Add(new PlacementValidationSystem(mapContext));
 
         // ── 视图 ──
-        Add(new ViewSwitchSystem(mapContext));
         Add(new ConvertGridPositionSystem(mapContext));
         Add(new CreateViewSystem(mapContext));
         Add(new LinkMaterialUpdateSystem());
