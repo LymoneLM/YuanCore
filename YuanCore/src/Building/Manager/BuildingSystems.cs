@@ -13,7 +13,6 @@ public sealed class BuildingSystems : Feature
 
         // ── 编辑候选 ──
         Add(new EditCandidateRefreshSystem(mapContext));
-        Add(new EditCandidateHighlightSystem(mapContext));
 
         // ── Placement 跟随 & 检测 ──
         Add(new PlacementFollowSystem(mapContext));

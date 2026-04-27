@@ -89,14 +89,7 @@ public sealed class BuildingInputSystem : IExecuteSystem
 
         if (mode == BuildingInteractionMode.EditSelect)
         {
-            // 切换候选建筑
-            if (!_context.HasEditCandidates()) return;
-            var ec = _context.GetEditCandidates();
-            if (ec.Candidates == null || ec.Candidates.Length <= 1) return;
-
-            var delta = scroll > 0 ? -1 : 1;
-            var newIndex = (ec.CurrentIndex + delta + ec.Candidates.Length) % ec.Candidates.Length;
-            _context.ReplaceEditCandidates(ec.Candidates, newIndex);
+            EditCandidateManager.CycleSelection(_context, scroll > 0 ? -1 : 1);
         }
         // 其它模式下滚轮行为由相机系统处理，不在此拦截
     }
@@ -131,12 +124,7 @@ public sealed class BuildingInputSystem : IExecuteSystem
 
     private void TrySelectCandidate()
     {
-        if (!_context.HasEditCandidates()) return;
-        var ec = _context.GetEditCandidates();
-        if (ec.Candidates == null || ec.Candidates.Length == 0) return;
-        if (ec.CurrentIndex < 0 || ec.CurrentIndex >= ec.Candidates.Length) return;
-
-        var uid = ec.Candidates[ec.CurrentIndex];
+        if (!EditCandidateManager.TryGetCurrentUid(out var uid)) return;
         PlacementLifecycle.BeginEditMove(_context, uid);
     }
 }

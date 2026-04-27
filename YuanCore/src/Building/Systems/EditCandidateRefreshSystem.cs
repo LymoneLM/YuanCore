@@ -26,14 +26,13 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
         var mode = BuildingModeManager.CurrentMode;
         if (mode != BuildingInteractionMode.EditSelect)
         {
-            if (_context.HasEditCandidates())
-                _context.RemoveEditCandidates();
+            EditCandidateManager.Clear(_context);
             return;
         }
 
         if (!CursorState.Active) return;
 
-        if (CursorState.GridPosition == _lastGrid && _context.HasEditCandidates()) return;
+        if (CursorState.GridPosition == _lastGrid && EditCandidateManager.HasCandidates) return;
         _lastGrid = CursorState.GridPosition;
 
         RefreshCandidates(CursorState.GridPosition);
@@ -91,30 +90,7 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
         for (var i = 0; i < _candidates.Count; i++)
             uidArray[i] = _candidates[i].uid;
 
-        // 保持 currentIndex 有效
-        var oldIndex = 0;
-        if (_context.HasEditCandidates())
-        {
-            var old = _context.GetEditCandidates();
-            // 尝试保持同一 uid 的选中
-            if (old.Candidates != null && old.CurrentIndex < old.Candidates.Length)
-            {
-                var oldUid = old.Candidates[old.CurrentIndex];
-                for (var i = 0; i < uidArray.Length; i++)
-                {
-                    if (uidArray[i] == oldUid)
-                    {
-                        oldIndex = i;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (oldIndex >= uidArray.Length)
-            oldIndex = uidArray.Length > 0 ? 0 : 0;
-
-        _context.ReplaceEditCandidates(uidArray, oldIndex);
+        EditCandidateManager.SetCandidates(_context, uidArray);
     }
 
     private bool IsEdgeFromThisCell(string uid, Vector2Int gridPos, BuildingDirection dir)
