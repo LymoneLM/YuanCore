@@ -26,16 +26,14 @@ public sealed class PlacementFollowSystem : IExecuteSystem
 
     public void Execute()
     {
-        if (!_context.HasCursor()) return;
-        var cursor = _context.GetCursor();
-        if (!cursor.Active) return;
+        if (!CursorState.Active) return;
 
         var mode = BuildingModeManager.CurrentMode;
         if (mode != BuildingInteractionMode.Build && mode != BuildingInteractionMode.EditMove)
             return;
 
-        if (cursor.GridPosition == _lastCursorGrid) return;
-        _lastCursorGrid = cursor.GridPosition;
+        if (CursorState.GridPosition == _lastCursorGrid) return;
+        _lastCursorGrid = CursorState.GridPosition;
 
         _buffer.Clear();
         _buffer.AddRange(_placementGroup.GetEntities());
@@ -44,13 +42,10 @@ public sealed class PlacementFollowSystem : IExecuteSystem
 
         foreach (var entity in _buffer)
         {
-            if (!entity.HasPlacementSession()) continue;
             if (entity.GetPlacementSession().SessionId != sessionId) continue;
 
             var offset = entity.GetPlacement().Offset;
-            var newGrid = cursor.GridPosition + offset;
-
-            entity.ReplaceGridPosition(newGrid);
+            entity.ReplaceGridPosition(CursorState.GridPosition + offset);
         }
     }
 }

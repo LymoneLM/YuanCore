@@ -1,9 +1,8 @@
-using UnityEngine;
 using YuanCore.Core;
 
 namespace YuanCore.Building;
 
-public class MainloadCompatibility : MonoBehaviour
+public static class MainloadCompatibility
 {
     public static string SceneID => Mainload.SceneID;
     public static bool IsSceneCreated => Mainload.isCreatSceneFinish;
@@ -20,11 +19,6 @@ public class MainloadCompatibility : MonoBehaviour
 
     /// 原版编辑模式下选中的建筑实例 ID。
     public static string EditBuildShiliID => Mainload.EditBuildShiliID;
-
-    private void Update()
-    {
-
-    }
 
     public static void SyncModeToVanilla(BuildingInteractionMode mode)
     {

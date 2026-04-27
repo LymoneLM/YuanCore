@@ -1,5 +1,3 @@
-using System;
-using UnityEngine;
 using YuanCore.Core;
 
 namespace YuanCore.Building;
@@ -12,8 +10,6 @@ public static class BuildingModeManager
     public static BuildingInteractionMode CurrentMode => _currentMode;
     public static int CurrentSessionId { get; private set; }
 
-    public static event Action<BuildingInteractionMode, BuildingInteractionMode> OnModeChanged;
-
     public static void SetMode(BuildingInteractionMode newMode)
     {
         if (_currentMode == newMode) return;
@@ -22,8 +18,6 @@ public static class BuildingModeManager
 
         // 同步兼容层
         MainloadCompatibility.SyncModeToVanilla(newMode);
-
-        OnModeChanged?.Invoke(oldMode, newMode);
 
         YuanCorePlugin.Logger.LogDebug($"[BuildingMode] {oldMode} -> {newMode}");
     }

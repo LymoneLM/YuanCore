@@ -17,7 +17,4 @@ public static class BuildingSignals
     public static void InvokeBuildingClicked(string uid, int buildingID)
         => OnBuildingClicked?.Invoke(uid, buildingID);
 
-    public static event Action<string, int> OnBuildingPlaced;
-    public static void InvokeBuildingPlaced(string uid, int buildingID)
-        => OnBuildingPlaced?.Invoke(uid, buildingID);
 }

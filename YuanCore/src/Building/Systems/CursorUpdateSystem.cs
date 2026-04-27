@@ -4,34 +4,34 @@ using UnityEngine;
 namespace YuanCore.Building;
 
 /// <summary>
-/// 在 Build / EditSelect / EditMove 模式下，每帧更新 Cursor 的
-/// World 坐标和 Grid 逻辑坐标。
+/// 在 Build / EditSelect / EditMove 模式下，每帧读取鼠标位置，
+/// 更新 CursorState 的网格坐标。
 /// </summary>
 public sealed class CursorUpdateSystem : IExecuteSystem
 {
-    private readonly MapContext _context;
+    private Camera _camera;
 
-    public CursorUpdateSystem(MapContext context)
+    public CursorUpdateSystem()
     {
-        _context = context;
+        _camera = Camera.main;
     }
 
     public void Execute()
     {
-        if (!_context.HasCursor()) return;
-        var cursor = _context.GetCursor();
-        if (!cursor.Active) return;
+        if (!CursorState.Active) return;
 
-        var cam = Camera.main;
-        if (cam == null) return;
+        var cam = _camera;
+        if (cam == null)
+        {
+            cam = Camera.main;
+            if (cam == null) return;
+            _camera = cam;
+        }
 
         var mouseScreen = Input.mousePosition;
         var worldPos = (Vector2)cam.ScreenToWorldPoint(mouseScreen);
         var gridPos = PositionConvertor.WorldToGrid(worldPos);
 
-        if (gridPos != cursor.GridPosition || worldPos != cursor.WorldPosition)
-        {
-            _context.ReplaceCursor(worldPos, gridPos, true);
-        }
+        CursorState.SetGridPosition(gridPos);
     }
 }

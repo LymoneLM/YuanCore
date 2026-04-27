@@ -33,18 +33,10 @@ public static class PlacementLifecycle
         entity.AddBuilding(uid, buildingID);
         entity.AddBuildingState(taoZhuangID, rotation, false, false);
         entity.AddPlacement(Vector2Int.zero, []);
-        entity.AddPlacementSession(sessionId, false);
+        entity.AddPlacementSession(sessionId);
 
         // GridPosition 由 PlacementFollowSystem 在下一帧设定
-        if (ctx.HasCursor())
-        {
-            var cursorGrid = ctx.GetCursor().GridPosition;
-            entity.AddGridPosition(cursorGrid);
-        }
-        else
-        {
-            entity.AddGridPosition(Vector2Int.zero);
-        }
+        entity.AddGridPosition(CursorState.GridPosition);
 
         return entity;
     }
@@ -79,7 +71,7 @@ public static class PlacementLifecycle
         // 2. 挂编辑会话组件
         entity.AddEditMoveSession(uid, gridPos, rotation, true);
         entity.AddPlacement(Vector2Int.zero, new (Vector2Int, bool)[0]);
-        entity.AddPlacementSession(sessionId, true);
+        entity.AddPlacementSession(sessionId);
 
         // 3. 请求视图切换 → PlacementView
         var state = entity.GetBuildingState();

@@ -37,9 +37,6 @@ public sealed class PlacementSessionComponent : IComponent
 {
     /// <summary>会话 ID，同一次建造/编辑操作共享同一个 SessionId。</summary>
     public int SessionId;
-
-    /// <summary>是否来自已有建筑（编辑模式）。</summary>
-    public bool IsFromExisting;
 }
 
 

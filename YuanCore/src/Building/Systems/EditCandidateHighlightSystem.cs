@@ -1,44 +1,40 @@
+using System.Collections.Generic;
 using Entitas;
 
 namespace YuanCore.Building;
 
 /// <summary>
-/// 监听 EditCandidates 的 CurrentIndex 变化（由滚轮触发），
+/// 响应式监听 EditCandidates 的 Added/Removed 事件，
 /// 更新候选建筑的高亮显示。
 /// </summary>
-public sealed class EditCandidateHighlightSystem : IExecuteSystem
+public sealed class EditCandidateHighlightSystem : ReactiveSystem<Map.Entity>
 {
     private readonly MapContext _context;
-    private int _lastIndex = -1;
     private string _lastHighlightUid;
 
-    public EditCandidateHighlightSystem(MapContext context)
+    public EditCandidateHighlightSystem(MapContext context) : base(context)
     {
         _context = context;
     }
 
-    public void Execute()
+    protected override ICollector<Map.Entity> GetTrigger(IContext<Map.Entity> context)
+        => context.CreateCollector(
+            new TriggerOnEvent<Map.Entity>(
+                Matcher<Map.Entity>.AllOf(
+                    YuanCoreBuildingMapEditCandidatesMatcher.EditCandidates),
+                GroupEvent.AddedOrRemoved));
+
+    protected override bool Filter(Map.Entity entity)
+        => true;
+
+    protected override void Execute(List<Map.Entity> entities)
     {
-        if (!_context.HasEditCandidates())
-        {
-            ClearHighlight();
-            _lastIndex = -1;
-            return;
-        }
-
-        var ec = _context.GetEditCandidates();
-        if (ec.Candidates == null || ec.Candidates.Length == 0)
-        {
-            ClearHighlight();
-            _lastIndex = -1;
-            return;
-        }
-
-        if (ec.CurrentIndex == _lastIndex) return;
-        _lastIndex = ec.CurrentIndex;
-
         ClearHighlight();
 
+        if (!_context.HasEditCandidates()) return;
+
+        var ec = _context.GetEditCandidates();
+        if (ec.Candidates == null || ec.Candidates.Length == 0) return;
         if (ec.CurrentIndex < 0 || ec.CurrentIndex >= ec.Candidates.Length) return;
 
         var uid = ec.Candidates[ec.CurrentIndex];

@@ -16,9 +16,6 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
     private readonly HashSet<string> _seen = new();
     private readonly List<(string uid, int sortKey)> _candidates = new();
 
-    // 上一帧高亮的 View
-    private BuildingShowView _lastHighlightedView;
-
     public EditCandidateRefreshSystem(MapContext context)
     {
         _context = context;
@@ -29,21 +26,17 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
         var mode = BuildingModeManager.CurrentMode;
         if (mode != BuildingInteractionMode.EditSelect)
         {
-            // 离开编辑选择模式时清理高亮
-            ClearHighlight();
             if (_context.HasEditCandidates())
                 _context.RemoveEditCandidates();
             return;
         }
 
-        if (!_context.HasCursor()) return;
-        var cursor = _context.GetCursor();
-        if (!cursor.Active) return;
+        if (!CursorState.Active) return;
 
-        if (cursor.GridPosition == _lastGrid && _context.HasEditCandidates()) return;
-        _lastGrid = cursor.GridPosition;
+        if (CursorState.GridPosition == _lastGrid && _context.HasEditCandidates()) return;
+        _lastGrid = CursorState.GridPosition;
 
-        RefreshCandidates(cursor.GridPosition);
+        RefreshCandidates(CursorState.GridPosition);
     }
 
     private void RefreshCandidates(Vector2Int gridPos)
@@ -122,8 +115,6 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
             oldIndex = uidArray.Length > 0 ? 0 : 0;
 
         _context.ReplaceEditCandidates(uidArray, oldIndex);
-
-        UpdateHighlight();
     }
 
     private bool IsEdgeFromThisCell(string uid, Vector2Int gridPos, BuildingDirection dir)
@@ -156,34 +147,5 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
         var gp = entity.GetGridPosition().Value;
         // 使用与 BuildingView 相同的 sortingOrder 算法
         return (gp.x + gp.y) * 10;
-    }
-
-    private void UpdateHighlight()
-    {
-        ClearHighlight();
-
-        if (!_context.HasEditCandidates()) return;
-        var ec = _context.GetEditCandidates();
-        if (ec.Candidates == null || ec.Candidates.Length == 0) return;
-        if (ec.CurrentIndex < 0 || ec.CurrentIndex >= ec.Candidates.Length) return;
-
-        var uid = ec.Candidates[ec.CurrentIndex];
-        var entity = _context.GetBuildingByUid(uid);
-        if (entity == null || !entity.HasView()) return;
-
-        if (entity.GetView().View is BuildingShowView showView)
-        {
-            showView.SetEditHighlight(true);
-            _lastHighlightedView = showView;
-        }
-    }
-
-    private void ClearHighlight()
-    {
-        if (_lastHighlightedView != null)
-        {
-            _lastHighlightedView.SetEditHighlight(false);
-            _lastHighlightedView = null;
-        }
     }
 }

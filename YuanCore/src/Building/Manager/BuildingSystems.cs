@@ -7,8 +7,8 @@ public sealed class BuildingSystems : Feature
     public BuildingSystems(MapContext mapContext)
     {
         // ── 输入 & 模式同步 ──
-        Add(new ModeSyncSystem(mapContext));
-        Add(new CursorUpdateSystem(mapContext));
+        Add(new ModeSyncSystem());
+        Add(new CursorUpdateSystem());
         Add(new BuildingInputSystem(mapContext));
 
         // ── 编辑候选 ──
