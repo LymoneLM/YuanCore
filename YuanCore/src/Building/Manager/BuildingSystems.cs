@@ -6,16 +6,10 @@ public sealed class BuildingSystems : Feature
 {
     public BuildingSystems(MapContext mapContext)
     {
-        // ── 输入 & 模式同步 ──
-        Add(new ModeSyncSystem());
-        Add(new CursorUpdateSystem());
-        Add(new BuildingInputSystem(mapContext));
-
         // ── 编辑候选 ──
         Add(new EditCandidateRefreshSystem(mapContext));
 
-        // ── Placement 跟随 & 检测 ──
-        Add(new PlacementFollowSystem(mapContext));
+        // ── Placement 检测 ──
         Add(new PlacementValidationSystem(mapContext));
 
         // ── 视图 ──

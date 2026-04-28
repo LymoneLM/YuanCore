@@ -5,7 +5,7 @@ namespace YuanCore.Building;
 
 /// <summary>
 /// 全局光标状态——纯静态方案，替代 ECS 组件。
-/// 网格坐标由 CursorUpdateSystem 每帧更新，Active 由 ModeSyncSystem 控制。
+/// 网格坐标由 BuildingInputManager 每帧更新，Active 由 BuildingInputManager 控制。
 /// </summary>
 public static class CursorState
 {

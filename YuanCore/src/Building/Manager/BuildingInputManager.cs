@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 using YuanCore.Core;
@@ -5,19 +6,79 @@ using YuanCore.Core;
 namespace YuanCore.Building;
 
 /// <summary>
-/// 统一的建筑输入采集系统。
-/// 根据当前模式处理滚轮、左键、旋转键、ESC。
+/// 非 ECS 输入管理器 —— 整合模式同步、光标更新、输入采集、Placement 跟随。
+/// BuildingController.Update() 在 ECS Systems 之前调用，确保输入状态在响应式系统执行前已稳定。
 /// </summary>
-public sealed class BuildingInputSystem : IExecuteSystem
+public sealed class BuildingInputManager
 {
     private readonly MapContext _context;
+    private readonly IGroup<Map.Entity> _placementGroup;
+    private readonly List<Map.Entity> _placementBuffer = [];
+    private Camera _camera;
+    private Vector2Int _lastCursorGrid;
 
-    public BuildingInputSystem(MapContext context)
+    public BuildingInputManager(MapContext context)
     {
         _context = context;
+        _placementGroup = context.GetGroup(
+            Matcher<Map.Entity>.AllOf(
+                YuanCoreBuildingMapPlacementMatcher.Placement));
+        _camera = Camera.main;
     }
 
-    public void Execute()
+    /// <summary>Startup: 重置 CursorState。</summary>
+    public void Initialize()
+    {
+        CursorState.Reset();
+    }
+
+    /// <summary>每帧更新入口：模式同步 → 光标 → 输入 → Placement 跟随。</summary>
+    public void Update()
+    {
+        SyncMode();
+
+        if (!CursorState.Active)
+            return;
+
+        UpdateCursor();
+        HandleInput();
+        FollowPlacements();
+    }
+
+    // ─── Mode Sync ───
+
+    private void SyncMode()
+    {
+        BuildingModeManager.PollVanillaMode();
+
+        var mode = BuildingModeManager.CurrentMode;
+        CursorState.Active = mode == BuildingInteractionMode.Build ||
+                             mode == BuildingInteractionMode.EditSelect ||
+                             mode == BuildingInteractionMode.EditMove;
+    }
+
+    // ─── Cursor Update ───
+
+    private void UpdateCursor()
+    {
+        var cam = _camera;
+        if (cam == null)
+        {
+            cam = Camera.main;
+            if (cam == null) return;
+            _camera = cam;
+        }
+
+        var mouseScreen = Input.mousePosition;
+        var worldPos = (Vector2)cam.ScreenToWorldPoint(mouseScreen);
+        var gridPos = PositionConvertor.WorldToGrid(worldPos);
+
+        CursorState.SetGridPosition(gridPos);
+    }
+
+    // ─── Input Handling ───
+
+    private void HandleInput()
     {
         var mode = BuildingModeManager.CurrentMode;
 
@@ -30,25 +91,17 @@ public sealed class BuildingInputSystem : IExecuteSystem
 
         // 旋转 (R 键)
         if (Input.GetKeyDown(KeyCode.R))
-        {
             HandleRotation(mode);
-        }
 
         // 滚轮
         var scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) > 0.01f)
-        {
             HandleScroll(mode, scroll);
-        }
 
         // 左键点击
         if (Input.GetMouseButtonDown(0))
-        {
             HandleLeftClick(mode);
-        }
     }
-
-    // ─── ESC ───
 
     private void HandleEscape(BuildingInteractionMode mode)
     {
@@ -71,8 +124,6 @@ public sealed class BuildingInputSystem : IExecuteSystem
         }
     }
 
-    // ─── 旋转 ───
-
     private void HandleRotation(BuildingInteractionMode mode)
     {
         if (mode != BuildingInteractionMode.Build && mode != BuildingInteractionMode.EditMove)
@@ -80,8 +131,6 @@ public sealed class BuildingInputSystem : IExecuteSystem
 
         PlacementLifecycle.RotateSessionPlacements(_context);
     }
-
-    // ─── 滚轮 ───
 
     private void HandleScroll(BuildingInteractionMode mode, float scroll)
     {
@@ -91,10 +140,7 @@ public sealed class BuildingInputSystem : IExecuteSystem
         {
             EditCandidateManager.CycleSelection(_context, scroll > 0 ? -1 : 1);
         }
-        // 其它模式下滚轮行为由相机系统处理，不在此拦截
     }
-
-    // ─── 左键 ───
 
     private void HandleLeftClick(BuildingInteractionMode mode)
     {
@@ -103,22 +149,16 @@ public sealed class BuildingInputSystem : IExecuteSystem
         switch (mode)
         {
             case BuildingInteractionMode.Build:
-                // 确认 Placement 落位
                 PlacementLifecycle.TrySubmitBuild(_context);
                 break;
 
             case BuildingInteractionMode.EditSelect:
-                // 选中当前候选建筑，进入 EditMove
                 TrySelectCandidate();
                 break;
 
             case BuildingInteractionMode.EditMove:
-                // 确认编辑移动落位
                 PlacementLifecycle.TrySubmitEditMove(_context);
                 break;
-
-            // Normal 模式的点击由 OpenBT -> BuildingShowView 处理，
-            // 挂 Clicked 组件后交给 ClickProcessSystem 消费
         }
     }
 
@@ -126,5 +166,26 @@ public sealed class BuildingInputSystem : IExecuteSystem
     {
         if (!EditCandidateManager.TryGetCurrentUid(out var uid)) return;
         PlacementLifecycle.BeginEditMove(_context, uid);
+    }
+
+    // ─── Placement Follow ───
+
+    private void FollowPlacements()
+    {
+        var mode = BuildingModeManager.CurrentMode;
+        if (mode != BuildingInteractionMode.Build && mode != BuildingInteractionMode.EditMove)
+            return;
+
+        if (CursorState.GridPosition == _lastCursorGrid) return;
+        _lastCursorGrid = CursorState.GridPosition;
+
+        _placementBuffer.Clear();
+        _placementBuffer.AddRange(_placementGroup.GetEntities());
+
+        foreach (var entity in _placementBuffer)
+        {
+            var offset = entity.GetPlacement().Offset;
+            entity.ReplaceGridPosition(CursorState.GridPosition + offset);
+        }
     }
 }

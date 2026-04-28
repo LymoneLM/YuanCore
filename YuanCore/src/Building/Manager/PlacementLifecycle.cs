@@ -32,7 +32,7 @@ public static class PlacementLifecycle
         entity.AddBuildingState(taoZhuangID, rotation, false, false);
         entity.AddPlacement(Vector2Int.zero, []);
 
-        // GridPosition 由 PlacementFollowSystem 在下一帧设定
+        // GridPosition 由 BuildingInputManager 在下一帧设定
         entity.AddGridPosition(CursorState.GridPosition);
 
         return entity;
