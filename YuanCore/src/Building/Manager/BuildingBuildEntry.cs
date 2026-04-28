@@ -4,8 +4,14 @@ namespace YuanCore.Building;
 
 /// <summary>
 /// 为原版 UI / 面板提供的建造入口 API。
-/// 原版 BuildPanel 等脚本通过此类进入建造模式，
+/// 原版 BuildPanel 等脚本通过此类进入建造模式。
 /// </summary>
+/// TODO: 整个类未被调用——需要接入原版面板按钮回调。
+///       原版建造按钮 → EnterBuildMode(buildingID, taoZhuangID, rotation)
+///       原版编辑按钮 → EnterEditMode()
+///       原版退出按钮 / Escape → ExitToNormal()
+///       当前实际入口是 BuildingModeManager.PollVanillaMode() 轮询，
+///       但该路径缺少 BeginNewPlacement 调用（见 PollVanillaMode）
 public static class BuildingBuildEntry
 {
     public static void EnterBuildMode(int buildingID, int taoZhuangID,
@@ -55,6 +61,6 @@ public static class BuildingBuildEntry
         }
 
         BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
-        MainloadCompatibility.SyncBuildPanelOpen(false);
+        MainloadCompat.SyncBuildPanelOpen(false);
     }
 }

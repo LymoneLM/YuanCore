@@ -5,8 +5,8 @@ namespace YuanCore.Building;
 
 public class AllBuildEx : MonoBehaviour
 {
-    private string _sceneClass;
-    private int _sceneIndex;
+    private string _sceneType;
+    private int _sceneSize;
     private Transform _backMap;
 
     private void Awake()
@@ -14,51 +14,40 @@ public class AllBuildEx : MonoBehaviour
         _backMap = transform.Find("BackMap");
     }
 
-    private void OnEnable()
+    public void SwitchScene(string sceneID, Action<Transform> onComplete = null)
     {
-        BuildingSignals.OnSceneChanged += SwitchScene;
-    }
-
-    private void OnDisable()
-    {
-        BuildingSignals.OnSceneChanged -= SwitchScene;
-    }
-
-    private void SwitchScene(string sceneClass, int sceneIndex)
-    {
-        _sceneClass = sceneClass;
-        _sceneIndex = sceneIndex;
+        (_sceneType, _sceneSize) = SceneIDResolver.GetSceneType(sceneID);
         _backMap.transform.DestroyAllChildren();
-        this.DelayInvoke(LoadScene, 0.4f);
+        this.DelayInvoke(() => LoadScene(onComplete), 0.4f);
     }
 
-    private void LoadScene()
+    private void LoadScene(Action<Transform> onComplete)
     {
         var prefab = GetScenePrefab();
         var instance = Instantiate(prefab, _backMap).transform;
         instance.localScale = Vector3.one;
         instance.localPosition = Vector3.zero;
         var ts = instance.Find("BuildShow");
-        BuildingSignals.InvokeSceneCreated(ts);
+        onComplete?.Invoke(ts);
     }
 
     private GameObject GetScenePrefab()
     {
-        switch (_sceneClass)
+        switch (_sceneType)
         {
             case "M":
-                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/M/" + _sceneIndex);
+                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/M/" + _sceneSize);
             case "Z":
                 FormulaData.SetNeiGameGuide(1);
-                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/Z/" + _sceneIndex);
+                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/Z/" + _sceneSize);
             case "S":
-                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/S/" + _sceneIndex);
+                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/S/" + _sceneSize);
             case "F":
                 return PrefabFactory.LoadAsBackMap<GameObject>("PerFengdiScene");
             case "H":
-                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/H/" + _sceneIndex);
+                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/H/" + _sceneSize);
             case "L":
-                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/L/" + _sceneIndex);
+                return PrefabFactory.LoadAsBackMap<GameObject>("AllBackMap/L/" + _sceneSize);
             default:
                 throw new ArgumentOutOfRangeException();
         }

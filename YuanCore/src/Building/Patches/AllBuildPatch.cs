@@ -11,8 +11,9 @@ public class AllBuildPatch
     public static bool ReplaceScript(AllBuild __instance)
     {
         __instance.enabled = false;
-        __instance.gameObject.AddComponent<AllBuildEx>();
-        __instance.gameObject.AddComponent<BuildingManager>();
+        var allBuild = __instance.gameObject.AddComponent<AllBuildEx>();
+        var manager = __instance.gameObject.AddComponent<BuildingManager>();
+        manager.SceneRoot = allBuild;
         return false;
     }
 }

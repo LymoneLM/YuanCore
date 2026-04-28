@@ -9,8 +9,7 @@ using YuanCore.Core;
 
 namespace YuanCore.Building;
 
-// 地图建筑全局状态，全局可读有限写入
-// 本质上是被 Manager 控制的，不隶属只是为了便于访问
+/// 地图逻辑状态，逻辑上受控于 Manager
 public class BuildingStates
 {
     public static BuildingStates Instance { get; } = new();

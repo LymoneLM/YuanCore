@@ -15,7 +15,7 @@ public static class BuildingModeManager
         _currentMode = newMode;
 
         // 同步兼容层
-        MainloadCompatibility.SyncModeToVanilla(newMode);
+        MainloadCompat.SyncModeToVanilla(newMode);
 
         YuanCorePlugin.Logger.LogDebug($"[BuildingMode] {oldMode} -> {newMode}");
     }
@@ -28,14 +28,18 @@ public static class BuildingModeManager
         // 仅在 Normal 模式下检测外部触发
         if (_currentMode != BuildingInteractionMode.Normal) return;
 
-        if (MainloadCompatibility.IsBuildMode &&
-            MainloadCompatibility.BuildIDCreatNow != "null")
+        if (MainloadCompat.IsBuildMode &&
+            MainloadCompat.BuildIDCreatNow != "null")
         {
+            // TODO: 需要从原版字段获取 buildingID/taoZhuangID/rotation，
+            //       并调用 PlacementLifecycle.BeginNewPlacement() 创建 Placement 实体。
+            //       当前只切换模式，无 Placement 实体，FollowPlacements 空转。
+            //       理想情况：此路径应改为由原版面板按钮直接调用 BuildingBuildEntry.EnterBuildMode()。
             SetMode(BuildingInteractionMode.Build);
             return;
         }
 
-        if (MainloadCompatibility.IsEditMode)
+        if (MainloadCompat.IsEditMode)
         {
             SetMode(BuildingInteractionMode.EditSelect);
         }

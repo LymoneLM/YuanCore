@@ -2,8 +2,9 @@ using YuanCore.Core;
 
 namespace YuanCore.Building;
 
-public static class MainloadCompatibility
+public static class MainloadCompat
 {
+    public static bool IsFirstGame => Mainload.isFirstGame;
     public static string SceneID => Mainload.SceneID;
     public static bool IsSceneCreated => Mainload.isCreatSceneFinish;
     public static bool IsBuildPanelOpen => Mainload.isBuildPanelOpen;
@@ -49,6 +50,7 @@ public static class MainloadCompatibility
     }
 
     /// 回写当前 hover 建筑信息，供原版 BuildInfoTip 等 UI 使用。
+    /// TODO: 此方法从未被调用。需要接入 EditCandidateManager 的悬停回调。
     public static void SyncHoverBuilding(int buildingID, string uid)
     {
         if (buildingID >= 0)
@@ -66,11 +68,62 @@ public static class MainloadCompatibility
     public static void SyncEditTarget(string uid)
         => Mainload.EditBuildShiliID = uid ?? "null";
 
-    /// 回写是非模式标志。
+    /// 回写施肥模式标志。
+    /// TODO: 此方法从未被调用。需要接入施肥模式切换。
     public static void SyncShiFeiMode(bool value)
         => Mainload.isShiFeiMode = value;
 
     /// 回写建造面板打开状态。
     public static void SyncBuildPanelOpen(bool value)
         => Mainload.isBuildPanelOpen = value;
+
+    internal static void Update()
+    {
+        CheckSceneChange();
+    }
+
+    private static string _sceneIDLast = "null|0";
+
+    public static void CheckSceneChange()
+    {
+        if (_sceneIDLast == Mainload.SceneID && !Mainload.isUpdateScene)
+            return;
+        _sceneIDLast = Mainload.SceneID;
+        Mainload.isUpdateScene = false;
+
+        BuildingSignals.InvokeSceneChanged(_sceneIDLast);
+    }
+
+    public static void ResetSceneState()
+    {
+        Mainload.MemberData_Enter = "null";
+        Mainload.BuildID_IsYour_Enter[0] = -1;
+        Mainload.TradeSR_index = 0;
+        Mainload.TradeData_now = "null";
+        Mainload.isShiFeiMode = false;
+        Mainload.isBuildPanelOpen = false;
+        Mainload.isBuildMode = false;
+        Mainload.isBuildEdit = false;
+        Mainload.EditBuildShiliID = "null";
+        Mainload.KingMemberID_OutBuild = [];
+        Mainload.HanMen_City = [];
+        Mainload.ClanMember_City = [];
+
+        // 来自建筑加载头部
+        Mainload.TempMemberIndex_now = 0;
+        Mainload.BuildPosiID_Now = "0|0";
+        Mainload.BuildID_CreatNow = "null";
+    }
+
+    public static void StartSceneLoad()
+    {
+        Mainload.isCreatSceneFinish = false;
+        Mainload.isSwichPanelOpen = true;
+    }
+
+    public static void FinishSceneLoad()
+    {
+        Mainload.isCreatSceneFinish = true;
+        Mainload.isSwichPanelOpen = false;
+    }
 }

@@ -73,7 +73,7 @@ public static class PlacementLifecycle
         entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, true);
 
         // 4. 兼容层同步
-        MainloadCompatibility.SyncEditTarget(uid);
+        MainloadCompat.SyncEditTarget(uid);
 
         // 5. 切换模式
         BuildingModeManager.SetMode(BuildingInteractionMode.EditMove);
@@ -139,7 +139,7 @@ public static class PlacementLifecycle
         }
 
         // 2. 业务可建造检查（简化：检查场景是否就绪）
-        if (!MainloadCompatibility.IsSceneCreated)
+        if (!MainloadCompat.IsSceneCreated)
         {
             YuanCorePlugin.Logger.LogDebug("[PlacementLifecycle] Scene not ready.");
             return false;
@@ -174,7 +174,7 @@ public static class PlacementLifecycle
 
         // 5. 退出建造模式（或可选继续放置）
         BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
-        MainloadCompatibility.SyncBuildPanelOpen(false);
+        MainloadCompat.SyncBuildPanelOpen(false);
         return true;
     }
 
@@ -220,7 +220,7 @@ public static class PlacementLifecycle
 
         // 回到 EditSelect（或 Normal，取决于交互设计）
         BuildingModeManager.SetMode(BuildingInteractionMode.EditSelect);
-        MainloadCompatibility.SyncEditTarget("null");
+        MainloadCompat.SyncEditTarget("null");
         return true;
     }
 

@@ -39,7 +39,7 @@ public sealed class CreateViewSystem : ReactiveSystem<Map.Entity>
                 $"AllBuild/{state.TaoZhuangID}/Scene/{building.BuildingID}/{state.VanillaStateID}");
         if (prefab == null)
             return null;
-        var view = Object.Instantiate(prefab, BuildingManager.Instance.BuildViewRoot).GetComponent<IView>();
+        var view = Object.Instantiate(prefab, BuildingManager.Instance.BuildingViewRoot).GetComponent<IView>();
         view.Link(entity);
         return view;
     }

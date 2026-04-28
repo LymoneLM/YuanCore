@@ -103,6 +103,10 @@ public sealed class BuildingInputManager
             HandleLeftClick(mode);
     }
 
+    // TODO: 此方法与 BuildingBuildEntry.ExitToNormal() 逻辑重复。
+    //       应统一为调用 BuildingBuildEntry.ExitToNormal()。
+    //       且 EditSelect 退出时未调用 EditCandidateManager.Clear() 清除高亮
+    //       （目前依赖 EditCandidateRefreshSystem 下一帧自动清理，为延迟清理）。
     private void HandleEscape(BuildingInteractionMode mode)
     {
         switch (mode)
@@ -110,7 +114,7 @@ public sealed class BuildingInputManager
             case BuildingInteractionMode.Build:
                 PlacementLifecycle.CancelAllSessionPlacements(_context);
                 BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
-                MainloadCompatibility.SyncBuildPanelOpen(false);
+                MainloadCompat.SyncBuildPanelOpen(false);
                 break;
 
             case BuildingInteractionMode.EditMove:
