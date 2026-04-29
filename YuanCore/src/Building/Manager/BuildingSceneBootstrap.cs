@@ -20,7 +20,7 @@ public static class BuildingSceneBootstrap
 
             var entity = MapContext.Instance.CreateEntity();
             entity.AddBuilding(dto.Uid, dto.BuildingID);
-            entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined, false);
+            entity.AddBuildingState(dto.TaoZhuangID, dto.Rotation, dto.IsRuined);
             entity.AddGridPosition(dto.GridPosition);
             entity.AddLinkMaterialUpdate(1);
 

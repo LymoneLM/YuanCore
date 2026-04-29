@@ -32,7 +32,7 @@ public sealed class CreateViewSystem : ReactiveSystem<Map.Entity>
     {
         var building = entity.GetBuilding();
         var state = entity.GetBuildingState();
-        var prefab = state.IsPlacement ?
+        var prefab = entity.HasPlacement() ?
             PrefabFactory.LoadAsBuildingPlacement<GameObject>(
                 $"AllBuild/{state.TaoZhuangID}/BuildTip/{building.BuildingID}/{state.VanillaStateID}") :
             PrefabFactory.LoadAsBuildingShow<GameObject>(

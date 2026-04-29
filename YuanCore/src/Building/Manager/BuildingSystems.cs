@@ -10,12 +10,12 @@ public sealed class BuildingSystems : Feature
         Add(new EditCandidateRefreshSystem(mapContext));
 
         // ── Placement 检测 ──
-        Add(new PlacementValidationSystem(mapContext));
+        Add(new UpdateValidationSystem(mapContext));
 
         // ── 视图 ──
         Add(new ConvertGridPositionSystem(mapContext));
         Add(new CreateViewSystem(mapContext));
-        Add(new LinkMaterialUpdateSystem());
+        Add(new LinkMaterialUpdateSystem(mapContext));
 
         // ── 点击业务消费 ──
         Add(new ClickProcessSystem(mapContext));

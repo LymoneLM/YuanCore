@@ -9,9 +9,9 @@ public sealed class LinkMaterialUpdateSystem : IExecuteSystem
     private readonly IGroup<Map.Entity> _group;
     private readonly List<Map.Entity> _buffer = [];
 
-    public LinkMaterialUpdateSystem()
+    public LinkMaterialUpdateSystem(MapContext mapContext)
     {
-        _group = MapContext.Instance.GetGroup(Matcher<Map.Entity>.AllOf(lmm.LinkMaterialUpdate));
+        _group = mapContext.GetGroup(Matcher<Map.Entity>.AllOf(lmm.LinkMaterialUpdate));
     }
 
     public void Execute()

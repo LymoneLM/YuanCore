@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace YuanCore.Building;
 
-public class BuildingPlacementView : BuildingView, IYuanCoreBuildingMapPlacementAddedListener
+public class BuildingPlacementView : BuildingView, IYuanCoreBuildingMapValidationAddedListener
 {
     private static readonly Color Green = new(0f, 1f, 0f, 0.2f);
     private static readonly Color Red = new(1f, 0f, 0f, 0.2f);
@@ -30,15 +30,15 @@ public class BuildingPlacementView : BuildingView, IYuanCoreBuildingMapPlacement
     public override void Link(Entity entity)
     {
         base.Link(entity);
-        LinkedEntity.AddPlacementAddedListener(this);
+        LinkedEntity.AddValidationAddedListener(this);
 
-        if (!LinkedEntity.HasPlacement())
+        if (!LinkedEntity.HasValidation())
             return;
-        var cmp = LinkedEntity.GetPlacement();
-        OnPlacementAdded(LinkedEntity, cmp.Offset, cmp.Flags);
+        var cmp = LinkedEntity.GetValidation();
+        OnValidationAdded(LinkedEntity, cmp.Flags);
     }
 
-    public void OnPlacementAdded(Map.Entity entity, Vector2Int _, (Vector2Int, bool)[] flags)
+    public void OnValidationAdded(Map.Entity entity, (Vector2Int, bool)[] flags)
     {
         _flagMap.Clear();
 

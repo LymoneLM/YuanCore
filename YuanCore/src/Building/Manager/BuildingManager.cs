@@ -11,6 +11,7 @@ public class BuildingManager : MonoBehaviour
 
     internal Transform BuildingViewRoot;
     internal AllBuildEx SceneRoot;
+    internal string CurrentSceneID;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class BuildingManager : MonoBehaviour
     private void OnSceneChanged(string sceneID)
     {
         MainloadCompat.StartSceneLoad();
+        CurrentSceneID = sceneID;
 
         if(!MainloadCompat.IsFirstGame)
             // TODO: 切换为Core接管的存档管理

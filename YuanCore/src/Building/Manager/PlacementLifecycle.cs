@@ -29,8 +29,8 @@ public static class PlacementLifecycle
         // 生成临时 UID
         var uid = $"_placement_{buildingID}";
         entity.AddBuilding(uid, buildingID);
-        entity.AddBuildingState(taoZhuangID, rotation, false, false);
-        entity.AddPlacement(Vector2Int.zero, []);
+        entity.AddBuildingState(taoZhuangID, rotation, false);
+        entity.AddPlacement(Vector2Int.zero);
 
         // GridPosition 由 BuildingInputManager 在下一帧设定
         entity.AddGridPosition(CursorState.GridPosition);
@@ -66,11 +66,11 @@ public static class PlacementLifecycle
 
         // 2. 挂编辑会话组件
         entity.AddBuildingRollback(gridPos, rotation);
-        entity.AddPlacement(Vector2Int.zero, new (Vector2Int, bool)[0]);
+        entity.AddPlacement(Vector2Int.zero);
 
         // 3. 请求视图切换 → PlacementView
         var state = entity.GetBuildingState();
-        entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, true);
+        entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined);
 
         // 4. 兼容层同步
         MainloadCompat.SyncEditTarget(uid);
@@ -98,7 +98,7 @@ public static class PlacementLifecycle
                 if (entity.HasBuildingState())
                 {
                     var bs = entity.GetBuildingState();
-                    entity.ReplaceBuildingState(bs.TaoZhuangID, session.OriginalRotation, bs.IsRuined, false);
+                    entity.ReplaceBuildingState(bs.TaoZhuangID, session.OriginalRotation, bs.IsRuined);
                 }
 
                 // 恢复位置
@@ -169,7 +169,7 @@ public static class PlacementLifecycle
             entity.RemovePlacement();
 
             // 切换 View
-            entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, false);
+            entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined);
         }
 
         // 5. 退出建造模式（或可选继续放置）
@@ -212,7 +212,7 @@ public static class PlacementLifecycle
             entity.RemovePlacement();
 
             // 切换回 ShowView
-            entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined, false);
+            entity.ReplaceBuildingState(state.TaoZhuangID, state.Rotation, state.IsRuined);
 
             // 触发 LinkMaterial 更新
             entity.AddLinkMaterialUpdate(1);
@@ -247,7 +247,7 @@ public static class PlacementLifecycle
                 continue;
             }
 
-            entity.ReplaceBuildingState(bs.TaoZhuangID, newRot, bs.IsRuined, true);
+            entity.ReplaceBuildingState(bs.TaoZhuangID, newRot, bs.IsRuined);
             // PlacementValidationSystem 会在下一帧重新检测
             // CreateViewSystem 会在 BuildingState 替换时重建 Placement 视图
         }
