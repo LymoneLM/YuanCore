@@ -12,8 +12,6 @@ namespace YuanCore.Building;
 /// 地图逻辑状态，逻辑上受控于 Manager
 public class BuildingStates
 {
-    public static BuildingStates Instance { get; } = new();
-
     private GridMap<CellData, EdgeData>  _gridMap;
     private Dictionary<string, (int, BuildingRotation, Vector2Int)> _buildings;
 
@@ -22,7 +20,7 @@ public class BuildingStates
 
     private Dictionary<(string, int),(int, int, int, int)> _mapShape;
 
-    private BuildingStates()
+    internal BuildingStates()
     {
         // BuildingShapeRegistry 初始化
         var executingAssembly = Assembly.GetExecutingAssembly();
@@ -49,10 +47,11 @@ public class BuildingStates
         _buildings = [];
     }
 
-    public void InitializeMap(string sceneClass, int sceneIndex)
+    public void InitializeMap(string sceneID)
     {
-        var (x, y, w, h) = _mapShape[(sceneClass, sceneIndex)];
-        YuanCorePlugin.Logger.LogDebug($"InitializeMap[{sceneClass}|{sceneIndex}]:({x}, {y}, {w}, {h})");
+        var (sceneType, sceneSize) = SceneIDResolver.GetSceneType(sceneID);
+        var (x, y, w, h) = _mapShape[(sceneType, sceneSize)];
+        YuanCorePlugin.Logger.LogDebug($"InitializeMap[{sceneType}|{sceneSize}]:({x}, {y}, {w}, {h})");
         InitializeMap(x, y, w, h);
     }
 

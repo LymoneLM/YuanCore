@@ -76,7 +76,7 @@ public static class LinkMaterialUpdaterFactory
             var offset = groupID == GroupID.Road ? RoadTraverseOffset : PondTraverseOffset;
             for (var i = 0; i < 4; ++i)
             {
-                var uids = BuildingStates.Instance.GetCellBuildingsUid(posi + offset[i]);
+                var uids = BuildingManager.States.GetCellBuildingsUid(posi + offset[i]);
                 var disable = false;
                 foreach (var uid in uids)
                 {
@@ -122,7 +122,7 @@ public static class LinkMaterialUpdaterFactory
             var posi = entity.GetGridPosition().Value;
             for (var i = 0; i < 6; ++i)
             {
-                var uids = BuildingStates.Instance.GetCellBuildingsUid(posi + DeepPondTraverseOffset[i]);
+                var uids = BuildingManager.States.GetCellBuildingsUid(posi + DeepPondTraverseOffset[i]);
                 var disable = false;
                 foreach (var uid in uids)
                 {
@@ -243,7 +243,7 @@ public static class LinkMaterialUpdaterFactory
             var pos = posi + frontOffset;
             for (var i = 0; i < 3; ++i)
             {
-                var uids = BuildingStates.Instance.GetEdgeBuildingsUid(pos + front[i].offset, front[i].dir);
+                var uids = BuildingManager.States.GetEdgeBuildingsUid(pos + front[i].offset, front[i].dir);
                 var enable = false;
                 foreach (var uid in uids)
                 {
@@ -262,7 +262,7 @@ public static class LinkMaterialUpdaterFactory
             pos = posi + backOffset;
             for (var i = 0; i < 3; ++i)
             {
-                var uids = BuildingStates.Instance.GetEdgeBuildingsUid(pos + back[i].offset, back[i].dir);
+                var uids = BuildingManager.States.GetEdgeBuildingsUid(pos + back[i].offset, back[i].dir);
                 var enable = false;
                 foreach (var uid in uids)
                 {

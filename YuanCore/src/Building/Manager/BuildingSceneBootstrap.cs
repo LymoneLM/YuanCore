@@ -10,7 +10,7 @@ public static class BuildingSceneBootstrap
 
         foreach (var dto in dtoList)
         {
-            if (!BuildingStates.Instance.CheckCanBuild(
+            if (!BuildingManager.States.CheckCanBuild(
                     dto.BuildingID, dto.Rotation, dto.GridPosition, out _))
             {
                 YuanCorePlugin.Logger.LogWarning($"[SceneBootstrap] Can't load building " +
@@ -24,7 +24,7 @@ public static class BuildingSceneBootstrap
             entity.AddGridPosition(dto.GridPosition);
             entity.AddLinkMaterialUpdate(1);
 
-            BuildingStates.Instance.AddBuilding(dto.BuildingID, dto.Rotation, dto.GridPosition, dto.Uid);
+            BuildingManager.States.AddBuilding(dto.BuildingID, dto.Rotation, dto.GridPosition, dto.Uid);
         }
     }
 }

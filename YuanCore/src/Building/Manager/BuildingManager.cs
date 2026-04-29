@@ -7,6 +7,7 @@ namespace YuanCore.Building;
 public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager Instance;
+    public static BuildingStates States;
 
     internal Transform BuildingViewRoot;
     internal AllBuildEx SceneRoot;
@@ -14,6 +15,7 @@ public class BuildingManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        States = new BuildingStates();
     }
 
     private void OnEnable()
@@ -37,8 +39,7 @@ public class BuildingManager : MonoBehaviour
         MainloadCompat.ResetSceneState();
         BuildingModeManager.Reset();
 
-        var (sceneClass, sceneIndex) = SceneIDResolver.GetSceneType(sceneID);
-        BuildingStates.Instance.InitializeMap(sceneClass, sceneIndex);
+        States.InitializeMap(sceneID);
         SceneRoot.SwitchScene(sceneID, (buildingViewRoot) =>
         {
             BuildingViewRoot = buildingViewRoot;

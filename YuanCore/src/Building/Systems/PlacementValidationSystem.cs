@@ -40,7 +40,7 @@ public sealed class PlacementValidationSystem : ReactiveSystem<Map.Entity>
             var gridPos = entity.GetGridPosition().Value;
             var offset = entity.GetPlacement().Offset;
 
-            BuildingStates.Instance.CheckCanBuild(
+            BuildingManager.States.CheckCanBuild(
                 building.BuildingID, state.Rotation, gridPos, out var flags);
 
             entity.ReplacePlacement(offset, flags);

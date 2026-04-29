@@ -44,7 +44,7 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
         _candidates.Clear();
 
         // Cell 建筑
-        var cellUids = BuildingStates.Instance.GetCellBuildingsUid(gridPos);
+        var cellUids = BuildingManager.States.GetCellBuildingsUid(gridPos);
         foreach (var uid in cellUids)
         {
             if (_seen.Add(uid))
@@ -65,7 +65,7 @@ public sealed class EditCandidateRefreshSystem : IExecuteSystem
 
         foreach (var dir in directions)
         {
-            var edgeUids = BuildingStates.Instance.GetEdgeBuildingsUid(gridPos, dir);
+            var edgeUids = BuildingManager.States.GetEdgeBuildingsUid(gridPos, dir);
             foreach (var uid in edgeUids)
             {
                 if (!_seen.Add(uid)) continue;

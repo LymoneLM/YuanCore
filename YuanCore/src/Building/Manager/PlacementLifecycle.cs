@@ -62,7 +62,7 @@ public static class PlacementLifecycle
         var rotation = entity.GetBuildingState().Rotation;
 
         // 1. 从占用图移除
-        BuildingStates.Instance.RemoveBuilding(uid);
+        BuildingManager.States.RemoveBuilding(uid);
 
         // 2. 挂编辑会话组件
         entity.AddBuildingRollback(gridPos, rotation);
@@ -106,7 +106,7 @@ public static class PlacementLifecycle
 
                 // 恢复占用
                 var building = entity.GetBuilding();
-                BuildingStates.Instance.AddBuilding(
+                BuildingManager.States.AddBuilding(
                     building.BuildingID, session.OriginalRotation,
                     session.OriginalGridPosition, building.Uid);
 
@@ -160,7 +160,7 @@ public static class PlacementLifecycle
             entity.ReplaceBuilding(newUid, building.BuildingID);
 
             // 写入占用图
-            BuildingStates.Instance.AddBuilding(building.BuildingID, state.Rotation, gridPos, newUid);
+            BuildingManager.States.AddBuilding(building.BuildingID, state.Rotation, gridPos, newUid);
 
             // TODO: 写回原版建筑数据（SaveData / Mainload.BuildInto_x）
             //       SyncBuildingToVanilla(entity);
@@ -201,7 +201,7 @@ public static class PlacementLifecycle
             var gridPos = entity.GetGridPosition().Value;
 
             // 写入新占用
-            BuildingStates.Instance.AddBuilding(
+            BuildingManager.States.AddBuilding(
                 building.BuildingID, state.Rotation, gridPos, building.Uid);
 
             // TODO: 写回原版数据中的位置/旋转
@@ -281,7 +281,7 @@ public static class PlacementLifecycle
             var state = entity.GetBuildingState();
             var gridPos = entity.GetGridPosition().Value;
 
-            if (!BuildingStates.Instance.CheckCanBuild(
+            if (!BuildingManager.States.CheckCanBuild(
                     building.BuildingID, state.Rotation, gridPos, out _))
                 return false;
         }
