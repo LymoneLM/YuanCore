@@ -4,12 +4,12 @@ using lmm = YuanCore.Building.YuanCoreBuildingMapLinkMaterialUpdateMatcher;
 
 namespace YuanCore.Building;
 
-public sealed class LinkMaterialUpdateSystem : IExecuteSystem
+public sealed class UpdateLinkMaterialSystem : IExecuteSystem
 {
     private readonly IGroup<Map.Entity> _group;
     private readonly List<Map.Entity> _buffer = [];
 
-    public LinkMaterialUpdateSystem(MapContext mapContext)
+    public UpdateLinkMaterialSystem(MapContext mapContext)
     {
         _group = mapContext.GetGroup(Matcher<Map.Entity>.AllOf(lmm.LinkMaterialUpdate));
     }

@@ -5,9 +5,9 @@ using static YuanCore.Building.YuanCoreBuildingMapClickedMatcher;
 
 namespace YuanCore.Building;
 
-public sealed class ClickProcessSystem : ReactiveSystem<Map.Entity>
+public sealed class ProcessClickedSystem : ReactiveSystem<Map.Entity>
 {
-    public ClickProcessSystem(MapContext context) : base(context) { }
+    public ProcessClickedSystem(MapContext context) : base(context) { }
 
     protected override ICollector<Map.Entity> GetTrigger(IContext<Map.Entity> context)
         => context.CreateCollector(Clicked);

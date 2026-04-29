@@ -15,9 +15,9 @@ public sealed class BuildingSystems : Feature
         // ── 视图 ──
         Add(new ConvertGridPositionSystem(mapContext));
         Add(new CreateViewSystem(mapContext));
-        Add(new LinkMaterialUpdateSystem(mapContext));
+        Add(new UpdateLinkMaterialSystem(mapContext));
 
         // ── 点击业务消费 ──
-        Add(new ClickProcessSystem(mapContext));
+        Add(new ProcessClickedSystem(mapContext));
     }
 }
