@@ -35,7 +35,13 @@ public class BuildingController : MonoBehaviour
     public void Update()
     {
         _inputManager.Update();
+        MainloadCompat.Update();
         Systems.Execute();
         Systems.Cleanup();
+    }
+
+    private void OnDestroy()
+    {
+        _inputManager.Dispose();
     }
 }

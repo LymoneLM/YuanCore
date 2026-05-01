@@ -6,7 +6,8 @@ using YuanCore.Core;
 namespace YuanCore.Building;
 
 /// <summary>
-/// 非 ECS 输入管理器 —— 整合模式同步、光标更新、输入采集、Placement 跟随。
+/// 非 ECS 输入管理器 —— 整合模式同步、光标更新、输入采集、Hover 决策、
+/// EditCandidate 管理、Placement 跟随。
 /// BuildingController.Update() 在 ECS Systems 之前调用，确保输入状态在响应式系统执行前已稳定。
 /// </summary>
 public sealed class BuildingInputManager
@@ -14,8 +15,12 @@ public sealed class BuildingInputManager
     private readonly MapContext _context;
     private readonly IGroup<Map.Entity> _placementGroup;
     private readonly List<Map.Entity> _placementBuffer = [];
+    private readonly EditCandidateManager _editCandidateManager;
     private Camera _camera;
     private Vector2Int _lastCursorGrid;
+
+    // ─── Hover ───
+    private string _hoveredUid;
 
     public BuildingInputManager(MapContext context)
     {
@@ -24,6 +29,11 @@ public sealed class BuildingInputManager
             Matcher<Map.Entity>.AllOf(
                 YuanCoreBuildingMapPlacementMatcher.Placement));
         _camera = Camera.main;
+
+        _editCandidateManager = new EditCandidateManager(context);
+
+        BuildingSignals.OnPointerEnterBuilding += OnPointerEnterBuilding;
+        BuildingSignals.OnPointerExitBuilding += OnPointerExitBuilding;
     }
 
     /// <summary>Startup: 重置 CursorState。</summary>
@@ -32,7 +42,7 @@ public sealed class BuildingInputManager
         CursorState.Reset();
     }
 
-    /// <summary>每帧更新入口：模式同步 → 光标 → 输入 → Placement 跟随。</summary>
+    /// <summary>每帧更新入口：模式同步 → 光标 → 输入 → HoverInfo → Placement 跟随。</summary>
     public void Update()
     {
         SyncMode();
@@ -45,16 +55,23 @@ public sealed class BuildingInputManager
         FollowPlacements();
     }
 
+    public void Dispose()
+    {
+        BuildingSignals.OnPointerEnterBuilding -= OnPointerEnterBuilding;
+        BuildingSignals.OnPointerExitBuilding -= OnPointerExitBuilding;
+        _editCandidateManager.Dispose();
+    }
+
     // ─── Mode Sync ───
 
     private void SyncMode()
     {
-        BuildingModeManager.PollVanillaMode();
+        MainloadCompat.PollVanillaMode();
 
-        var mode = BuildingModeManager.CurrentMode;
-        CursorState.Active = mode == BuildingInteractionMode.Build ||
-                             mode == BuildingInteractionMode.EditSelect ||
-                             mode == BuildingInteractionMode.EditMove;
+        var mode = MainloadCompat.CurrentMode;
+        CursorState.Active = mode == BuildMode.Build ||
+                             mode == BuildMode.EditSelect ||
+                             mode == BuildMode.EditMove;
     }
 
     // ─── Cursor Update ───
@@ -80,7 +97,7 @@ public sealed class BuildingInputManager
 
     private void HandleInput()
     {
-        var mode = BuildingModeManager.CurrentMode;
+        var mode = MainloadCompat.CurrentMode;
 
         // ESC 退出
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -103,64 +120,61 @@ public sealed class BuildingInputManager
             HandleLeftClick(mode);
     }
 
-    // TODO: 此方法与 BuildingBuildEntry.ExitToNormal() 逻辑重复。
-    //       应统一为调用 BuildingBuildEntry.ExitToNormal()。
-    //       且 EditSelect 退出时未调用 EditCandidateManager.Clear() 清除高亮
-    //       （目前依赖 EditCandidateRefreshSystem 下一帧自动清理，为延迟清理）。
-    private void HandleEscape(BuildingInteractionMode mode)
+    private void HandleEscape(BuildMode mode)
     {
         switch (mode)
         {
-            case BuildingInteractionMode.Build:
+            case BuildMode.Build:
                 PlacementLifecycle.CancelAllSessionPlacements(_context);
-                BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
+                MainloadCompat.SetMode(BuildMode.Normal);
                 MainloadCompat.SyncBuildPanelOpen(false);
                 break;
 
-            case BuildingInteractionMode.EditMove:
+            case BuildMode.EditMove:
                 PlacementLifecycle.CancelAllSessionPlacements(_context);
-                BuildingModeManager.SetMode(BuildingInteractionMode.EditSelect);
+                MainloadCompat.SetMode(BuildMode.EditSelect);
                 break;
 
-            case BuildingInteractionMode.EditSelect:
-                BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
+            case BuildMode.EditSelect:
+                _editCandidateManager.Clear();
+                MainloadCompat.SetMode(BuildMode.Normal);
                 break;
         }
     }
 
-    private void HandleRotation(BuildingInteractionMode mode)
+    private void HandleRotation(BuildMode mode)
     {
-        if (mode != BuildingInteractionMode.Build && mode != BuildingInteractionMode.EditMove)
+        if (mode != BuildMode.Build && mode != BuildMode.EditMove)
             return;
 
         PlacementLifecycle.RotateSessionPlacements(_context);
     }
 
-    private void HandleScroll(BuildingInteractionMode mode, float scroll)
+    private void HandleScroll(BuildMode mode, float scroll)
     {
         if (PointChecker.IsPointerOverUI()) return;
 
-        if (mode == BuildingInteractionMode.EditSelect)
+        if (mode == BuildMode.EditSelect)
         {
-            EditCandidateManager.CycleSelection(_context, scroll > 0 ? -1 : 1);
+            _editCandidateManager.CycleSelection(scroll > 0 ? -1 : 1);
         }
     }
 
-    private void HandleLeftClick(BuildingInteractionMode mode)
+    private void HandleLeftClick(BuildMode mode)
     {
         if (PointChecker.IsPointerOverUI()) return;
 
         switch (mode)
         {
-            case BuildingInteractionMode.Build:
+            case BuildMode.Build:
                 PlacementLifecycle.TrySubmitBuild(_context);
                 break;
 
-            case BuildingInteractionMode.EditSelect:
+            case BuildMode.EditSelect:
                 TrySelectCandidate();
                 break;
 
-            case BuildingInteractionMode.EditMove:
+            case BuildMode.EditMove:
                 PlacementLifecycle.TrySubmitEditMove(_context);
                 break;
         }
@@ -168,7 +182,7 @@ public sealed class BuildingInputManager
 
     private void TrySelectCandidate()
     {
-        if (!EditCandidateManager.TryGetCurrentUid(out var uid)) return;
+        if (!_editCandidateManager.TryGetCurrentUid(out var uid)) return;
         PlacementLifecycle.BeginEditMove(_context, uid);
     }
 
@@ -176,8 +190,8 @@ public sealed class BuildingInputManager
 
     private void FollowPlacements()
     {
-        var mode = BuildingModeManager.CurrentMode;
-        if (mode != BuildingInteractionMode.Build && mode != BuildingInteractionMode.EditMove)
+        var mode = MainloadCompat.CurrentMode;
+        if (mode != BuildMode.Build && mode != BuildMode.EditMove)
             return;
 
         if (CursorState.GridPosition == _lastCursorGrid) return;
@@ -191,5 +205,41 @@ public sealed class BuildingInputManager
             var offset = entity.GetPlacement().Offset;
             entity.ReplaceGridPosition(CursorState.GridPosition + offset);
         }
+    }
+
+    // ─── Hover ───
+
+    private void OnPointerEnterBuilding(string uid)
+    {
+        if (MainloadCompat.CurrentMode != BuildMode.Normal)
+            return;
+
+        ClearCurrentHover();
+
+        _hoveredUid = uid;
+        SetBuildingHoverVisual(uid, true);
+    }
+
+    private void OnPointerExitBuilding(string uid)
+    {
+        if (_hoveredUid != uid) return;
+
+        ClearCurrentHover();
+    }
+
+    private void ClearCurrentHover()
+    {
+        if (_hoveredUid == null) return;
+
+        SetBuildingHoverVisual(_hoveredUid, false);
+        _hoveredUid = null;
+    }
+
+    private void SetBuildingHoverVisual(string uid, bool on)
+    {
+        var entity = _context.GetBuildingByUid(uid);
+        if (entity == null || !entity.HasView()) return;
+        if (entity.GetView().View is BuildingShowView sv)
+            sv.SetHoverVisual(on);
     }
 }

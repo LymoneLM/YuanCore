@@ -14,4 +14,12 @@ public static class BuildingSignals
     public static event Action<string, int> OnBuildingClicked;
     public static void InvokeBuildingClicked(string uid, int buildingID)
         => OnBuildingClicked?.Invoke(uid, buildingID);
+
+    public static event Action<string> OnPointerEnterBuilding;
+    public static void InvokePointerEnterBuilding(string uid)
+        => OnPointerEnterBuilding?.Invoke(uid);
+
+    public static event Action<string> OnPointerExitBuilding;
+    public static void InvokePointerExitBuilding(string uid)
+        => OnPointerExitBuilding?.Invoke(uid);
 }

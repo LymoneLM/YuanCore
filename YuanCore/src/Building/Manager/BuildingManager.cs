@@ -39,7 +39,7 @@ public class BuildingManager : MonoBehaviour
             SaveData.SaveGameData(sceneID);
 
         MainloadCompat.ResetSceneState();
-        BuildingModeManager.Reset();
+        MainloadCompat.ResetMode();
 
         States.InitializeMap(sceneID);
         SceneRoot.SwitchScene(sceneID, (buildingViewRoot) =>
@@ -51,10 +51,5 @@ public class BuildingManager : MonoBehaviour
 
             MainloadCompat.FinishSceneLoad();
         });
-    }
-
-    private void Update()
-    {
-        MainloadCompat.Update();
     }
 }

@@ -4,6 +4,47 @@ namespace YuanCore.Building;
 
 public static class MainloadCompat
 {
+    // ── 模式管理 ──
+
+    public static BuildMode CurrentMode { get; private set; } = BuildMode.Normal;
+
+    public static void SetMode(BuildMode newMode)
+    {
+        if (CurrentMode == newMode) return;
+        var oldMode = CurrentMode;
+        CurrentMode = newMode;
+        SyncModeToVanilla(newMode);
+        YuanCorePlugin.Logger.LogDebug($"[BuildingMode] {oldMode} -> {newMode}");
+    }
+
+    /// <summary>
+    /// 每帧检测原版是否从外部触发了模式变更（仅在 Normal 模式下）。
+    /// </summary>
+    public static void PollVanillaMode()
+    {
+        if (CurrentMode != BuildMode.Normal) return;
+
+        if (IsBuildMode && BuildIDCreatNow != "null")
+        {
+            // TODO: 需要从原版字段获取 buildingID/taoZhuangID/rotation，
+            //       并调用 PlacementLifecycle.BeginNewPlacement() 创建 Placement 实体。
+            SetMode(BuildMode.Build);
+            return;
+        }
+
+        if (IsEditMode)
+        {
+            SetMode(BuildMode.EditSelect);
+        }
+    }
+
+    public static void ResetMode()
+    {
+        CurrentMode = BuildMode.Normal;
+    }
+
+    // ── 原版状态桥接 ──
+
     public static bool IsFirstGame => Mainload.isFirstGame;
     public static string SceneID => Mainload.SceneID;
     public static bool IsSceneCreated => Mainload.isCreatSceneFinish;
@@ -21,28 +62,28 @@ public static class MainloadCompat
     /// 原版编辑模式下选中的建筑实例 ID。
     public static string EditBuildShiliID => Mainload.EditBuildShiliID;
 
-    public static void SyncModeToVanilla(BuildingInteractionMode mode)
+    public static void SyncModeToVanilla(BuildMode mode)
     {
         switch (mode)
         {
-            case BuildingInteractionMode.Normal:
+            case BuildMode.Normal:
                 Mainload.isBuildMode = false;
                 Mainload.isBuildEdit = false;
                 Mainload.EditBuildShiliID = "null";
                 break;
 
-            case BuildingInteractionMode.Build:
+            case BuildMode.Build:
                 Mainload.isBuildMode = true;
                 Mainload.isBuildEdit = false;
                 Mainload.EditBuildShiliID = "null";
                 break;
 
-            case BuildingInteractionMode.EditSelect:
+            case BuildMode.EditSelect:
                 Mainload.isBuildMode = false;
                 Mainload.isBuildEdit = true;
                 break;
 
-            case BuildingInteractionMode.EditMove:
+            case BuildMode.EditMove:
                 Mainload.isBuildMode = false;
                 Mainload.isBuildEdit = true;
                 break;
@@ -126,4 +167,12 @@ public static class MainloadCompat
         Mainload.isCreatSceneFinish = true;
         Mainload.isSwichPanelOpen = false;
     }
+}
+
+public enum BuildMode
+{
+    Normal = 0,
+    Build = 1,
+    EditSelect = 2,
+    EditMove = 3,
 }

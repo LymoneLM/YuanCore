@@ -76,7 +76,7 @@ public static class PlacementLifecycle
         MainloadCompat.SyncEditTarget(uid);
 
         // 5. 切换模式
-        BuildingModeManager.SetMode(BuildingInteractionMode.EditMove);
+        MainloadCompat.SetMode(BuildMode.EditMove);
     }
 
     // ═══════════════════════════════════════════════════
@@ -173,7 +173,7 @@ public static class PlacementLifecycle
         }
 
         // 5. 退出建造模式（或可选继续放置）
-        BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
+        MainloadCompat.SetMode(BuildMode.Normal);
         MainloadCompat.SyncBuildPanelOpen(false);
         return true;
     }
@@ -219,7 +219,7 @@ public static class PlacementLifecycle
         }
 
         // 回到 EditSelect（或 Normal，取决于交互设计）
-        BuildingModeManager.SetMode(BuildingInteractionMode.EditSelect);
+        MainloadCompat.SetMode(BuildMode.EditSelect);
         MainloadCompat.SyncEditTarget("null");
         return true;
     }

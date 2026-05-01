@@ -25,35 +25,28 @@ public class BuildingShowView : BuildingView
     public void OnPointerEnterForwarded()
     {
         if (PointChecker.IsPointerOverUI()) return;
-        if (BuildingModeManager.CurrentMode != BuildingInteractionMode.Normal &&
-            BuildingModeManager.CurrentMode != BuildingInteractionMode.EditSelect)
-            return;
 
-        SetHoverVisual(true);
+        if (LinkedEntity != null && LinkedEntity.IsEnabled)
+            BuildingSignals.InvokePointerEnterBuilding(
+                LinkedEntity.GetBuilding().Uid);
     }
 
     public void OnPointerExitForwarded()
     {
-        SetHoverVisual(false);
+        if (LinkedEntity != null && LinkedEntity.IsEnabled)
+            BuildingSignals.InvokePointerExitBuilding(
+                LinkedEntity.GetBuilding().Uid);
     }
 
     public void OnClickForwarded(PointerEventData.InputButton button)
     {
-        if (button != PointerEventData.InputButton.Left) return;
-
         if (PointChecker.IsPointerOverUI()) return;
-        if (BuildingModeManager.CurrentMode != BuildingInteractionMode.Normal) return;
+        if (button != PointerEventData.InputButton.Left) return;
+        if (MainloadCompat.CurrentMode != BuildMode.Normal) return;
 
         if (LinkedEntity != null && LinkedEntity.IsEnabled)
-        {
             if (!LinkedEntity.HasClicked())
                 LinkedEntity.AddClicked();
-        }
-    }
-
-    public void SetEditHighlight(bool on)
-    {
-        SetHoverVisual(on);
     }
 
     public void SetHoverVisual(bool hovered)

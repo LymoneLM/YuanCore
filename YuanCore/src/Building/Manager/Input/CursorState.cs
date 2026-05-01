@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace YuanCore.Building;
 
@@ -26,5 +27,10 @@ public static class CursorState
     {
         GridPosition = Vector2Int.zero;
         Active = false;
+    }
+
+    public static bool IsOverUI()
+    {
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 }

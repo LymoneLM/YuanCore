@@ -21,7 +21,7 @@ public sealed class ProcessClickedSystem : ReactiveSystem<Map.Entity>
         {
             entity.RemoveClicked();
 
-            if (BuildingModeManager.CurrentMode != BuildingInteractionMode.Normal)
+            if (MainloadCompat.CurrentMode != BuildMode.Normal)
                 continue;
 
             var building = entity.GetBuilding();

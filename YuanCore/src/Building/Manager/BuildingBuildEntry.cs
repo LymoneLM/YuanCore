@@ -17,14 +17,14 @@ public static class BuildingBuildEntry
     public static void EnterBuildMode(int buildingID, int taoZhuangID,
         BuildingRotation rotation = BuildingRotation.R0)
     {
-        if (BuildingModeManager.CurrentMode != BuildingInteractionMode.Normal)
+        if (MainloadCompat.CurrentMode != BuildMode.Normal)
         {
             YuanCorePlugin.Logger.LogWarning(
-                $"[BuildEntry] Cannot enter Build mode from {BuildingModeManager.CurrentMode}");
+                $"[BuildEntry] Cannot enter Build mode from {MainloadCompat.CurrentMode}");
             return;
         }
 
-        BuildingModeManager.SetMode(BuildingInteractionMode.Build);
+        MainloadCompat.SetMode(BuildMode.Build);
 
         // 创建 Placement 实体
         PlacementLifecycle.BeginNewPlacement(
@@ -36,14 +36,14 @@ public static class BuildingBuildEntry
     /// </summary>
     public static void EnterEditMode()
     {
-        if (BuildingModeManager.CurrentMode != BuildingInteractionMode.Normal)
+        if (MainloadCompat.CurrentMode != BuildMode.Normal)
         {
             YuanCorePlugin.Logger.LogWarning(
-                $"[BuildEntry] Cannot enter Edit mode from {BuildingModeManager.CurrentMode}");
+                $"[BuildEntry] Cannot enter Edit mode from {MainloadCompat.CurrentMode}");
             return;
         }
 
-        BuildingModeManager.SetMode(BuildingInteractionMode.EditSelect);
+        MainloadCompat.SetMode(BuildMode.EditSelect);
     }
 
     /// <summary>
@@ -52,15 +52,15 @@ public static class BuildingBuildEntry
     /// </summary>
     public static void ExitToNormal()
     {
-        var mode = BuildingModeManager.CurrentMode;
-        if (mode == BuildingInteractionMode.Normal) return;
+        var mode = MainloadCompat.CurrentMode;
+        if (mode == BuildMode.Normal) return;
 
-        if (mode == BuildingInteractionMode.Build || mode == BuildingInteractionMode.EditMove)
+        if (mode == BuildMode.Build || mode == BuildMode.EditMove)
         {
             PlacementLifecycle.CancelAllSessionPlacements(MapContext.Instance);
         }
 
-        BuildingModeManager.SetMode(BuildingInteractionMode.Normal);
+        MainloadCompat.SetMode(BuildMode.Normal);
         MainloadCompat.SyncBuildPanelOpen(false);
     }
 }
